@@ -157,7 +157,25 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### Binary Classification: Single Neuron
 
-<!-- TODO -->
+|  Type  | Batch Size | Activation | Optimizer |  Loss  | Accuracy |  Time   |
+| :----: | :--------: | :--------: | :-------: | :----: | :------: | :-----: |
+| Binary |   60000    |  Sigmoid   |   Adam    | 0.3021 |  90.97%  | 119.37s |
+| Binary |    2048    |  Sigmoid   |   Adam    | 0.1011 |  94.52%  | 83.70s  |
+| Binary |    1024    |  Sigmoid   |   Adam    | 0.0904 |  96.59%  | 86.38s  |
+| Binary |    512     |  Sigmoid   |   Adam    | 0.0844 |  96.80%  | 85.34s  |
+| Binary |    256     |  Sigmoid   |   Adam    | 0.0822 |  97.35%  | 87.18s  |
+| Binary |    128     |  Sigmoid   |   Adam    | 0.0809 |  97.56%  | 90.80s  |
+| Binary |     64     |  Sigmoid   |   Adam    | 0.0797 |  97.66%  | 100.32s |
+| Binary |     32     |  Sigmoid   |   Adam    | 0.0814 |  97.57%  | 112.29s |
+| Binary |     16     |  Sigmoid   |   Adam    | 0.0800 |  97.78%  | 122.05s |
+
+<img src="plots/ex1/pytorch/loss_over_bs.png" height="240" />
+<img src="plots/ex1/pytorch/accuracy_over_bs.png" height="240" />
+<img src="plots/ex1/pytorch/training_time_over_bs.png" height="240" />
+<img src="plots/ex1/pytorch/loss_over_epoch.png" height="240" />
+<img src="plots/ex1/pytorch/accuracy_over_epoch.png" height="240" />
+
+…
 
 ### Binary Classification: Hidden Layer
 
@@ -171,11 +189,11 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 | Binary |    64    | Sigmoid, Sigmoid |   Adam    | 0.0000 | 100.00%  | 102.66s |
 | Binary |   128    | Sigmoid, Sigmoid |   Adam    | 0.0001 | 100.00%  | 119.12s |
 
-<img src="plots/ex2/pytorch/hlu/loss_over_epoch.png" height="240" />
-<img src="plots/ex2/pytorch/hlu/accuracy_over_epoch.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/loss_over_hlu.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/accuracy_over_hlu.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/training_time_over_hlu.png" height="240" />
+<img src="plots/ex2/pytorch/hlu/loss_over_epoch.png" height="240" />
+<img src="plots/ex2/pytorch/hlu/accuracy_over_epoch.png" height="240" />
 
 …
 
