@@ -10,7 +10,7 @@ from keras.models import Sequential
 
 DIGIT = 5
 EPOCHS = 40
-BATCH_SIZES = [60000, 2048, 1024, 512, 256, 128, 64, 32, 16, 8]
+BATCH_SIZES = [60000, 2048, 1024, 512, 256, 128, 64, 32, 16]
 
 if __name__ == "__main__":
     # Load the data, flatten x, and set up y for binary classification.
@@ -29,17 +29,19 @@ if __name__ == "__main__":
     for BATCH_SIZE in BATCH_SIZES:
         print(f"\n###\n### BATCH SIZE: {BATCH_SIZE}\n###")
 
-        # Define the model and its parameters, train it, evaluate it, and display its results.
+        # Define the model and its parameters, train it, and evaluate it.
         model = Sequential()
         model.add(Dense(1, activation="sigmoid"))
         model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
         start_time = time.time()
-        history = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=2, validation_data=(x_test, y_test))  # type: ignore
+        history = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
         training_time = time.time() - start_time
         loss, accuracy = model.evaluate(x_test, y_test)
         scores += [(loss, accuracy)]
         durations += [training_time]
-        print(f"Model: loss={loss:.2f}, accuracy={accuracy:.2f}, training_time={training_time}.")
+
+        # Display the summary.
+        print(f"SUMMARY FOR BATCH SIZE {BATCH_SIZE}:\n    - Training Time: {training_time:.0f}s\n    - Loss: {loss:.2f}\n    - Accuracy: {accuracy:.2f}")
 
     # Plot the loss history.
     plt.clf()
@@ -48,7 +50,7 @@ if __name__ == "__main__":
     plt.xlabel("Batch Size")
     plt.ylabel("Loss")
     plt.title("Loss over Batch Size")
-    plt.savefig("plots/lab3_1_keras_bs_cmp_loss.png")
+    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_loss.png")
 
     # Plot the accuracy history.
     plt.clf()
@@ -57,7 +59,7 @@ if __name__ == "__main__":
     plt.xlabel("Batch Size")
     plt.ylabel("Accuracy")
     plt.title("Accuracy over Batch Size")
-    plt.savefig("plots/lab3_1_keras_bs_cmp_accuracy.png")
+    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_accuracy.png")
 
     # Plot the duration history.
     plt.clf()
@@ -66,4 +68,4 @@ if __name__ == "__main__":
     plt.xlabel("Batch Size")
     plt.ylabel("Duration")
     plt.title("Duration over Batch Size")
-    plt.savefig("plots/lab3_1_keras_bs_cmp_duration.png")
+    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_duration.png")

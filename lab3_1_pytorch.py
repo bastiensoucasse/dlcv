@@ -1,76 +1,143 @@
 # Single neuron neural network for binary classification using Pytorch
 
+import time
+
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
+from torchvision import datasets
+from torchvision.transforms import ToTensor
 
-BATCH_SIZE = 32
+DIGIT = 5
 EPOCHS = 40
+BATCH_SIZES = [60000, 2048, 1024, 512, 256, 128, 64, 32, 16]
 
 
 class NeuralNetwork(nn.Module):
     def __init__(self, input_size):
         super(NeuralNetwork, self).__init__()
-        self.linear = nn.Linear(input_size, output_size)
-        self.sig = nn.Sigmoid()
+        self.linear = nn.Linear(input_size, 1)
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        return self.sig(self.linear(x))
+        return self.sigmoid(self.linear(x))
 
 
 if __name__ == "__main__":
-    # Set Device
-    device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    print(f"Using {device} device")
+    # Set up the device.
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    # Load Data
-    training_data = datasets.MNIST(root="./data", download=True, train=True, transform=transforms.ToTensor())
-    test_data = datasets.MNIST(root="./data", download=True, train=False, transform=transforms.ToTensor())
-    train_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-    test_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE)
-    for x, y in test_dataloader:
-        x_shape = x.shape
-        y_shape = y.shape
-        print(f"Shape of X [N, C, H, W]: {x.shape}")
-        print(f"Shape of y: {y.shape} {y.dtype}")
-        break
+    scores = []
+    durations = []
+    for BATCH_SIZE in BATCH_SIZES:
+        print(f"\n###\n### BATCH SIZE: {BATCH_SIZE}\n###")
 
-    # Define Model
-    input_size = 0
+        # Load the data.
+        training_data = datasets.MNIST(root="data", train=True, transform=ToTensor(), download=True)
+        test_data = datasets.MNIST(root="data", train=False, transform=ToTensor(), download=True)
+        train_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+        test_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE)
 
-    model = NeuralNetwork(input_size).to(device)
-    print(model)
+        # Retrieve image size.
+        image_size = 0
+        for x, y in train_dataloader:
+            image_size = x.shape[2] * x.shape[3]
+            break
+        assert image_size != 0
 
-    learning_rate = 0.001
-    optimizer = torch.optim.Adam(model.parameters(), learning_rate)
-    loss_function = nn.CrossEntropyLoss
+        # Define the model and its parameters.
+        model = NeuralNetwork(image_size).to(device)
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+        loss_fn = nn.BCELoss()
 
-    searched_digit = 5
+        # Train the model.
+        history = []
+        training_start_time = time.time()
+        for e in range(EPOCHS):
+            print(f"Epoch {e + 1}/{EPOCHS}")
+            dataset_size = len(train_dataloader.dataset)  # type: ignore
+            num_batches = len(train_dataloader)
+            epoch_loss, epoch_accuracy = 0, 0
+            model.train()
 
-    # Train Model
-    for e in range(EPOCHS):
-        size = len(train_dataloader.dataset)
-        num_batches = len(train_dataloader)
+            epoch_start_time = time.time()
+            for x, y in train_dataloader:
+                # Flatten x, set up y for binary classification, and initialize the device.
+                x = x.reshape(-1, image_size)
+                y = torch.where(y == DIGIT, 1, 0)
+                y = y.unsqueeze(-1).to(torch.float32)
+                x, y = x.to(device), y.to(device)
 
-        running_acc = 0
-        running_loss = 0
-        for batch, (x, y) in enumerate(train_dataloader):
-            x = x.reshape(-1, input_size)
-            y = torch.where(y == searched_digit, 1, 0)
+                # Achieve the forward pass and compute the error.
+                pred = model(x)
+                loss = loss_fn(pred, y)
+
+                # Achieve the backpropagation.
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                # Apply the batch metrics to the epoch metrics.
+                epoch_loss += loss.item() / num_batches
+                epoch_accuracy += (torch.where(pred >= .5, 1, 0) == y).sum().float() / BATCH_SIZE / num_batches
+            epoch_time = time.time() - epoch_start_time
+
+            # Save and display epoch results.
+            history += [(epoch_loss, epoch_accuracy)]
+            print(f"{epoch_time:.0f}s - loss: {epoch_loss:.4f} - accuracy: {epoch_accuracy:.4f}")
+        training_time = time.time() - training_start_time
+
+        # Evaluate the model.
+        dataset_size = len(test_dataloader.dataset)  # type: ignore
+        num_batches = len(test_dataloader)
+        model_loss, model_accuracy = 0, 0
+        model.eval()
+        for x, y in test_dataloader:
+            # Flatten x, set up y for binary classification, and initialize the device.
+            x = x.reshape(-1, image_size)
+            y = torch.where(y == DIGIT, 1, 0)
             y = y.unsqueeze(-1).to(torch.float32)
             x, y = x.to(device), y.to(device)
 
+            # Predict the class.
             pred = model(x)
-            loss = loss_function(pred, y)
+            loss = loss_fn(pred, y)
 
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            # Apply the batch metrics to the model metrics.
+            model_loss += loss.item() / num_batches
+            model_accuracy += (torch.where(pred >= .5, 1, 0) == y).sum().float() / BATCH_SIZE / num_batches
+        print(f"loss: {model_loss:.4f} - accuracy: {model_accuracy:.4f}")
+        scores += [(model_loss, model_accuracy)]
+        durations += [training_time]
 
-            running_acc = 0 # TODO
-            running_loss = 0 # TODO
+        # Display the summary.
+        print(f"SUMMARY FOR BATCH SIZE {BATCH_SIZE}:\n    - Training Time: {training_time:.0f}s\n    - Loss: {model_loss:.2f}\n    - Accuracy: {model_accuracy:.2f}")
 
-    loss = 0 # TODO
-    accuracy = 0 # TODO
-    print(f"Epoch {e}/{EPOCHS}: loss={loss:.4f} acc={accuracy:.4f}")
+    # Plot the loss history.
+    plt.clf()
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, np.array(scores)[:, 0])
+    plt.xlabel("Batch Size")
+    plt.ylabel("Loss")
+    plt.title("Loss over Batch Size")
+    plt.savefig("plots/ex1/lab3_1_pytorch_bs_cmp_loss.png")
+
+    # Plot the accuracy history.
+    plt.clf()
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, np.array(scores)[:, 1])
+    plt.xlabel("Batch Size")
+    plt.ylabel("Accuracy")
+    plt.title("Accuracy over Batch Size")
+    plt.savefig("plots/ex1/lab3_1_pytorch_bs_cmp_accuracy.png")
+
+    # Plot the duration history.
+    plt.clf()
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, durations)
+    plt.xlabel("Batch Size")
+    plt.ylabel("Duration")
+    plt.title("Duration over Batch Size")
+    plt.savefig("plots/ex1/lab3_1_pytorch_bs_cmp_duration.png")
