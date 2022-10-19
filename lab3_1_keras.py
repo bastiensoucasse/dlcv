@@ -1,16 +1,19 @@
 # Single neuron neural network for binary classification using Keras
 
+import time
+
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets import mnist
 from keras.layers import Dense
 from keras.models import Sequential
 
-BATCH_SIZE = 32
+DIGIT = 5
 EPOCHS = 40
+BATCH_SIZES = [60000, 2048, 1024, 512, 256, 128, 64, 32, 16, 8]
 
 if __name__ == "__main__":
-    # Load Data
+    # Load the data, flatten x, and set up y for binary classification.
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
     x_train = x_train.reshape(x_train.shape[0], -1) / 255.0
     x_test = x_test.reshape(x_test.shape[0], -1) / 255.0
@@ -21,31 +24,46 @@ if __name__ == "__main__":
     y_new[np.where(y_test == 0.0)[0]] = 1
     y_test = y_new
 
-    # Train Model
-    model = Sequential()
-    model.add(Dense(1, activation="sigmoid"))
-    model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-    history = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, validation_data=(x_test, y_test))
-    loss, accuracy = model.evaluate(x_test, y_test)
-    print("Model Loss: %.2f." % loss)
-    print("Model Accuracy: %.2f%%." % (accuracy * 100))
+    scores = []
+    durations = []
+    for BATCH_SIZE in BATCH_SIZES:
+        print(f"\n###\n### BATCH SIZE: {BATCH_SIZE}\n###")
 
-    # Plot Loss
+        # Define the model and its parameters, train it, evaluate it, and display its results.
+        model = Sequential()
+        model.add(Dense(1, activation="sigmoid"))
+        model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+        start_time = time.time()
+        history = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, verbose=2, validation_data=(x_test, y_test))  # type: ignore
+        training_time = time.time() - start_time
+        loss, accuracy = model.evaluate(x_test, y_test)
+        scores += [(loss, accuracy)]
+        durations += [training_time]
+        print(f"Model: loss={loss:.2f}, accuracy={accuracy:.2f}, training_time={training_time}.")
+
+    # Plot the loss history.
     plt.clf()
-    plt.plot(history.history["loss"], label="Training")
-    plt.plot(history.history["val_loss"], label="Validation")
-    plt.xlabel("Epoch")
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, np.array(scores)[:, 0])
+    plt.xlabel("Batch Size")
     plt.ylabel("Loss")
-    plt.legend()
-    plt.title("Loss over Epoch")
-    plt.savefig("plots/lab3_1_keras_bs%d_loss.png" % BATCH_SIZE)
+    plt.title("Loss over Batch Size")
+    plt.savefig("plots/lab3_1_keras_bs_cmp_loss.png")
 
-    # Plot Accuracy
+    # Plot the accuracy history.
     plt.clf()
-    plt.plot(history.history["accuracy"], label="Training")
-    plt.plot(history.history["val_accuracy"], label="Validation")
-    plt.xlabel("Epoch")
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, np.array(scores)[:, 1])
+    plt.xlabel("Batch Size")
     plt.ylabel("Accuracy")
-    plt.legend()
-    plt.title("Accuracy over Epoch")
-    plt.savefig("plots/lab3_1_keras_bs%d_accuracy.png" % BATCH_SIZE)
+    plt.title("Accuracy over Batch Size")
+    plt.savefig("plots/lab3_1_keras_bs_cmp_accuracy.png")
+
+    # Plot the duration history.
+    plt.clf()
+    plt.xscale("log")
+    plt.plot(BATCH_SIZES, durations)
+    plt.xlabel("Batch Size")
+    plt.ylabel("Duration")
+    plt.title("Duration over Batch Size")
+    plt.savefig("plots/lab3_1_keras_bs_cmp_duration.png")
