@@ -1,0 +1,11 @@
+|  Type  | Batch Size | Activation | Optimizer | Loss  | Accuracy |  Time  |
+| :----: | :--------: | :--------: | :-------: | :---: | :------: | :----: |
+| Binary |   60000    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |    2048    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |    1024    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |    512     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |    256     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |    128     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |     64     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |     32     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Binary |     16     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
