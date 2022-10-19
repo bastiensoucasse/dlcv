@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     HIST = []
 
-    # durations = []
+    durations = []
     
     # TODO: Add inputshape
     # for hlu in HL_UNITS:
@@ -43,16 +43,16 @@ if __name__ == "__main__":
             model.add(Dense(HL_UNITS[3], activation=af1))
             model.add(Dense(1, activation=af2))
             model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-            # start_time = time.time()
+            start_time = time.time()
             history += [model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))]
-            # training_time = time.time() - start_time
-            # durations += [training_time]
+            training_time = time.time() - start_time
+            durations += [training_time]
             loss, accuracy = model.evaluate(x_test, y_test)
             # acc += [accuracy]
             print("** %s & %s **" % (af1, af2))
             print("Model Loss: %.2f." % loss)
             print("Model Accuracy: %.2f%%." % (accuracy * 100))
-            # print("Training time: %d", training_time)
+            print("Training time: %.0fs." % training_time)
         HIST += [history]
 
 
@@ -98,19 +98,21 @@ if __name__ == "__main__":
     # plt.savefig("plots/ex2/lab3_2_keras_hlu_model_accuracy.png")
 
     # Plot time over HL units/activation function
-    # plt.clf()
+    plt.clf()
 
     # plt.plot(HL_UNITS, durations)
     # plt.xlabel("Neurons in hidden layer")
 
-    # NP_ACTIVATION = np.array(ACTIVATION_FUN)
-    # models = np.transpose([np.tile(NP_ACTIVATION, len(NP_ACTIVATION)), np.repeat(NP_ACTIVATION, len(NP_ACTIVATION))])
-    # plt.plot(models, durations, 'o')
-    # plt.xlabel("Activation function")
+    NP_ACTIVATION = np.array(ACTIVATION_FUN)
+    models = np.transpose([np.repeat(NP_ACTIVATION, len(NP_ACTIVATION)), np.tile(NP_ACTIVATION, len(NP_ACTIVATION))])
+    models = [model[0] + " & " + model[1] for model in models] 
+    plt.figure(figsize=(15, 6))
+    plt.plot(models, durations, 'o')
+    plt.xlabel("Activation function")
 
-    # plt.ylabel("Duration")
-    # plt.legend()
+    plt.ylabel("Duration")
+    plt.legend()
     # plt.title("Duration over number of neurons in hidden layer")
     # plt.savefig("plots/ex2/lab3_2_keras_hlu_duration.png")
-    # plt.title("Duration over Activation functions")
-    # plt.savefig("plots/ex2/lab3_2_keras_af_duration.png")
+    plt.title("Duration over Activation functions")
+    plt.savefig("plots/ex2/lab3_2_keras_af_duration.png")
