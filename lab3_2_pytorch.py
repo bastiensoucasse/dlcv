@@ -121,7 +121,6 @@ if __name__ == "__main__":
 
     # Plot the loss history.
     plt.clf()
-    plt.xscale("log")
     plt.plot(HL_UNITS, np.array(scores)[:, 0])
     plt.xlabel("HL Units")
     plt.ylabel("Loss")
@@ -130,7 +129,6 @@ if __name__ == "__main__":
 
     # Plot the accuracy history.
     plt.clf()
-    plt.xscale("log")
     plt.plot(HL_UNITS, np.array(scores)[:, 1])
     plt.xlabel("HL Units")
     plt.ylabel("Accuracy")
@@ -139,7 +137,6 @@ if __name__ == "__main__":
 
     # Plot the duration history.
     plt.clf()
-    plt.xscale("log")
     plt.plot(HL_UNITS, durations)
     plt.xlabel("HL Units")
     plt.ylabel("Duration")

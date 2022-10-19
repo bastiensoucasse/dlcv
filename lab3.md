@@ -79,30 +79,33 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### 2.4. Different activation functions
 
-<!-- TODO: ALL RESULTS IN THIS SECTION ARE WEIRD -->
-
-
 **N.B.:** We won't try softmax on last layer because it's only relevant on multiclass classification.
 
-|  Type  | HL Units |   Activations    | Optimizer | Loss  | Accuracy |   Time   |
+<!-- |  Type  | HL Units |   Activations    | Optimizer | Loss  | Accuracy |   Time   |
 | :----: | :------: | :--------------: | :-------: | :---: | :------: | :------: |
 | Binary |   64     |    relu, relu    |   Adam    |  0.07 |  99.52%  |  XX.XXs  |
-
-<img src="plots/ex2/lab3_2_keras_relu_loss.png" alt="plots/lab3_2_keras_relu_loss.png" height="240" />
-<img src="plots/ex2/lab3_2_keras_relu_accuracy.png" alt="plots/lab3_2_keras_relu_accuracy.png" height="240" />
-
-<!-- real loss: 0.0705 -->
-…
+| :----: | :------: | :--------------: | :-------: | :---: | :------: | :------: |
+| Binary |   64     |    tanh, tanh    |   Adam    | 0.02  |  99.73%  |  XX.XXs  | -->
 
 |  Type  | HL Units |   Activations    | Optimizer | Loss  | Accuracy |   Time   |
 | :----: | :------: | :--------------: | :-------: | :---: | :------: | :------: |
-| Binary |   64     |    tanh, tanh    |   Adam    | 0.02  |  99.73%  |  XX.XXs  |
+| Binary |   64     |   sigmoid, relu  |   Adam    |  1.51 |  90.20%  |  XX.XXs  |
+| Binary |   64     |   sigmoid, tanh  |   Adam    |  0.02 |  99.68%  |  XX.XXs  |
+| Binary |   64     |   relu, sigmoid  |   Adam    |  0.02 |  99.81%  |  XX.XXs  |
+| Binary |   64     |   relu, relu     |   Adam    |  1.51 |  90.20%  |  XX.XXs  |
+| Binary |   64     |   relu, tanh     |   Adam    |  1.51 |  90.20%  |  XX.XXs  |
+| Binary |   64     |   tanh, sigmoid  |   Adam    |  0.02 |  99.81%  |  XX.XXs  |
+| Binary |   64     |   tanh, relu     |   Adam    |  1.51 |  90.20%  |  XX.XXs  |
+| Binary |   64     |   tanh, tanh     |   Adam    |  0.03 |  99.58%  |  XX.XXs  |
 
-<img src="plots/ex2/lab3_2_keras_tanh_loss.png" alt="plots/lab3_2_keras_tanh_loss.png" height="240" />
-<img src="plots/ex2/lab3_2_keras_tanh_accuracy.png" alt="plots/lab3_2_keras_tanh_accuracy.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_af0_loss.png" alt="plots/lab3_2_keras_af0_loss.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_af1_loss.png" alt="plots/lab3_2_keras_af1_loss.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_af2_loss.png" alt="plots/lab3_2_keras_af2_loss.png" height="240" />
 
-<!-- real loss: 0.0182 -->
-…
+<img src="plots/ex2/lab3_2_keras_af0_accuracy.png" alt="plots/lab3_2_keras_af0_accuracy.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_af1_accuracy.png" alt="plots/lab3_2_keras_af1_accuracy.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_af2_accuracy.png" alt="plots/lab3_2_keras_af2_accuracy.png" height="240" />
+
 
 ## 3. Multiclass Neural Networks
 
@@ -131,8 +134,8 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ## 4. Best Network
 
-<!-- TODO or not -->
+<!-- TODO (or not) -->
 
 ### Summary table
 
-<!-- TODO -->
+

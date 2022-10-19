@@ -22,17 +22,23 @@ if __name__ == "__main__":
     # Train Model
     history = []
 
+    # durations = []
+
     # TODO: Add inputshape
     for opt in OPTIMIZERS:
         model = Sequential()
         model.add(Dense(64, activation="sigmoid"))
         model.add(Dense(10, activation="softmax"))
         model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
+        # start_time = time.time()
         history += [model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))]
+        # training_time = time.time() - start_time
+        # durations += [training_time]
         loss, accuracy = model.evaluate(x_test, y_test)
         print("** %s **" % opt)
         print("Model Loss: %.2f." % loss)
         print("Model Accuracy: %.2f%%." % (accuracy * 100))
+        # print("Training time: %d", training_time)
 
     # Plot Loss
     plt.clf()
@@ -55,3 +61,12 @@ if __name__ == "__main__":
     plt.legend()
     plt.title("Training accuracy over Epoch")
     plt.savefig("plots/lab3_3_keras_opt_accuracy.png")
+
+    # Plot time over optimizers
+    # plt.clf()
+    # plt.plot(OPTIMIZERS, durations, 'o')
+    # plt.xlabel("Optimizer")
+    # plt.ylabel("Duration")
+    # plt.legend()
+    # plt.title("Duration over Optimizer")
+    # plt.savefig("plots/ex2/lab3_2_keras_opt_duration.png")
