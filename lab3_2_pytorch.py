@@ -133,7 +133,8 @@ if __name__ == "__main__":
     # Plot Training Loss Over Epoch
     plt.clf()
     for i in range(NB_HLU):
-        plt.plot(np.array(hists)[i, :, 0])
+        plt.plot(np.array(hists)[i, :, 0], label=f"{HL_UNITS[i]} units")
+    plt.legend()
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.title("Loss over Epoch")
@@ -142,7 +143,8 @@ if __name__ == "__main__":
     # Plot Training Accuracy Over Epoch
     plt.clf()
     for i in range(NB_HLU):
-        plt.plot(np.array(hists)[i, :, 1])
+        plt.plot(np.array(hists)[i, :, 1], label=f"{HL_UNITS[i]} units")
+    plt.legend()
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
     plt.title("Accuracy over Epoch")
