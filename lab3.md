@@ -44,7 +44,6 @@ We can see that smaller batch sizes give better results but take much longer. A 
 <img src="plots/ex2/lab3_2_keras_64u_loss.png" alt="plots/lab3_2_keras_64u_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_64u_accuracy.png" alt="plots/lab3_2_keras_64u_accuracy.png" height="240" />
 
-<!-- real loss: 0.0185 -->
 …
 
 ### 2.3. Different numbers of neurons on hidden layer
@@ -59,43 +58,19 @@ We can see that smaller batch sizes give better results but take much longer. A 
 <img src="plots/ex2/lab3_2_keras_hlu_loss.png" alt="plots/lab3_2_keras_hlu_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_hlu_accuracy.png" alt="plots/lab3_2_keras_hlu_accuracy.png" height="240" />
 
-
-**32 neurons**
-
-<!-- real loss: 0.0167 -->
-We get the same loss and accuracy than with 64 neurons. But is it faster ? To determine... 
-Either way, let's try with 16 neurons to see if the performances are still ok.
-
-**16 neurons**
-
-<!-- real loss: 0.0176 -->
-Again, we get really close results on loss and accuracy. We could try even less neurons out of curiosity.
-
-**8 neurons**
-
-<!-- real loss: 0.0171 -->
-This time, the accuracy decreased a little bit more, more precisely by about 0.10%. However, the accuracy is still pretty high.
-
-**128 neurons**
-
-Since the accuracy is already very high, it would be overkilled to add more neurons to the hidden layer, at least for this model. Indeed, it would take more time (I guess ?), just to get just results that are just as good.
+<img src="plots/ex2/lab3_2_keras_hlu_model_accuracy.png" alt="plots/lab3_2_keras_hlu_model_accuracy.png" height="240" />
+<img src="plots/ex2/lab3_2_keras_hlu_duration.png" alt="plots/lab3_2_keras_hlu_duration.png" height="240" />
 
 
-<!-- real loss: 0.0165 -->
+**128 neurons**: Since the accuracy is already very high, it would be overkilled to add more neurons to the hidden layer, at least for this model. Indeed, it would take more time (I guess ?), just to get just results that are just as good.
+
 That's the highest accuracy we got, but it's not significantly higher for us to say this model is the best one.
 
-<!-- Maybe put this in the summary part ? -->
-**Conclusion:** For this model, the number of neurons in the hidden layer is not a significant hyperparameter. As a consequence, we may chose the one that
+**Conclusion:** For this model, the number of neurons in the hidden layer is not a significant hyperparameter. As a consequence, we may chose the one that takes less time.
 
 ### 2.4. Different activation functions
 
 **N.B.:** We won't try softmax on last layer because it's only relevant on multiclass classification.
-
-|  <!--  |   Type   |     HL Units     | Activations | Optimizer |   Loss   | Accuracy | Time |
-| :----: | :------: | :--------------: | :---------: | :-------: | :------: | :------: |
-| Binary |    64    |    relu, relu    |    Adam     |   0.07    |  99.52%  |  XX.XXs  |
-| :----: | :------: | :--------------: |  :-------:  |   :---:   | :------: | :------: |
-| Binary |    64    |    tanh, tanh    |    Adam     |   0.02    |  99.73%  |  XX.XXs  | -->  |
 
 |  Type  | HL Units |  Activations  | Optimizer | Loss  | Accuracy |  Time  |
 | :----: | :------: | :-----------: | :-------: | :---: | :------: | :----: |
@@ -115,6 +90,10 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 <img src="plots/ex2/lab3_2_keras_af0_accuracy.png" alt="plots/lab3_2_keras_af0_accuracy.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_af1_accuracy.png" alt="plots/lab3_2_keras_af1_accuracy.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_af2_accuracy.png" alt="plots/lab3_2_keras_af2_accuracy.png" height="240" />
+
+<img src="plots/ex2/lab3_2_keras_af_duration.png" alt="plots/lab3_2_keras_af_duration.png" height="240" />
+
+…
 
 
 ## 3. Multiclass Neural Networks
