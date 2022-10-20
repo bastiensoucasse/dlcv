@@ -152,7 +152,7 @@ After all the tests done in the previous section, let's gather the best hyperpar
 
 | Batch Size | HL Units |   Activations    | Optimizer |  Loss  | Accuracy |  Time   |
 | :--------: | :------: | :--------------: | :-------: | :----: | :------: | :-----: |
-|     32     |    128   | Sigmoid, Softmax |  RMSProp  | X.XXXX |  XX.XX%  | XXX.XXs |
+|     32     |   128    | Sigmoid, Softmax |  RMSProp  | X.XXXX |  XX.XX%  | XXX.XXs |
 
 
 <br><br>
@@ -209,17 +209,17 @@ After all the tests done in the previous section, let's gather the best hyperpar
 
 #### Activation Functions (AF)
 
-|   Activations    | Loss  | Accuracy | Time  |
-| :--------------: | :---: | :------: | :---: |
-| Sigmoid, Sigmoid | X.XX  |  XX.XX%  | XXXs  |
-|  Sigmoid, ReLU   | X.XX  |  XX.XX%  | XXXs  |
-|  Sigmoid, Tanh   | X.XX  |  XX.XX%  | XXXs  |
-|  ReLU, Sigmoid   | X.XX  |  XX.XX%  | XXXs  |
-|    ReLU, ReLU    | X.XX  |  XX.XX%  | XXXs  |
-|    ReLU, Tanh    | X.XX  |  XX.XX%  | XXXs  |
-|  Tanh, Sigmoid   | X.XX  |  XX.XX%  | XXXs  |
-|    Tanh, ReLU    | X.XX  |  XX.XX%  | XXXs  |
-|    Tanh, Tanh    | X.XX  |  XX.XX%  | XXXs  |
+|   Activations    |  Loss  | Accuracy |  Time   |
+| :--------------: | :----: | :------: | :-----: |
+| Sigmoid, Sigmoid | 0.6931 |  90.96%  | 98.03s  |
+|  Sigmoid, ReLU   | 0.6931 |  90.96%  | 99.16s  |
+|  Sigmoid, Tanh   | 0.3141 |  99.92%  | 99.76s  |
+|  ReLU, Sigmoid   | 0.6595 |  99.85%  | 100.56s |
+|    ReLU, ReLU    | 0.6931 |  90.96%  | 101.15s |
+|    ReLU, Tanh    | 0.3145 |  99.90%  | 100.69s |
+|  Tanh, Sigmoid   | 0.6592 |  99.91%  | 100.64s |
+|    Tanh, ReLU    | 0.6931 |  90.96%  | 100.78s |
+|    Tanh, Tanh    | 0.3140 |  99.92%  | 102.01s |
 
 <br><br>
 
