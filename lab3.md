@@ -102,9 +102,9 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### 3.2. Default Network
 
-| Optimizer |   Activations    |  Loss  | Accuracy |  Time  |
-| :-------: | :--------------: | :----: | :------: | :----: |
-|   Adam    | Sigmoid, Softmax | 0.1117 |  97.31%  | XX.XXs |
+| Optimizer |   Activations    |  Loss  | Accuracy |  Time   |
+| :-------: | :--------------: | :----: | :------: | :-----: |
+|   Adam    | Sigmoid, Softmax | 0.1117 |  97.31%  | 516.73s |
 
 <img src="plots/ex3/lab3_3_keras_adam_loss.png" alt="plots/lab3_3_keras_adam_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_adam_accuracy.png" alt="plots/lab3_3_keras_adam_accuracy.png" height="240" />
@@ -113,11 +113,11 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### 3.3. Different optimizers
 
-| Optimizer |  Loss  | Accuracy |  Time  |
-| :-------: | :----: | :------: | :----: |
-|   Adam    | 0.1117 |  97.31%  | XX.XXs |
-|  RMSprop  | 0.1087 |  97.46%  | XX.XXs |
-|    SGD    | 0.1971 |  94.21%  | XX.XXs |
+| Optimizer |  Loss  | Accuracy |  Time   |
+| :-------: | :----: | :------: | :-----: |
+|   Adam    | 0.1117 |  97.31%  | 516.73s |
+|  RMSprop  | 0.1087 |  97.46%  | 560.40s |
+|    SGD    | 0.1971 |  94.21%  | 485.83s |
 
 <img src="plots/ex3/lab3_3_keras_opt_loss.png" alt="plots/lab3_3_keras_opt_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_opt_accuracy.png" alt="plots/lab3_3_opt_sgd_accuracy.png" height="240" />
