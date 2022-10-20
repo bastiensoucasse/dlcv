@@ -19,7 +19,7 @@ ACTIVATION_FUN = ["sigmoid", "relu", "tanh"]
 NB_AF = len(ACTIVATION_FUN)
 
 class NeuralNetwork(nn.Module):
-    def getAF(af):
+    def getAF(self, af):
         if af == "sigmoid":
             return nn.Sigmoid()
         elif af == "relu":
@@ -151,7 +151,7 @@ if __name__ == "__main__":
             print(f"SUMMARY FOR ACTIVATION FUNCTIONS {af1, af2}:\n    - Training Time: {training_time:.2f}s\n    - Loss: {model_loss:.4f}\n    - Accuracy: {model_accuracy:.4f}")
         HIST += [hists]
 
-    # Plot Training Loss Over Epoch
+    # Plot Training Loss Over Epoch.
     # plt.clf()
     # for i in range(NB_HLU):
     #     plt.plot(np.array(hists)[i, :, 0], label=f"{HL_UNITS[i]} units")
@@ -160,8 +160,7 @@ if __name__ == "__main__":
     for i in range(NB_AF):
         plt.clf()
         for j in range(NB_AF):
-            # TODO: plt.plot(np.array(hists)[i, :, 0], label=f"{HL_UNITS[i]} units") 
-            ntm = i
+            plt.plot(np.array(HIST[i])[j, :, 0], label=(ACTIVATION_FUN[i] + " & " + ACTIVATION_FUN[j]))  
         plt.legend()
         plt.xlabel("Epoch")
         plt.ylabel("Loss")
@@ -169,7 +168,7 @@ if __name__ == "__main__":
         plt.savefig("plots/ex2/pytorch/af/loss_over_epoch.png")
             
 
-    # Plot Training Accuracy Over Epoch
+    # Plot Training Accuracy Over Epoch.
     # plt.clf()
     # for i in range(NB_HLU):
     #     plt.plot(np.array(hists)[i, :, 1], label=f"{HL_UNITS[i]} units")
@@ -178,15 +177,14 @@ if __name__ == "__main__":
     for i in range(NB_AF):
         plt.clf()
         for j in range(NB_AF):
-            # TODO: plt.plot(np.array(hists)[i, :, 1], label=f"{HL_UNITS[i]} units")
-            ntm = i
+            plt.plot(np.array(HIST[i])[j, :, 1], label=(ACTIVATION_FUN[i] + " & " + ACTIVATION_FUN[j]))
     plt.legend()
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
     plt.title("Training accuracy over Epoch")
     plt.savefig("plots/ex2/pytorch/af/accuracy_over_epoch.png")
     
-    # Plot Evaluation Loss Over HLU
+    # Plot Evaluation Loss Over HLU.
     # plt.clf()
     # plt.plot(HL_UNITS, np.array(scores)[:, 0])
     # plt.xlabel("HL Units")
@@ -203,7 +201,7 @@ if __name__ == "__main__":
     # plt.title("Accuracy over HL Units")
     # plt.savefig("plots/ex2/pytorch/hlu/accuracy_over_hlu.png")
 
-    # Plot Training Time 
+    # Plot Training Time...
     # ... over HLU
     # plt.clf()
     # plt.plot(HL_UNITS, durations)
