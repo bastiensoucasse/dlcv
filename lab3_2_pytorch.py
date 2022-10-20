@@ -193,7 +193,7 @@ if __name__ == "__main__":
     # plt.savefig("plots/ex2/pytorch/hlu/loss_over_hlu.png")
 
     # Plot Evaluation Accuracy...
-    # ... over HLU
+    # ... over HLU.
     # plt.clf()
     # plt.plot(HL_UNITS, np.array(scores)[:, 1])
     # plt.xlabel("HL Units")
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     # plt.savefig("plots/ex2/pytorch/hlu/accuracy_over_hlu.png")
 
     # Plot Training Time...
-    # ... over HLU
+    # ... over HLU.
     # plt.clf()
     # plt.plot(HL_UNITS, durations)
     # plt.xlabel("HL Units")
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     # plt.title("Training Time over HL Units")
     # plt.savefig("plots/ex2/pytorch/hlu/training_time_over_hlu.png")
 
-    # ... over AF
+    # ... over AF.
     plt.clf()
     NP_ACTIVATION = np.array(ACTIVATION_FUN)
     models = np.transpose([np.repeat(NP_ACTIVATION, len(NP_ACTIVATION)), np.tile(NP_ACTIVATION, len(NP_ACTIVATION))])

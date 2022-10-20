@@ -104,7 +104,7 @@ if __name__ == "__main__":
     # plt.savefig("plots/ex2/lab3_2_keras_hlu_model_accuracy.png")
 
     # Plot Training time...
-    #  ...over HL units
+    #  ...over HL units.
     # plt.clf()
     # plt.plot(HL_UNITS, durations)
     # plt.xlabel("Neurons in hidden layer")
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     # plt.title("Duration over number of neurons in hidden layer")
     # plt.savefig("plots/ex2/lab3_2_keras_hlu_duration.png")
 
-    # ...over Activation Function
+    # ...over Activation Function.
     plt.clf()
     NP_ACTIVATION = np.array(ACTIVATION_FUN)
     models = np.transpose([np.repeat(NP_ACTIVATION, len(NP_ACTIVATION)), np.tile(NP_ACTIVATION, len(NP_ACTIVATION))])
