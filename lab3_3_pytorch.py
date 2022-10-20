@@ -133,7 +133,7 @@ if __name__ == "__main__":
         # Display the summary.
         print(f"SUMMARY FOR OPTIMIZER \"{opt}\":\n    - Training Time: {training_time:.2f}s\n    - Loss: {model_loss:.4f}\n    - Accuracy: {model_accuracy:.4f}")
 
-    # Plot Training Loss Over Epoch
+    # Plot Training Loss Over Epoch.
     plt.clf()
     for i in range(NB_OPT):
         plt.plot(np.array(hists)[i, :, 0], label=f"{OPTIMIZERS[i]} Optimizer")
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     plt.title("Loss over Epoch")
     plt.savefig("plots/ex3/pytorch/loss_over_epoch.png")
 
-    # Plot Training Accuracy Over Epoch
+    # Plot Training Accuracy Over Epoch.
     plt.clf()
     for i in range(NB_OPT):
         plt.plot(np.array(hists)[i, :, 1], label=f"{OPTIMIZERS[i]} Optimizer")
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     plt.title("Accuracy over Epoch")
     plt.savefig("plots/ex3/pytorch/accuracy_over_epoch.png")
 
-    # Plot Evaluation Loss Over OPT
+    # Plot Evaluation Loss Over OPT.
     plt.clf()
     plt.plot(OPTIMIZERS, np.array(scores)[:, 0], 'o')
     plt.xlabel("Optimizer")
@@ -161,7 +161,7 @@ if __name__ == "__main__":
     plt.title("Loss over Optimizer")
     plt.savefig("plots/ex3/pytorch/loss_over_opt.png")
 
-    # Plot Evaluation Accuracy Over OPT
+    # Plot Evaluation Accuracy Over OPT.
     plt.clf()
     plt.plot(OPTIMIZERS, np.array(scores)[:, 1], 'o')
     plt.xlabel("Optimizer")
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     plt.title("Accuracy over Optimizer")
     plt.savefig("plots/ex3/pytorch/accuracy_over_opt.png")
 
-    # Plot Training Time Over OPT
+    # Plot Training Time Over OPT.
     plt.clf()
     plt.plot(OPTIMIZERS, durations, 'o')
     plt.xlabel("Optimizer")

@@ -52,7 +52,7 @@ if __name__ == "__main__":
         # Display the summary.
         print(f"SUMMARY FOR BATCH SIZE {bs}:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
 
-    # Plot Training Loss Over Epoch
+    # Plot Training Loss Over Epoch.
     plt.clf()
     for i in range(NB_BS):
         plt.plot(hists[i].history["loss"], label=f"Batch Size: {BATCH_SIZES[i]}")
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     plt.title("Loss over Epoch")
     plt.savefig("plots/ex1/keras/loss_over_epoch.png")
 
-    # Plot Training Accuracy Over Epoch
+    # Plot Training Accuracy Over Epoch.
     plt.clf()
     for i in range(NB_BS):
         plt.plot(hists[i].history["accuracy"], label=f"Batch Size: {BATCH_SIZES[i]}")
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     plt.title("Accuracy over Epoch")
     plt.savefig("plots/ex1/keras/accuracy_over_epoch.png")
 
-    # Plot Evaluation Loss Over BS
+    # Plot Evaluation Loss Over BS.
     plt.clf()
     plt.plot(BATCH_SIZES, np.array(scores)[:, 0])
     plt.xlabel("Batch Size")
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     plt.title("Loss over Batch Size")
     plt.savefig("plots/ex1/keras/loss_over_bs.png")
 
-    # Plot Evaluation Accuracy Over BS
+    # Plot Evaluation Accuracy Over BS.
     plt.clf()
     plt.plot(BATCH_SIZES, np.array(scores)[:, 1])
     plt.xlabel("Batch Size")
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     plt.title("Accuracy over Batch Size")
     plt.savefig("plots/ex1/keras/accuracy_over_bs.png")
 
-    # Plot Training Time Over BS
+    # Plot Training Time Over BS.
     plt.clf()
     plt.plot(BATCH_SIZES, durations)
     plt.xlabel("Batch Size")
