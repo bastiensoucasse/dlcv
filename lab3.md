@@ -72,7 +72,7 @@ This first model provides more than acceptable results, with a 99.77% accuracy. 
 <img src="plots/ex2/lab3_2_keras_hlu_model_accuracy.png" alt="plots/lab3_2_keras_hlu_model_accuracy.png" height="240" />
 <img src="plots/ex2/keras/hlu/training_time_over_hlu.png" height="240" />
 
-Looking at the accuracy plot, it appears that the more neurons on hidden layer, the better the model. But actually, the other plots and the table shows that the results are fairly similar, whether on loss, accuracy or time.
+Looking at the model accuracy plot (third figure), it appears that the more neurons on hidden layer, the better the model. But actually, the other plots and the table shows that the results are fairly similar, whether on loss, accuracy or time.
 
 Indeed, the 128-unit model gives the highest accuracy, but it's not significantly higher than the other ones for us to say this model is THE best one.
 
