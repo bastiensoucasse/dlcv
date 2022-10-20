@@ -24,12 +24,11 @@ if __name__ == "__main__":
     history = []
     durations = []
 
-    # TODO: Add inputshape
     for opt in OPTIMIZERS:
 
         # Define the model and its parameters, train it, and evaluate it.
         model = Sequential()
-        model.add(Dense(64, activation="sigmoid"))
+        model.add(Dense(64, activation="sigmoid", input_shape=(x_test.shape[1],)))
         model.add(Dense(10, activation="softmax"))
         model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
         start_time = time.time()
@@ -53,7 +52,7 @@ if __name__ == "__main__":
     plt.ylabel("Loss")
     plt.legend()
     plt.title("Training loss over Epoch")
-    plt.savefig("plots/lab3_3_keras_opt_loss.png")
+    plt.savefig("plots/ex3/lab3_3_keras_opt_loss.png")
 
     # Plot Training Accuracy Over Epoch.
     plt.clf()
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     plt.ylabel("Accuracy")
     plt.legend()
     plt.title("Training accuracy over Epoch")
-    plt.savefig("plots/lab3_3_keras_opt_accuracy.png")
+    plt.savefig("plots/ex3/lab3_3_keras_opt_accuracy.png")
 
     # Plot Training time over Optimizers.
     plt.clf()
@@ -73,4 +72,4 @@ if __name__ == "__main__":
     plt.ylabel("Duration")
     plt.legend()
     plt.title("Duration over Optimizer")
-    plt.savefig("plots/ex2/lab3_2_keras_opt_duration.png")
+    plt.savefig("plots/ex3/lab3_3_keras_opt_duration.png")

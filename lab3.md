@@ -13,6 +13,8 @@
 
 After 40 epochs, the loss and accuracy tends to stabilize and going further wouldn't be useful.
 
+<br>
+
 ### 1.3. Different Batch Sizes
 
 | Batch Size |  Loss  | Accuracy |  Time   |
@@ -33,7 +35,11 @@ After 40 epochs, the loss and accuracy tends to stabilize and going further woul
 <img src="plots/ex1/keras/accuracy_over_bs.png" height="240" />
 <img src="plots/ex1/keras/training_time_over_bs.png" height="240" />
 
-We can see that smaller batch sizes give better results but take much longer. A good compromise would be around 32, as the results are nearly the same as smaller values, but the execution time remains acceptable. We will keep this one for our next models.
+We can see that smaller batch sizes give better results but take much longer. A good compromise would be around 32, as the results are nearly the same as smaller values, but the execution time remains acceptable. 
+
+**Conclusion**: We will keep the 32 one for our next models.
+
+<br><br>
 
 ## 2. A Neural Network with One Hidden Layer
 
@@ -47,6 +53,8 @@ We can see that smaller batch sizes give better results but take much longer. A 
 <img src="plots/ex2/lab3_2_keras_64u_accuracy.png" alt="plots/lab3_2_keras_64u_accuracy.png" height="240" />
 
 This first model provides more than acceptable results, with a 99.77% accuracy. Let's see how the number of neurons on the hidden layer, and the activation functions, affect its performance.
+
+<br>
 
 ### 2.3. Different numbers of neurons on hidden layer
 
@@ -69,6 +77,8 @@ Looking at the accuracy plot, it appears that the more neurons on hidden layer, 
 Indeed, the 128-unit model gives the highest accuracy, but it's not significantly higher than the other ones for us to say this model is THE best one.
 
 **Conclusion:** For this model, the number of neurons in the hidden layer is not a significant hyperparameter. As a consequence, we may choose the one that gives the best accuracy (here the 128-unit one) since they all take a similar amount of time.
+
+<br>
 
 ### 2.4. Different activation functions
 
@@ -100,6 +110,8 @@ This time, we observe 2 categories. On one hand, models with an accuracy around 
 
 **Conclusion:** A configuration that always gives good performances is the (sigmoid, sigmoid) one, that's why we should choose it, out of "security".
 
+<br><br>
+
 ## 3. Multiclass Neural Networks
 
 ### 3.2. Default Network
@@ -113,6 +125,8 @@ This time, we observe 2 categories. On one hand, models with an accuracy around 
 
 This first multiclass model provides very good results, with a 97.31% accuracy. Let's see how the different optimizers affect its performance.
 
+<br>
+
 ### 3.3. Different optimizers
 
 | Optimizer |  Loss  | Accuracy |  Time   |
@@ -123,11 +137,14 @@ This first multiclass model provides very good results, with a 97.31% accuracy. 
 
 <img src="plots/ex3/lab3_3_keras_opt_loss.png" alt="plots/lab3_3_keras_opt_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_opt_accuracy.png" alt="plots/lab3_3_opt_accuracy.png" height="240" />
+
 <img src="plots/ex3/lab3_3_keras_opt_duration.png" alt="plots/lab3_3_opt_duration.png" height="240" />
 
-It is obvious that the SGD optimizer is beaten by the two others, in accuracy and time. Even though Adam and RMSProp have similar and high accuracies, RMSProp is about one minute shorter.
+It is obvious that the SGD optimizer is beaten by the two others, in accuracy and time. Even though Adam and RMSProp have similar and high accuracies, RMSProp is about one minute shorter, which makes RMSProp the best one.
 
 **Conclusion**: RMSProp is the best optimizer out of the three optimizers tested.
+
+<br><br>
 
 ## 4. Best Network
 
@@ -137,7 +154,8 @@ After all the tests done in the previous section, let's gather the best hyperpar
 | :--------: | :------: | :--------------: | :-------: | :----: | :------: | :-----: |
 |     32     |    128   | Sigmoid, Softmax |  RMSProp  | X.XXXX |  XX.XX%  | XXX.XXs |
 
-### Summary table
+
+<br><br>
 
 ## PyTorch
 
@@ -158,10 +176,13 @@ After all the tests done in the previous section, let's gather the best hyperpar
 <!-- <img src="plots/ex1/pytorch/loss_over_bs.png" height="240" /> -->
 <img src="plots/ex1/pytorch/loss_over_epoch.png" height="240" />
 <img src="plots/ex1/pytorch/accuracy_over_epoch.png" height="240" />
+
 <img src="plots/ex1/pytorch/accuracy_over_bs.png" height="240" />
 <img src="plots/ex1/pytorch/training_time_over_bs.png" height="240" />
 
-As we have seen before, the smaller the batch size, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, a batch size of 32 still seems the better option.
+<!-- As we have seen before, the smaller the batch size, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, a batch size of 32 still seems the better option. -->
+
+<br><br>
 
 ### Binary Classification: Hidden Layer
 
@@ -178,14 +199,29 @@ As we have seen before, the smaller the batch size, the better the accuracy. But
 <img src="plots/ex2/pytorch/hlu/loss_over_epoch.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/accuracy_over_epoch.png" height="240" />
 <!-- <img src="plots/ex2/pytorch/hlu/loss_over_hlu.png" height="240" /> -->
+
 <img src="plots/ex2/pytorch/hlu/accuracy_over_hlu.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/training_time_over_hlu.png" height="240" />
 
-As expected, the more HLU, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, 64 units still seems the better option.
+<!-- As expected, the more HLU, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, 64 units still seems the better option. -->
+
+<br>
 
 #### Activation Functions (AF)
 
-<!-- TODO -->
+|   Activations    | Loss  | Accuracy | Time  |
+| :--------------: | :---: | :------: | :---: |
+| Sigmoid, Sigmoid | X.XX  |  XX.XX%  | XXXs  |
+|  Sigmoid, ReLU   | X.XX  |  XX.XX%  | XXXs  |
+|  Sigmoid, Tanh   | X.XX  |  XX.XX%  | XXXs  |
+|  ReLU, Sigmoid   | X.XX  |  XX.XX%  | XXXs  |
+|    ReLU, ReLU    | X.XX  |  XX.XX%  | XXXs  |
+|    ReLU, Tanh    | X.XX  |  XX.XX%  | XXXs  |
+|  Tanh, Sigmoid   | X.XX  |  XX.XX%  | XXXs  |
+|    Tanh, ReLU    | X.XX  |  XX.XX%  | XXXs  |
+|    Tanh, Tanh    | X.XX  |  XX.XX%  | XXXs  |
+
+<br><br>
 
 ### Multiclass Classification
 
@@ -199,6 +235,7 @@ As expected, the more HLU, the better the accuracy. But the training time is als
 <img src="plots/ex3/pytorch/accuracy_over_epoch.png" height="240" />
 <!-- <img src="plots/ex3/pytorch/loss_over_opt.png" height="240" /> -->
 <!-- <img src="plots/ex3/pytorch/accuracy_over_opt.png" height="240" /> -->
+
 <img src="plots/ex3/pytorch/training_time_over_opt.png" height="240" />
 
-We can notice that the SGD optimizer doesn't give results as good as the other two on this dataset. Adam and RMSprop are both giving the same results.
+<!-- We can notice that the SGD optimizer doesn't give results as good as the other two on this dataset. Adam and RMSprop are both giving the same results. -->

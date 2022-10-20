@@ -31,9 +31,8 @@ if __name__ == "__main__":
     HIST = []
     durations = []
     
-    # TODO: Add inputshape
     # for hlu in HL_UNITS:
-    #   model.add(Dense(hlu, activation=ACTIVATION_FUN[0]))
+    #   model.add(Dense(hlu, activation=ACTIVATION_FUN[0], input_shape=(x_test.shape[1],)))
     #   model.add(Dense(1, activation=ACTIVATION_FUN[0]))
     for af1 in ACTIVATION_FUN:
         history = []
@@ -41,7 +40,7 @@ if __name__ == "__main__":
 
             # Define the model and its parameters, train it, and evaluate it.
             model = Sequential()
-            model.add(Dense(HL_UNITS[3], activation=af1))
+            model.add(Dense(HL_UNITS[3], activation=af1, input_shape=(x_test.shape[1],)))
             model.add(Dense(1, activation=af2))
             model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
             start_time = time.time()

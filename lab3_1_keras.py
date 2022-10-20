@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
         # Define the model and its parameters, train it, and evaluate it.
         model = Sequential()
-        model.add(Dense(1, activation="sigmoid"))
+        model.add(Dense(1, activation="sigmoid", input_shape=(x_test.shape[1],)))
         model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
         start_time = time.time()
         history = model.fit(x_train, y_train, batch_size=bs, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
