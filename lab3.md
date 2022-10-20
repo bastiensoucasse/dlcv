@@ -4,32 +4,34 @@
 
 ### 1.2. Default Batch Size
 
-|  Type  | Batch Size | Activation | Optimizer | Loss  | Accuracy |  Time  |
-| :----: | :--------: | :--------: | :-------: | :---: | :------: | :----: |
-| Binary |     32     |  Sigmoid   |   Adam    | 0.03  |  99.15%  | XX.XXs |
+| Batch Size | Activation | Optimizer |  Loss  | Accuracy |  Time   |
+| :--------: | :--------: | :-------: | :----: | :------: | :-----: |
+|     32     |  Sigmoid   |   Adam    | 0.0232 |  99.31%  | 465.82s |
 
-<img src="plots/ex1/lab3_1_keras_bs32_loss.png" alt="plots/lab3_1_keras_bs32_loss.png" height="240" />
-<img src="plots/ex1/lab3_1_keras_bs32_accuracy.png" alt="plots/lab3_1_keras_bs32_accuracy.png" height="240" />
+<img src="plots/ex1/keras/default_loss_over_epoch.png" height="240" />
+<img src="plots/ex1/keras/default_accuracy_over_epoch.png" height="240" />
 
 After 40 epochs, the loss and accuracy tends to stabilize and going further wouldn't be useful.
 
 ### 1.3. Different Batch Sizes
 
- |  Type  | Batch Size | Activation | Optimizer | Loss  | Accuracy |  Time  |
- | :----: | :--------: | :--------: | :-------: | :---: | :------: | :----: |
- | Binary |   60000    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |    2048    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |    1024    |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |    512     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |    256     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |    128     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |     64     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |     32     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
- | Binary |     16     |  Sigmoid   |   Adam    | X.XX  |  XX.XX%  | XX.XXs |
+| Batch Size |  Loss  | Accuracy |  Time   |
+| :--------: | :----: | :------: | :-----: |
+|   60000    | 0.3035 |  90.20%  |  4.38s  |
+|    2048    | 0.0333 |  99.08%  | 11.50s  |
+|    1024    | 0.0244 |  99.25%  | 18.89s  |
+|    512     | 0.0222 |  99.25%  | 33.66s  |
+|    256     | 0.0214 |  99.30%  | 64.63s  |
+|    128     | 0.0227 |  99.24%  | 147.17s |
+|     64     | 0.0235 |  99.25%  | 291.96s |
+|     32     | 0.0232 |  99.31%  | 465.82s |
+|     16     | 0.0243 |  99.29%  | 565.27s |
 
-<img src="plots/ex1/lab3_1_keras_bs_cmp_loss.png" alt="plots/lab3_1_keras_bs_cmp_loss.png" height="240" />
-<img src="plots/ex1/lab3_1_keras_bs_cmp_accuracy.png" alt="plots/lab3_1_keras_bs_cmp_accuracy.png" height="240" />
-<img src="plots/ex1/lab3_1_keras_bs_cmp_duration.png" alt="plots/lab3_1_keras_bs_cmp_duration.png" height="240" />
+<img src="plots/ex1/keras/loss_over_bs.png" height="240" />
+<img src="plots/ex1/keras/accuracy_over_bs.png" height="240" />
+<img src="plots/ex1/keras/training_time_over_bs.png" height="240" />
+<img src="plots/ex1/keras/loss_over_epoch.png" height="240" />
+<img src="plots/ex1/keras/accuracy_over_epoch.png" height="240" />
 
 We can see that smaller batch sizes give better results but take much longer. A good compromise would be around 32, as the results are nearly the same as smaller values, but the execution time remains acceptable. We will keep this one for our next models.
 
@@ -37,9 +39,9 @@ We can see that smaller batch sizes give better results but take much longer. A 
 
 ### 2.2. Default Network
 
-|  Type  | HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
-| :----: | :------: | :--------------: | :-------: | :---: | :------: | :----: |
-| Binary |    64    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.77%  | XX.XXs |
+| HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
+| :------: | :--------------: | :-------: | :---: | :------: | :----: |
+|    64    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.77%  | XX.XXs |
 
 <img src="plots/ex2/lab3_2_keras_64u_loss.png" alt="plots/lab3_2_keras_64u_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_64u_accuracy.png" alt="plots/lab3_2_keras_64u_accuracy.png" height="240" />
@@ -48,19 +50,19 @@ We can see that smaller batch sizes give better results but take much longer. A 
 
 ### 2.3. Different numbers of neurons on hidden layer
 
-|  Type  | HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
-| :----: | :------: | :--------------: | :-------: | :---: | :------: | :----: |
-| Binary |    8     | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.58%  | XX.XXs |
-| Binary |    16    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.72%  | XX.XXs |
-| Binary |    32    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.75%  | XX.XXs |
-| Binary |   128    | Sigmoid, Sigmoid |   Adam    | 0.01  |  99.80%  | XX.XXs |
+| HL Units | Loss  | Accuracy |  Time  |
+| :------: | :---: | :------: | :----: |
+|    8     | 0.02  |  99.58%  | XX.XXs |
+|    16    | 0.02  |  99.72%  | XX.XXs |
+|    32    | 0.02  |  99.75%  | XX.XXs |
+|    64    | 0.02  |  99.77%  | XX.XXs |
+|   128    | 0.01  |  99.80%  | XX.XXs |
 
 <img src="plots/ex2/lab3_2_keras_hlu_loss.png" alt="plots/lab3_2_keras_hlu_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_hlu_accuracy.png" alt="plots/lab3_2_keras_hlu_accuracy.png" height="240" />
 
 <img src="plots/ex2/lab3_2_keras_hlu_model_accuracy.png" alt="plots/lab3_2_keras_hlu_model_accuracy.png" height="240" />
-<img src="plots/ex2/lab3_2_keras_hlu_duration.png" alt="plots/lab3_2_keras_hlu_duration.png" height="240" />
-
+<img src="plots/ex2/keras/hlu/training_time_over_hlu.png" height="240" />
 
 **128 neurons**: Since the accuracy is already very high, it would be overkilled to add more neurons to the hidden layer, at least for this model. Indeed, it would take more time (I guess ?), just to get just results that are just as good.
 
@@ -70,18 +72,18 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### 2.4. Different activation functions
 
-**N.B.:** We won't try softmax on last layer because it's only relevant on multiclass classification.
+**N.B.:** We won't try Softmax on last layer because it's only relevant on multiclass classification.
 
-|  Type  | HL Units |  Activations  | Optimizer | Loss  | Accuracy |  Time  |
-| :----: | :------: | :-----------: | :-------: | :---: | :------: | :----: |
-| Binary |    64    | sigmoid, relu |   Adam    | 1.51  |  90.20%  | XX.XXs |
-| Binary |    64    | sigmoid, tanh |   Adam    | 0.02  |  99.68%  | XX.XXs |
-| Binary |    64    | relu, sigmoid |   Adam    | 0.02  |  99.81%  | XX.XXs |
-| Binary |    64    |  relu, relu   |   Adam    | 1.51  |  90.20%  | XX.XXs |
-| Binary |    64    |  relu, tanh   |   Adam    | 1.51  |  90.20%  | XX.XXs |
-| Binary |    64    | tanh, sigmoid |   Adam    | 0.02  |  99.81%  | XX.XXs |
-| Binary |    64    |  tanh, relu   |   Adam    | 1.51  |  90.20%  | XX.XXs |
-| Binary |    64    |  tanh, tanh   |   Adam    | 0.03  |  99.58%  | XX.XXs |
+|  Activations  | Loss  | Accuracy |  Time  |
+| :-----------: | :---: | :------: | :----: |
+| Sigmoid, ReLU | 1.51  |  90.20%  | XX.XXs |
+| Sigmoid, Tanh | 0.02  |  99.68%  | XX.XXs |
+| ReLU, Sigmoid | 0.02  |  99.81%  | XX.XXs |
+|  ReLU, ReLU   | 1.51  |  90.20%  | XX.XXs |
+|  ReLU, Tanh   | 1.51  |  90.20%  | XX.XXs |
+| Tanh, Sigmoid | 0.02  |  99.81%  | XX.XXs |
+|  Tanh, ReLU   | 1.51  |  90.20%  | XX.XXs |
+|  Tanh, Tanh   | 0.03  |  99.58%  | XX.XXs |
 
 <img src="plots/ex2/lab3_2_keras_af0_loss.png" alt="plots/lab3_2_keras_af0_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_af1_loss.png" alt="plots/lab3_2_keras_af1_loss.png" height="240" />
@@ -95,14 +97,13 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 …
 
-
 ## 3. Multiclass Neural Networks
 
 ### 3.2. Default Network
 
-|    Type    | HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
-| :--------: | :------: | :--------------: | :-------: | :---: | :------: | :----: |
-| Multiclass |    64    | sigmoid, softmax |   Adam    | 0.11  |  97.31%  | XX.XXs | <!-- real loss: 0.1117 --> |
+| Optimizer |   Activations    |  Loss  | Accuracy |  Time  |
+| :-------: | :--------------: | :----: | :------: | :----: |
+|   Adam    | Sigmoid, Softmax | 0.1117 |  97.31%  | XX.XXs |
 
 <img src="plots/ex3/lab3_3_keras_adam_loss.png" alt="plots/lab3_3_keras_adam_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_adam_accuracy.png" alt="plots/lab3_3_keras_adam_accuracy.png" height="240" />
@@ -111,10 +112,11 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### 3.3. Different optimizers
 
-|    Type    | HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
-| :--------: | :------: | :--------------: | :-------: | :---: | :------: | :----: |
-| Multiclass |    64    | sigmoid, softmax |    SGD    | 0.20  |  94.21%  | XX.XXs | <!-- real loss: 0.1971 --> |
-| Multiclass |    64    | sigmoid, softmax |  RMSprop  | 0.11  |  97.46%  | XX.XXs | <!-- real loss: 0.1087 --> |
+| Optimizer |  Loss  | Accuracy |  Time  |
+| :-------: | :----: | :------: | :----: |
+|   Adam    | 0.1117 |  97.31%  | XX.XXs |
+|  RMSprop  | 0.1087 |  97.46%  | XX.XXs |
+|    SGD    | 0.1971 |  94.21%  | XX.XXs |
 
 <img src="plots/ex3/lab3_3_keras_opt_loss.png" alt="plots/lab3_3_keras_opt_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_opt_accuracy.png" alt="plots/lab3_3_opt_sgd_accuracy.png" height="240" />
@@ -127,26 +129,21 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### Summary table
 
-
-
-
-
-
-## PYTORCH
+## PyTorch
 
 ### Binary Classification: Single Neuron
 
-|  Type  | Batch Size | Activation | Optimizer |  Loss  | Accuracy |  Time   |
-| :----: | :--------: | :--------: | :-------: | :----: | :------: | :-----: |
-| Binary |   60000    |  Sigmoid   |   Adam    | 0.3021 |  90.97%  | 119.37s |
-| Binary |    2048    |  Sigmoid   |   Adam    | 0.1011 |  94.52%  | 83.70s  |
-| Binary |    1024    |  Sigmoid   |   Adam    | 0.0904 |  96.59%  | 86.38s  |
-| Binary |    512     |  Sigmoid   |   Adam    | 0.0844 |  96.80%  | 85.34s  |
-| Binary |    256     |  Sigmoid   |   Adam    | 0.0822 |  97.35%  | 87.18s  |
-| Binary |    128     |  Sigmoid   |   Adam    | 0.0809 |  97.56%  | 90.80s  |
-| Binary |     64     |  Sigmoid   |   Adam    | 0.0797 |  97.66%  | 100.32s |
-| Binary |     32     |  Sigmoid   |   Adam    | 0.0814 |  97.57%  | 112.29s |
-| Binary |     16     |  Sigmoid   |   Adam    | 0.0800 |  97.78%  | 122.05s |
+| Batch Size |  Loss  | Accuracy |  Time   |
+| :--------: | :----: | :------: | :-----: |
+|   60000    | 0.3027 |  90.97%  | 123.33s |
+|    2048    | 0.1008 |  94.53%  | 96.60s  |
+|    1024    | 0.0904 |  96.59%  | 98.84s  |
+|    512     | 0.0845 |  96.81%  | 100.26s |
+|    256     | 0.0822 |  97.31%  | 101.05s |
+|    128     | 0.0807 |  97.61%  | 105.33s |
+|     64     | 0.0799 |  97.64%  | 112.18s |
+|     32     | 0.0790 |  97.74%  | 121.56s |
+|     16     | 0.0787 |  97.79%  | 142.27s |
 
 <img src="plots/ex1/pytorch/loss_over_bs.png" height="240" />
 <img src="plots/ex1/pytorch/accuracy_over_bs.png" height="240" />
@@ -154,19 +151,19 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 <img src="plots/ex1/pytorch/loss_over_epoch.png" height="240" />
 <img src="plots/ex1/pytorch/accuracy_over_epoch.png" height="240" />
 
-…
+As we have seen before, the smaller the batch size, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, a batch size of 32 still seems the better option.
 
 ### Binary Classification: Hidden Layer
 
 #### Hidden Layer Units (HLU)
 
-|  Type  | HL Units |   Activations    | Optimizer |  Loss  | Accuracy |  Time   |
-| :----: | :------: | :--------------: | :-------: | :----: | :------: | :-----: |
-| Binary |    8     | Sigmoid, Sigmoid |   Adam    | 0.0091 |  99.75%  | 92.47s  |
-| Binary |    16    | Sigmoid, Sigmoid |   Adam    | 0.0024 |  99.97%  | 96.81s  |
-| Binary |    32    | Sigmoid, Sigmoid |   Adam    | 0.0002 | 100.00%  | 99.41s  |
-| Binary |    64    | Sigmoid, Sigmoid |   Adam    | 0.0000 | 100.00%  | 102.66s |
-| Binary |   128    | Sigmoid, Sigmoid |   Adam    | 0.0001 | 100.00%  | 119.12s |
+|  HLU  |  Loss  | Accuracy |  Time   |
+| :---: | :----: | :------: | :-----: |
+|   8   | 0.0091 |  99.75%  | 92.47s  |
+|  16   | 0.0024 |  99.97%  | 96.81s  |
+|  32   | 0.0002 | 100.00%  | 99.41s  |
+|  64   | 0.0000 | 100.00%  | 102.66s |
+|  128  | 0.0001 | 100.00%  | 119.12s |
 
 <img src="plots/ex2/pytorch/hlu/loss_over_hlu.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/accuracy_over_hlu.png" height="240" />
@@ -174,7 +171,7 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 <img src="plots/ex2/pytorch/hlu/loss_over_epoch.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/accuracy_over_epoch.png" height="240" />
 
-…
+As expected, the more HLU, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, 64 units still seems the better option.
 
 #### Activation Functions (AF)
 
@@ -182,4 +179,16 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 ### Multiclass Classification
 
-<!-- TODO -->
+| Optimizer |  Loss  | Accuracy |  Time  |
+| :-------: | :----: | :------: | :----: |
+|   Adam    | 1.4708 |  99.12%  | 97.29s |
+|  RMSprop  | 1.4701 |  99.16%  | 96.68s |
+|    SGD    | 2.2037 |  23.30%  | 96.39s |
+
+<img src="plots/ex3/pytorch/loss_over_opt.png" height="240" />
+<img src="plots/ex3/pytorch/accuracy_over_opt.png" height="240" />
+<img src="plots/ex3/pytorch/training_time_over_opt.png" height="240" />
+<img src="plots/ex3/pytorch/loss_over_epoch.png" height="240" />
+<img src="plots/ex3/pytorch/accuracy_over_epoch.png" height="240" />
+
+We can notice that the SGD optimizer doesn't give results as good as the other two on this dataset. Adam and RMSprop are both giving the same results.

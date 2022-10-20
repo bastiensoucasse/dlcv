@@ -26,9 +26,10 @@ class NeuralNetwork(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.relu = nn.ReLU()
         self.tanh = nn.Tanh()
+        self.softmax = nn.Softmax()
 
     def forward(self, x):
-        return self.sigmoid(self.output(self.sigmoid(self.hidden(x))))
+        return self.softmax(self.output(self.sigmoid(self.hidden(x))))
 
 
 if __name__ == "__main__":
