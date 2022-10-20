@@ -39,9 +39,9 @@ We can see that smaller batch sizes give better results but take much longer. A 
 
 ### 2.2. Default Network
 
-| HL Units |   Activations    | Optimizer | Loss  | Accuracy |  Time  |
-| :------: | :--------------: | :-------: | :---: | :------: | :----: |
-|    64    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.77%  | XX.XXs |
+| HL Units |   Activations    | Optimizer | Loss  | Accuracy | Time  |
+| :------: | :--------------: | :-------: | :---: | :------: | :---: |
+|    64    | Sigmoid, Sigmoid |   Adam    | 0.02  |  99.77%  | 320s  |
 
 <img src="plots/ex2/lab3_2_keras_64u_loss.png" alt="plots/lab3_2_keras_64u_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_64u_accuracy.png" alt="plots/lab3_2_keras_64u_accuracy.png" height="240" />
@@ -50,13 +50,13 @@ We can see that smaller batch sizes give better results but take much longer. A 
 
 ### 2.3. Different numbers of neurons on hidden layer
 
-| HL Units | Loss  | Accuracy |  Time  |
-| :------: | :---: | :------: | :----: |
-|    8     | 0.02  |  99.58%  | XX.XXs |
-|    16    | 0.02  |  99.72%  | XX.XXs |
-|    32    | 0.02  |  99.75%  | XX.XXs |
-|    64    | 0.02  |  99.77%  | XX.XXs |
-|   128    | 0.01  |  99.80%  | XX.XXs |
+| HL Units | Loss  | Accuracy | Time  |
+| :------: | :---: | :------: | :---: |
+|    8     | 0.02  |  99.58%  | 326s  |
+|    16    | 0.02  |  99.72%  | 322s  |
+|    32    | 0.02  |  99.75%  | 318s  |
+|    64    | 0.02  |  99.77%  | 320s  |
+|   128    | 0.01  |  99.80%  | 322s  |
 
 <img src="plots/ex2/lab3_2_keras_hlu_loss.png" alt="plots/lab3_2_keras_hlu_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_hlu_accuracy.png" alt="plots/lab3_2_keras_hlu_accuracy.png" height="240" />
@@ -74,16 +74,17 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 **N.B.:** We won't try Softmax on last layer because it's only relevant on multiclass classification.
 
-|  Activations  | Loss  | Accuracy |  Time  |
-| :-----------: | :---: | :------: | :----: |
-| Sigmoid, ReLU | 1.51  |  90.20%  | XX.XXs |
-| Sigmoid, Tanh | 0.02  |  99.68%  | XX.XXs |
-| ReLU, Sigmoid | 0.02  |  99.81%  | XX.XXs |
-|  ReLU, ReLU   | 1.51  |  90.20%  | XX.XXs |
-|  ReLU, Tanh   | 1.51  |  90.20%  | XX.XXs |
-| Tanh, Sigmoid | 0.02  |  99.81%  | XX.XXs |
-|  Tanh, ReLU   | 1.51  |  90.20%  | XX.XXs |
-|  Tanh, Tanh   | 0.03  |  99.58%  | XX.XXs |
+|   Activations    | Loss  | Accuracy | Time  |
+| :--------------: | :---: | :------: | :---: |
+| Sigmoid, Sigmoid | 0.02  |  99.77%  | 320s  |
+|  Sigmoid, ReLU   | 1.51  |  90.20%  | 340s  |
+|  Sigmoid, Tanh   | 0.02  |  99.68%  | 340s  |
+|  ReLU, Sigmoid   | 0.02  |  99.81%  | 325s  |
+|    ReLU, ReLU    | 1.51  |  90.20%  | 333s  |
+|    ReLU, Tanh    | 1.51  |  90.20%  | 338s  |
+|  Tanh, Sigmoid   | 0.02  |  99.81%  | 338s  |
+|    Tanh, ReLU    | 1.51  |  90.20%  | 343s  |
+|    Tanh, Tanh    | 0.03  |  99.58%  | 344s  |
 
 <img src="plots/ex2/lab3_2_keras_af0_loss.png" alt="plots/lab3_2_keras_af0_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_af1_loss.png" alt="plots/lab3_2_keras_af1_loss.png" height="240" />
