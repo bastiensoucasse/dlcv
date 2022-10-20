@@ -1,16 +1,20 @@
 import os
+import time
 
 import keras
+import matplotlib.pyplot as plt
 from keras.datasets import mnist
 from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import RMSprop
 
+EPOCHS = 40
 NUM_CLASSES = 10
 
 K = 3
 STRIDE = 1
 PADDING = ['valid', 'same']
+NB_FILTERS = 1
 
 
 if __name__ == '__main__':
@@ -25,8 +29,33 @@ if __name__ == '__main__':
     y_train = keras.utils.to_categorical(y_train, NUM_CLASSES)
     y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
 
+    # Array of training time over model version.
+    # durations = []
+
     # Define the model.
     model = Sequential()
-    model.add(Conv2D(K, K), S)
-    model.add(Dense(NUM_CLASSES, activation='softmax', input_shape=x_train.shape[1:]))
-    model.compile(optimizer='adam', loss='category_crossentropy', metrics=['accuracy'])
+    model.add(Conv2D(NB_FILTERS, (K, K), STRIDE, PADDING[1], input_shape=(width, height, 1)))
+    model.add(Flatten())
+    model.add(Dense(NUM_CLASSES, activation='softmax'))
+    model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
+    start_time = time.time()
+    hist = model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
+    training_time = time.time() - start_time
+    loss, accuracy = model.evaluate(x_test, y_test)
+    # durations += [training_time]
+
+    # Display the summary.
+    print(f"SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
+
+    # Plot Training Loss & Validation Accuracy Over Epoch.
+    plt.clf()
+    plt.plot(hist.history["loss"], label="Training Loss")
+    plt.plot(hist.history["val_accuracy"], label="Validation Accuracy")
+    plt.legend()
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss/Accuracy")
+    plt.title("Training Loss & Validation Accuracy Over Epoch")
+    plt.savefig("plots/ex1/keras/loss_valacc_over_epoch.png")
+
+
+

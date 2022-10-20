@@ -41,3 +41,9 @@ Data normalization/standardization
 Conv2D, Conv2D, MaxPooling2D, Conv2D, Flatten, TraditionalNN
 
 PyTorch: `Conv2D(input_channels, output_channels, kernel_size)`
+
+
+To detect overfitting:
+- Loss on training set
+- Accuracy on test set
+on same plot
