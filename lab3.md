@@ -152,7 +152,9 @@ After all the tests done in the previous section, let's gather the best hyperpar
 
 | Batch Size | HL Units |   Activations    | Optimizer |  Loss  | Accuracy |  Time   |
 | :--------: | :------: | :--------------: | :-------: | :----: | :------: | :-----: |
-|     32     |   128    | Sigmoid, Softmax |  RMSProp  | X.XXXX |  XX.XX%  | XXX.XXs |
+|     32     |   128    | Sigmoid, Softmax |  RMSProp  | 0.0934 |  97.82%  | 561.08s |
+
+For a multiclass model, this is the best model we've had.
 
 
 <br><br>
