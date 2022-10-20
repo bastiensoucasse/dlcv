@@ -1,4 +1,4 @@
-# Single neuron neural network for binary classification using Pytorch
+# Single neuron neural network for binary classification using PyTorch
 
 import time
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     # Plot Training Loss Over Epoch
     plt.clf()
     for i in range(NUM_BS):
-        plt.plot(np.array(hists)[i, :, 0], label=f"Batch size: {BATCH_SIZES[i]}")
+        plt.plot(np.array(hists)[i, :, 0], label=f"Batch Size: {BATCH_SIZES[i]}")
     plt.legend()
     plt.xlabel("Epoch")
     plt.ylabel("Loss")

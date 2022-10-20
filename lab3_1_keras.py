@@ -11,6 +11,7 @@ from keras.models import Sequential
 DIGIT = 5
 EPOCHS = 40
 BATCH_SIZES = [60000, 2048, 1024, 512, 256, 128, 64, 32, 16]
+NB_BS = len(BATCH_SIZES)
 
 if __name__ == "__main__":
     # Load the data, flatten x, and set up y for binary classification.
@@ -24,48 +25,73 @@ if __name__ == "__main__":
     y_new[np.where(y_test == 0.0)[0]] = 1
     y_test = y_new
 
+    # Array of history over model version (one history being an array of (training_loss, training_accuracy) over epoch).
+    hists = []
+
+    # Array of evaluation score over model version (one evaluation score being (evaluation_loss, evaluation_score)).
     scores = []
+
+    # Array of training time over model version.
     durations = []
-    for BATCH_SIZE in BATCH_SIZES:
-        print(f"\n###\n### BATCH SIZE: {BATCH_SIZE}\n###")
+
+    for bs in BATCH_SIZES:
+        print(f"\n###\n### BATCH SIZE: {bs}\n###")
 
         # Define the model and its parameters, train it, and evaluate it.
         model = Sequential()
         model.add(Dense(1, activation="sigmoid"))
         model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
         start_time = time.time()
-        history = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
+        history = model.fit(x_train, y_train, batch_size=bs, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
         training_time = time.time() - start_time
         loss, accuracy = model.evaluate(x_test, y_test)
+        hists += [history]
         scores += [(loss, accuracy)]
         durations += [training_time]
 
         # Display the summary.
-        print(f"SUMMARY FOR BATCH SIZE {BATCH_SIZE}:\n    - Training Time: {training_time:.0f}s\n    - Loss: {loss:.2f}\n    - Accuracy: {accuracy:.2f}")
+        print(f"SUMMARY FOR BATCH SIZE {bs}:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
 
-    # Plot the loss history.
+    # Plot Training Loss Over Epoch
     plt.clf()
-    plt.xscale("log")
+    for i in range(NB_BS):
+        plt.plot(hists[i].history["loss"], label=f"Batch Size: {BATCH_SIZES[i]}")
+    plt.legend()
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Loss over Epoch")
+    plt.savefig("plots/ex1/keras/loss_over_epoch.png")
+
+    # Plot Training Accuracy Over Epoch
+    plt.clf()
+    for i in range(NB_BS):
+        plt.plot(hists[i].history["accuracy"], label=f"Batch Size: {BATCH_SIZES[i]}")
+    plt.legend()
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.title("Accuracy over Epoch")
+    plt.savefig("plots/ex1/keras/accuracy_over_epoch.png")
+
+    # Plot Evaluation Loss Over BS
+    plt.clf()
     plt.plot(BATCH_SIZES, np.array(scores)[:, 0])
     plt.xlabel("Batch Size")
     plt.ylabel("Loss")
     plt.title("Loss over Batch Size")
-    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_loss.png")
+    plt.savefig("plots/ex1/keras/loss_over_bs.png")
 
-    # Plot the accuracy history.
+    # Plot Evaluation Accuracy Over BS
     plt.clf()
-    plt.xscale("log")
     plt.plot(BATCH_SIZES, np.array(scores)[:, 1])
     plt.xlabel("Batch Size")
     plt.ylabel("Accuracy")
     plt.title("Accuracy over Batch Size")
-    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_accuracy.png")
+    plt.savefig("plots/ex1/keras/accuracy_over_bs.png")
 
-    # Plot the duration history.
+    # Plot Training Time Over BS
     plt.clf()
-    plt.xscale("log")
     plt.plot(BATCH_SIZES, durations)
     plt.xlabel("Batch Size")
-    plt.ylabel("Duration")
-    plt.title("Duration over Batch Size")
-    plt.savefig("plots/ex1/lab3_1_keras_bs_cmp_duration.png")
+    plt.ylabel("Training Time")
+    plt.title("Training Time over Batch Size")
+    plt.savefig("plots/ex1/keras/training_time_over_bs.png")

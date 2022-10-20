@@ -1,0 +1,16 @@
+TODO:
+- Compute 2-Pytorch
+- Write and check README
+
+DONE:
+- Implement 1-Keras
+- Implement 1-Pytorch
+- Implement 2-Keras
+- Implement 2-Pytorch
+- Implement 3-Keras
+- Implement 3-Pytorch
+- Compute 1-Keras
+- Compute 1-Pytorch
+- Compute 2-Keras
+- Compute 3-Keras
+- Compute 3-Pytorch
