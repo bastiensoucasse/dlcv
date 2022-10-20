@@ -221,6 +221,16 @@ After all the tests done in the previous section, let's gather the best hyperpar
 |    Tanh, ReLU    | 0.6931 |  90.96%  | 100.78s |
 |    Tanh, Tanh    | 0.3140 |  99.92%  | 102.01s |
 
+<img src="plots/ex2/pytorch/af/loss_over_epoch0.png" height="240" />
+<img src="plots/ex2/pytorch/af/loss_over_epoch1.png" height="240" />
+<img src="plots/ex2/pytorch/af/loss_over_epoch2.png" height="240" />
+
+<img src="plots/ex2/pytorch/af/accuracy_over_epoch0.png" height="240" />
+<img src="plots/ex2/pytorch/af/accuracy_over_epoch1.png" height="240" />
+<img src="plots/ex2/pytorch/af/accuracy_over_epoch2.png" height="240" />
+
+<img src="plots/ex2/pytorch/af/training_time_over_af.png" height="240" />
+
 <br><br>
 
 ### Multiclass Classification
