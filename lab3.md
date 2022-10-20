@@ -27,11 +27,11 @@ After 40 epochs, the loss and accuracy tends to stabilize and going further woul
 |     32     | 0.0232 |  99.31%  | 465.82s |
 |     16     | 0.0243 |  99.29%  | 565.27s |
 
-<img src="plots/ex1/keras/loss_over_bs.png" height="240" />
-<img src="plots/ex1/keras/accuracy_over_bs.png" height="240" />
-<img src="plots/ex1/keras/training_time_over_bs.png" height="240" />
+<!-- <img src="plots/ex1/keras/loss_over_bs.png" height="240" /> -->
 <img src="plots/ex1/keras/loss_over_epoch.png" height="240" />
 <img src="plots/ex1/keras/accuracy_over_epoch.png" height="240" />
+<img src="plots/ex1/keras/accuracy_over_bs.png" height="240" />
+<img src="plots/ex1/keras/training_time_over_bs.png" height="240" />
 
 We can see that smaller batch sizes give better results but take much longer. A good compromise would be around 32, as the results are nearly the same as smaller values, but the execution time remains acceptable. We will keep this one for our next models.
 
@@ -46,7 +46,7 @@ We can see that smaller batch sizes give better results but take much longer. A 
 <img src="plots/ex2/lab3_2_keras_64u_loss.png" alt="plots/lab3_2_keras_64u_loss.png" height="240" />
 <img src="plots/ex2/lab3_2_keras_64u_accuracy.png" alt="plots/lab3_2_keras_64u_accuracy.png" height="240" />
 
-…
+This first model provides more than acceptable results, with a 99.77% accuracy. Let's see how the number of neurons on the hidden layer, and the activation functions, affect its performance.
 
 ### 2.3. Different numbers of neurons on hidden layer
 
@@ -64,15 +64,15 @@ We can see that smaller batch sizes give better results but take much longer. A 
 <img src="plots/ex2/lab3_2_keras_hlu_model_accuracy.png" alt="plots/lab3_2_keras_hlu_model_accuracy.png" height="240" />
 <img src="plots/ex2/keras/hlu/training_time_over_hlu.png" height="240" />
 
-**128 neurons**: Since the accuracy is already very high, it would be overkilled to add more neurons to the hidden layer, at least for this model. Indeed, it would take more time (I guess ?), just to get just results that are just as good.
+Looking at the accuracy plot, it appears that the more neurons on hidden layer, the better the model. But actually, the other plots and the table shows that the results are fairly similar, whether on loss, accuracy or time.
 
-That's the highest accuracy we got, but it's not significantly higher for us to say this model is the best one.
+Indeed, the 128-unit model gives the highest accuracy, but it's not significantly higher than the other ones for us to say this model is THE best one.
 
-**Conclusion:** For this model, the number of neurons in the hidden layer is not a significant hyperparameter. As a consequence, we may chose the one that takes less time.
+**Conclusion:** For this model, the number of neurons in the hidden layer is not a significant hyperparameter. As a consequence, we may choose the one that gives the best accuracy (here the 128-unit one) since they all take a similar amount of time.
 
 ### 2.4. Different activation functions
 
-**N.B.:** We won't try Softmax on last layer because it's only relevant on multiclass classification.
+*N.B.:* We won't try Softmax on last layer because it's only relevant on multiclass classification.
 
 |   Activations    | Loss  | Accuracy | Time  |
 | :--------------: | :---: | :------: | :---: |
@@ -96,7 +96,9 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 
 <img src="plots/ex2/lab3_2_keras_af_duration.png" alt="plots/lab3_2_keras_af_duration.png" height="240" />
 
-…
+This time, we observe 2 categories. On one hand, models with an accuracy around 90%. On the other hand, models with one around 99%. Actually, the members of each category are not constant over the different executions, which makes it difficult to figure out.
+
+**Conclusion:** A configuration that always gives good performances is the (sigmoid, sigmoid) one, that's why we should choose it, out of "security".
 
 ## 3. Multiclass Neural Networks
 
@@ -109,7 +111,7 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 <img src="plots/ex3/lab3_3_keras_adam_loss.png" alt="plots/lab3_3_keras_adam_loss.png" height="240" />
 <img src="plots/ex3/lab3_3_keras_adam_accuracy.png" alt="plots/lab3_3_keras_adam_accuracy.png" height="240" />
 
-…
+This first multiclass model provides very good results, with a 97.31% accuracy. Let's see how the different optimizers affect its performance.
 
 ### 3.3. Different optimizers
 
@@ -120,13 +122,20 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 |    SGD    | 0.1971 |  94.21%  | XX.XXs |
 
 <img src="plots/ex3/lab3_3_keras_opt_loss.png" alt="plots/lab3_3_keras_opt_loss.png" height="240" />
-<img src="plots/ex3/lab3_3_keras_opt_accuracy.png" alt="plots/lab3_3_opt_sgd_accuracy.png" height="240" />
+<img src="plots/ex3/lab3_3_keras_opt_accuracy.png" alt="plots/lab3_3_opt_accuracy.png" height="240" />
+<img src="plots/ex3/lab3_3_keras_opt_duration.png" alt="plots/lab3_3_opt_duration.png" height="240" />
 
-…
+It is obvious that the SGD optimizer is beaten by the two others, in accuracy and time. Even though Adam and RMSProp have similar and high accuracies, RMSProp is about one minute shorter.
+
+**Conclusion**: RMSProp is the best optimizer out of the three optimizers tested.
 
 ## 4. Best Network
 
-<!-- TODO (or not) -->
+After all the tests done in the previous section, let's gather the best hyperparameter to (hopefully) create the best model.
+
+| Batch Size | HL Units |   Activations    | Optimizer |  Loss  | Accuracy |  Time   |
+| :--------: | :------: | :--------------: | :-------: | :----: | :------: | :-----: |
+|     32     |    128   | Sigmoid, Softmax |  RMSProp  | X.XXXX |  XX.XX%  | XXX.XXs |
 
 ### Summary table
 
@@ -146,11 +155,11 @@ That's the highest accuracy we got, but it's not significantly higher for us to 
 |     32     | 0.0790 |  97.74%  | 121.56s |
 |     16     | 0.0787 |  97.79%  | 142.27s |
 
-<img src="plots/ex1/pytorch/loss_over_bs.png" height="240" />
-<img src="plots/ex1/pytorch/accuracy_over_bs.png" height="240" />
-<img src="plots/ex1/pytorch/training_time_over_bs.png" height="240" />
+<!-- <img src="plots/ex1/pytorch/loss_over_bs.png" height="240" /> -->
 <img src="plots/ex1/pytorch/loss_over_epoch.png" height="240" />
 <img src="plots/ex1/pytorch/accuracy_over_epoch.png" height="240" />
+<img src="plots/ex1/pytorch/accuracy_over_bs.png" height="240" />
+<img src="plots/ex1/pytorch/training_time_over_bs.png" height="240" />
 
 As we have seen before, the smaller the batch size, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, a batch size of 32 still seems the better option.
 
@@ -166,11 +175,11 @@ As we have seen before, the smaller the batch size, the better the accuracy. But
 |  64   | 0.0000 | 100.00%  | 102.66s |
 |  128  | 0.0001 | 100.00%  | 119.12s |
 
-<img src="plots/ex2/pytorch/hlu/loss_over_hlu.png" height="240" />
-<img src="plots/ex2/pytorch/hlu/accuracy_over_hlu.png" height="240" />
-<img src="plots/ex2/pytorch/hlu/training_time_over_hlu.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/loss_over_epoch.png" height="240" />
 <img src="plots/ex2/pytorch/hlu/accuracy_over_epoch.png" height="240" />
+<!-- <img src="plots/ex2/pytorch/hlu/loss_over_hlu.png" height="240" /> -->
+<img src="plots/ex2/pytorch/hlu/accuracy_over_hlu.png" height="240" />
+<img src="plots/ex2/pytorch/hlu/training_time_over_hlu.png" height="240" />
 
 As expected, the more HLU, the better the accuracy. But the training time is also growing rapidly. So, in order to keep a good ratio time/effectiveness, 64 units still seems the better option.
 
@@ -186,10 +195,10 @@ As expected, the more HLU, the better the accuracy. But the training time is als
 |  RMSprop  | 1.4701 |  99.16%  | 96.68s |
 |    SGD    | 2.2037 |  23.30%  | 96.39s |
 
-<img src="plots/ex3/pytorch/loss_over_opt.png" height="240" />
-<img src="plots/ex3/pytorch/accuracy_over_opt.png" height="240" />
-<img src="plots/ex3/pytorch/training_time_over_opt.png" height="240" />
 <img src="plots/ex3/pytorch/loss_over_epoch.png" height="240" />
 <img src="plots/ex3/pytorch/accuracy_over_epoch.png" height="240" />
+<!-- <img src="plots/ex3/pytorch/loss_over_opt.png" height="240" /> -->
+<!-- <img src="plots/ex3/pytorch/accuracy_over_opt.png" height="240" /> -->
+<img src="plots/ex3/pytorch/training_time_over_opt.png" height="240" />
 
 We can notice that the SGD optimizer doesn't give results as good as the other two on this dataset. Adam and RMSprop are both giving the same results.
