@@ -81,7 +81,7 @@ if __name__ == "__main__":
             # model = NeuralNetwork(image_size, hlu, "sigmoid", "sigmoid").to(device)
             model = NeuralNetwork(image_size, 64, af1, af2).to(device)
             optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-            loss_fn = nn.BCELoss()
+            loss_fn = nn.BCEWithLogitsLoss()
 
             # Train the model.
             history = []
