@@ -17,6 +17,6 @@ if __name__ == '__main__':
 
     # TODO: Standardize the data?
 
-    # Retrieve 
-    train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True, num_workers=2)
-    test_dataloader = DataLoader(training_data, batch_size=batch_size)
+    # Retrieve the data loaders.
+    train_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+    test_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True)
