@@ -47,3 +47,7 @@ To detect overfitting:
 - Loss on training set
 - Accuracy on test set
 on same plot
+
+For confusion matrix:
+https://subscription.packtpub.com/book/data/9781838555078/6/ch06lvl1sec34/confusion-matrix
+

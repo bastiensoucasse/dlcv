@@ -2,11 +2,14 @@ import os
 import time
 
 import keras
+import numpy as np
 import matplotlib.pyplot as plt
 from keras.datasets import mnist
 from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import RMSprop
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
 
 EPOCHS = 40
 NUM_CLASSES = 10
@@ -34,7 +37,7 @@ if __name__ == '__main__':
 
     # Define the model.
     model = Sequential()
-    model.add(Conv2D(NB_FILTERS, (K, K), STRIDE, PADDING[1], input_shape=(width, height, 1)))
+    model.add(Conv2D(NB_FILTERS, (K, K), STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
     model.add(Flatten())
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -55,7 +58,16 @@ if __name__ == '__main__':
     plt.xlabel("Epoch")
     plt.ylabel("Loss/Accuracy")
     plt.title("Training Loss & Validation Accuracy Over Epoch")
-    plt.savefig("plots/ex1/keras/loss_valacc_over_epoch.png")
+    plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch.png")
 
+    # Compute Confusion Matrix.
+    y_pred = model.predict(x_test)
+    y_pred = np.argmax(y_pred, axis=1)
+    y_test = np.argmax(y_test, axis=1)
 
+    cm = confusion_matrix(y_test, y_pred)
 
+    labels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
+    disp.plot(cmap=plt.cm.Blues)
+    plt.savefig("plots/ex1/keras/first_model_confusion_matrix.png")
