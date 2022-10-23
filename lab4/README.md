@@ -4,11 +4,13 @@
 
 ### 1.2. First CNN
 
-#### Hyperparameters
+#### Hyperparameters & Results
 
-| Batch Size |  Filters |  Kernel Size  | Stride | Padding |   Loss  | Accuracy |  Time   |
-| :--------: | :------: | :-----------: | :----: | :-----: | :-----: | :------: | :-----: |
-|     32     |    64    |    (3, 3)     |   1    | 'valid' |  0.2746 |  92.41%  | 563.05s |
+| Batch Size |  Filters |  Kernel Size  | Stride | Padding |   Loss  | Accuracy |   Time   |
+| :--------: | :------: | :-----------: | :----: | :-----: | :-----: | :------: | :------: |
+|     32     |    64    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  | 1411.18s |
+
+<!-- temps abérant, à voir sur ton ordi -->
 
 <br>
 
@@ -33,13 +35,13 @@
 
 Here are the configuration and results of the best model we obtained on lab3.3.
 
-|    Model    | Accuracy |  Time   |
-| :---------: | :------: | :-----: |
-| best lab3.3 |  97.82%  | 561.08s |
-| :---------: | :------: | :-----: |
-|  first CNN  |  92.41%% | 563.05s |
+|    Model    | Accuracy |   Time   |
+| :---------: | :------: | :------: |
+| best lab3.3 |  97.82%  |  561.08s |
+|  first CNN  |  92.43%  | 1411.18s |
 
-Both models took about the same amount of time, but the lab3.3 model provides a 5% higher accuracy.
+<!-- temporary time, to update (also update sentence, as adapted) -->
+The CNN model takes two times more time than the lab3.3 best model and provides a 5% lower accuracy. For now, the CNN model doesn't look good. It must be improvable.
 
 <br>
 

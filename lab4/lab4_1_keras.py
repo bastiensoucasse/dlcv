@@ -17,7 +17,7 @@ NUM_CLASSES = 10
 K = 3
 STRIDE = 1
 PADDING = ['valid', 'same']
-NB_FILTERS = 1
+NB_FILTERS = 64
 
 
 if __name__ == '__main__':
@@ -32,9 +32,6 @@ if __name__ == '__main__':
     y_train = keras.utils.to_categorical(y_train, NUM_CLASSES)
     y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
 
-    # Array of training time over model version.
-    # durations = []
-
     # Define the model.
     model = Sequential()
     model.add(Conv2D(NB_FILTERS, (K, K), STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
@@ -45,7 +42,7 @@ if __name__ == '__main__':
     hist = model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
     training_time = time.time() - start_time
     loss, accuracy = model.evaluate(x_test, y_test)
-    # durations += [training_time]
+
 
     # Display the summary.
     print(f"SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
