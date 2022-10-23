@@ -11,6 +11,17 @@
 |     32     |    64    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  | 1411.18s |
 
 <!-- temps abérant, à voir sur ton ordi -->
+Results for double plots:
+SUMMARY:
+    - Loss: 0.3228
+    - Accuracy: 0.9154
+    - Training Time: 1343.11s
+
+Results for two plots:
+SUMMARY:
+    - Loss: 0.3107
+    - Accuracy: 0.9167
+    - Training Time: 1282.95s
 
 <br>
 

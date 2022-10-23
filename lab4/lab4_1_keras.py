@@ -50,12 +50,42 @@ if __name__ == '__main__':
     # Plot Training Loss & Validation Accuracy Over Epoch.
     plt.clf()
     plt.plot(hist.history["loss"], label="Training Loss")
+    # plt.plot(hist.history["val_accuracy"], label="Validation Accuracy")
+    plt.legend()
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Training Loss Over Epoch")
+    plt.savefig("plots/ex1/keras/first_model_loss_over_epoch.png")
+    # plt.ylabel("Loss/Accuracy")
+    # plt.title("Training Loss & Validation Accuracy Over Epoch")
+    # plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch.png")
+
+    plt.clf()
     plt.plot(hist.history["val_accuracy"], label="Validation Accuracy")
     plt.legend()
     plt.xlabel("Epoch")
-    plt.ylabel("Loss/Accuracy")
-    plt.title("Training Loss & Validation Accuracy Over Epoch")
-    plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch.png")
+    plt.ylabel("Accuracy")
+    plt.title("Validation Accuracy Over Epoch")
+    plt.savefig("plots/ex1/keras/first_model_valacc_over_epoch.png")
+
+    # fig, loss_ax = plt.subplots()
+
+    # color = 'tab:red'
+    # loss_ax.set_xlabel('Epoch')
+    # loss_ax.set_ylabel('Loss', color=color)
+    # loss_ax.plot(hist.history["loss"], label="Training Loss", color=color)
+    # loss_ax.tick_params(axis='y', labelcolor=color)
+
+    # acc_ax = loss_ax.twinx()  # instantiate a second axes that shares the same x-axis
+
+    # color = 'tab:blue'
+    # acc_ax.set_ylabel('Accuracy', color=color)  # we already handled the x-label with ax1
+    # acc_ax.plot(hist.history["val_accuracy"], label="Validation Accuracy", color=color)
+    # acc_ax.tick_params(axis='y', labelcolor=color)
+
+    # fig.tight_layout()  # otherwise the right y-label is slightly clipped
+    # plt.title("Training Loss & Validation Accuracy Over Epoch")
+    # plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch_test.png")
 
     # Compute Confusion Matrix.
     y_pred = model.predict(x_test)
