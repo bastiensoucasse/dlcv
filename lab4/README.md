@@ -10,6 +10,7 @@
 
 #### Hyperparameters & Results
 
+<<<<<<< HEAD
 | Batch Size |  Filters |  Kernel Size  | Stride | Padding |   Loss  | Accuracy |   Time   |
 | :--------: | :------: | :-----------: | :----: | :-----: | :-----: | :------: | :------: |
 |     32     |    32    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  |  622.84s |
@@ -52,8 +53,8 @@ Here are the configuration and results of the best model we obtained on lab3.3.
 
 |    Model    | Accuracy |   Time   |
 | :---------: | :------: | :------: |
-| best lab3.3 |  97.82%  |  561.08s |
-|  first CNN  |  92.43%  | 1411.18s |
+| best lab3.3 |  97.82%  | 561.08s  |
+|  first CNN  |  92.43%  | 622.84s |
 
 <!-- temporary time, to update (also update sentence, as adapted) -->
 The CNN model takes two times more time than the lab3.3 best model and provides a 5% lower accuracy. For now, the CNN model doesn't look good. It must be improvable.
@@ -71,3 +72,30 @@ The CNN model takes two times more time than the lab3.3 best model and provides 
 ## 3. Data augmentation
 
 ## 4. Transfer learning / fine-tuning on CIFAR10 dataset
+
+# PyTorch
+
+## 1. Convolutional Neural Network on MNIST dataset
+
+### 1.2. First CNN
+
+#### Hyperparameters & Results
+
+| Batch Size | Filters | Kernel Size | Stride | Padding |  Loss  | Accuracy |  Time   |
+| :--------: | :-----: | :---------: | :----: | :-----: | :----: | :------: | :-----: |
+|     32     |   32    |      3      |   1    | 'valid' | 1.5289 |  93.21%  | 294.66s |
+
+<br>
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex1/pytorch/model_1_loss.png" height="240" />
+<img src="plots/ex1/pytorch/model_1_accuracy.png" height="240" />
+
+On ne détecte bien aucun overfitting.
+
+<br>
+
+#### Confusion matrix
+
+<img src="plots/ex1/pytorch/model_1_confusion_matrix.png" height="240" />
