@@ -2,27 +2,28 @@ import time
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sn
 import torch
-from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+from sklearn.metrics import confusion_matrix
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import ToTensor
+from torchvision import datasets, transforms
 
-# Number of Epochs
-EPOCHS = 40
+CLASSES = 10
+CHANNELS = 1
 
-# Batch Size
+EPOCHS = 20
 BATCH_SIZE = 32
 
 # Convolution Layers: Array of tuples (in_channels, out_channels, kernel_size, stride, padding).
-CONVS = [(1, 64, 3, 1, 'valid')]
+CONVS = [(CHANNELS, 32, 3, 1, 'valid')]
 
 # Max Pooling Layers: Array of tuple (kernel_size, stride, padding).
 MAXPOOLS = []
 
 # Linear Layers: Array of tuples (in_features, out_features, activation_function).
-LINEARS = [(43264, 10, 'softmax')]
+LINEARS = [(21632, CLASSES, 'softmax')]
 
 
 class CNN(nn.Module):
@@ -87,10 +88,8 @@ if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     # Load the data.
-    training_data = datasets.MNIST(root='data', train=True, transform=ToTensor(), download=True)
-    test_data = datasets.MNIST(root='data', train=False, transform=ToTensor(), download=True)
-
-    # TODO: Standardize the data?
+    training_data = datasets.MNIST(root='data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0.5, 0.5)]), download=True)
+    test_data = datasets.MNIST(root='data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0.5, 0.5)]), download=True)
 
     # Retrieve the data loaders.
     train_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
@@ -118,7 +117,7 @@ if __name__ == '__main__':
         epoch_loss, epoch_accuracy = 0, 0
         epoch_val_loss, epoch_val_accuracy = 0, 0
 
-        # Actual Training.
+        # actual training
         for x, y in train_dataloader:
             x, y = x.to(device), y.to(device)
             pred = model(x)
@@ -129,7 +128,7 @@ if __name__ == '__main__':
             epoch_loss += loss.item() / num_batches
             epoch_accuracy += (pred.argmax(1) == y).type(torch.float).sum().item() / BATCH_SIZE / num_batches
 
-        # Validation.
+        # validation
         for x, y in test_dataloader:
             x, y = x.to(device), y.to(device)
             pred = model(x)
@@ -145,36 +144,54 @@ if __name__ == '__main__':
         print(f'{epoch_time:.2f}s - loss: {epoch_loss:.4f} - accuracy: {epoch_accuracy:.4f} - val_loss: {epoch_val_loss:.4f} - val_accuracy: {epoch_val_accuracy:.4f}')
     training_time = time.time() - training_start_time
 
-    # Plot Training Loss & Validation Accuracy Over Epoch.
-    plt.clf()
-    plt.plot(history['loss'], label='Training Loss')
-    plt.plot(history['val_accuracy'], label='Validation Accuracy')
-    plt.legend()
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss/Accuracy')
-    plt.title('Training Loss & Validation Accuracy Over Epoch')
-    plt.savefig('plots/ex1/pytorch/first_model_loss_valacc_over_epoch.png')
-
     # Evaluate the model.
     dataset_size = len(test_dataloader.dataset)  # type: ignore
     num_batches = len(test_dataloader)
     evaluating_start_time = time.time()
     model.eval()
     model_loss, model_accuracy = 0, 0
+    y_pred, y_true = [], []
     for x, y in test_dataloader:
         x, y = x.to(device), y.to(device)
         pred = model(x)
         loss = loss_fn(pred, y)
         model_loss += loss.item() / num_batches
         model_accuracy += (pred.argmax(1) == y).type(torch.float).sum().item() / BATCH_SIZE / num_batches
+        pred = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
+        y_pred.extend(pred)
+        y = y.data.cpu().numpy()
+        y_true.extend(y)
     evaluating_time = time.time() - evaluating_start_time
     print(f'{evaluating_time:.2f}s - loss: {model_loss:.4f} - accuracy: {model_accuracy:.4f}')
 
-    # Plot Confusion Matrix
-    # y_pred = np.argmax(pred, axis=1)
-    # y_test = np.argmax(y, axis=1)
-    # cm = confusion_matrix(y_test, y_pred)
-    # labels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
-    # disp.plot(cmap=plt.cm.Blues)
-    # plt.savefig("plots/ex1/pytorch/first_model_confusion_matrix.png")
+    # Display the summary.
+    print(f"SUMMARY:\n    - Loss: {model_loss:.4f}\n    - Accuracy: {model_accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
+
+    # Plot the loss.
+    plt.plot(history['loss'], label='Training')
+    plt.plot(history['val_loss'], label='Validation')
+    plt.legend()
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Loss Over Epoch')
+    plt.savefig('plots/ex1/pytorch/model_1_loss.png')
+    plt.clf()
+
+    # Plot the accuracy.
+    plt.plot(history['accuracy'], label='Training')
+    plt.plot(history['val_accuracy'], label='Validation')
+    plt.legend()
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Over Epoch')
+    plt.savefig('plots/ex1/pytorch/model_1_accuracy.png')
+    plt.clf()
+
+    # Plot the confusion matrix.
+    cm = confusion_matrix(y_true, y_pred)
+    labels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    df_cm = pd.DataFrame(cm/np.sum(cm) * 10, index=[i for i in labels], columns=[i for i in labels])
+    plt.figure(figsize=(12, 7))
+    sn.heatmap(df_cm, annot=True)
+    plt.savefig("plots/ex1/pytorch/model_1_confusion_matrix.png")
+    plt.clf()
