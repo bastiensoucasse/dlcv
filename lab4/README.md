@@ -4,17 +4,17 @@
 
 # Keras
 
-## 1. Convolutional Neural Network on MNIST dataset
+## 1. Convolutional Neural Network on MNIST Dataset
 
 ### 1.2. First CNN
 
 *N.B.*: After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seems to stabilize around that number.
 
-#### Hyperparameters & Results
+#### Model Summary
 
-| Batch Size |  Filters |  Kernel Size  | Stride | Padding |   Loss  | Accuracy |   Time   |
-| :--------: | :------: | :-----------: | :----: | :-----: | :-----: | :------: | :------: |
-|     32     |    32    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  |  622.84s |
+| Batch Size | Filters | Kernel Size | Stride | Padding |  Loss  | Accuracy |  Time   |
+| :--------: | :-----: | :---------: | :----: | :-----: | :----: | :------: | :-----: |
+|     32     |   32    |   (3, 3)    |   1    | 'valid' | 0.3152 |  92.43%  | 622.84s |
 
 <!-- temps abérant, à voir sur ton ordi -->
 <!-- Results for double plots:
@@ -29,26 +29,26 @@ SUMMARY:
     - Accuracy: 0.9167
     - Training Time: 1282.95s -->
 
-<br>
+<br />
 
 #### Loss and Accuracy Plot
 
 <img src="plots/ex1/keras/first_model_loss_valacc_over_epoch.png" height="240" />
 
-<br>
+<br />
 
-#### Confusion matrix
+#### Confusion Matrix
 
 <img src="plots/ex1/keras/first_model_confusion_matrix.png" height="240" />
 
-<br>
+<br />
 
 <!-- TODO: Comment those results -->
 …
 
-<br>
+<br />
 
-#### 10 worst classified images
+#### 10 Worst Classified Images
 
 First of all, let's define what we mean by "badly classified" images. Here, we consider an image badly classified if:
 - it is misclassified
@@ -57,73 +57,111 @@ First of all, let's define what we mean by "badly classified" images. Here, we c
 As a consequence, we decided to gather all the misclassified images and selected the ones that had the ten lowest predicted probability for their actual class.
 
 
-<br>
+<br />
 
-| Rank  | Image idx  | Pred. cat. | Act cat. |
-| :---: | :--------: | :--------: | :------: |
-|  10   |     X      |     X      |    X     |
-|   9   |     X      |     X      |    X     |
-|   8   |     X      |     X      |    X     |
-|   7   |     X      |     X      |    X     |
-|   6   |     X      |     X      |    X     |
-|   5   |     X      |     X      |    X     |
-|   4   |     X      |     X      |    X     |
-|   3   |     X      |     X      |    X     |
-|   2   |     X      |     X      |    X     |
-|   1   |     X      |     X      |    X     |
+| Rank  | Image idx | Pred. cat. | Act cat. |
+| :---: | :-------: | :--------: | :------: |
+|  10   |     X     |     X      |    X     |
+|   9   |     X     |     X      |    X     |
+|   8   |     X     |     X      |    X     |
+|   7   |     X     |     X      |    X     |
+|   6   |     X     |     X      |    X     |
+|   5   |     X     |     X      |    X     |
+|   4   |     X     |     X      |    X     |
+|   3   |     X     |     X      |    X     |
+|   2   |     X     |     X      |    X     |
+|   1   |     X     |     X      |    X     |
 
-<br>
+<br />
 
 ### 1.3. Comparison
 
 Here are the configuration and results of the best model we obtained on lab3.3.
 
-|    Model    | Accuracy |   Time   |
-| :---------: | :------: | :------: |
-| best lab3.3 |  97.82%  | 561.08s  |
-|  first CNN  |  92.43%  | 622.84s  |
+|    Model    | Accuracy |  Time   |
+| :---------: | :------: | :-----: |
+| best lab3.3 |  97.82%  | 561.08s |
+|  first CNN  |  92.43%  | 622.84s |
 
 <!-- temporary time, to update (also update sentence, as adapted) -->
 The CNN model takes two times more time than the lab3.3 best model and provides a 5% lower accuracy. For now, the CNN model doesn't look good. It must be improvable.
 
-<br>
+<br />
 
-### 1.4. Model improvment
+### 1.4. Model Improvment
 
 …
 
-<br><br>
+<br /><br />
 
-## 2. Convolutional Neural Network on CIFAR10 dataset
+## 2. Convolutional Neural Network on CIFAR10 Dataset
 
-## 3. Data augmentation
+## 3. Data Augmentation
 
-## 4. Transfer learning / fine-tuning on CIFAR10 dataset
-
+## 4. Transfer Learning / Fine-Tuning on CIFAR10 Dataset
 
 # PyTorch
 
-## 1. Convolutional Neural Network on MNIST dataset
+## 1. Convolutional Neural Network on MNIST Dataset
 
 ### 1.2. First CNN
 
-#### Hyperparameters & Results
+#### Model Summary
 
 | Batch Size | Filters | Kernel Size | Stride | Padding |  Loss  | Accuracy |  Time   |
 | :--------: | :-----: | :---------: | :----: | :-----: | :----: | :------: | :-----: |
 |     32     |   32    |      3      |   1    | 'valid' | 1.5289 |  93.21%  | 294.66s |
 
-<br>
+<br />
 
 #### Loss and Accuracy Plots
 
-<img src="plots/ex1/pytorch/model_1_loss.png" height="240" />
-<img src="plots/ex1/pytorch/model_1_accuracy.png" height="240" />
+<img src="plots/ex1/pytorch/model1_loss.png" height="240" />
+<img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
 
-On ne détecte bien aucun overfitting.
+…
 
-<br>
+<br />
 
-#### Confusion matrix
+#### Confusion Matrix
 
-<img src="plots/ex1/pytorch/model_1_confusion_matrix.png" height="240" />
+<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="240" />
+
+…
+
+<br />
+
+#### 10 Worst Classified Images
+
+| Rank  | Image idx | Pred. cat. | Act cat. |
+| :---: | :-------: | :--------: | :------: |
+|  10   |     X     |     X      |    X     |
+|   9   |     X     |     X      |    X     |
+|   8   |     X     |     X      |    X     |
+|   7   |     X     |     X      |    X     |
+|   6   |     X     |     X      |    X     |
+|   5   |     X     |     X      |    X     |
+|   4   |     X     |     X      |    X     |
+|   3   |     X     |     X      |    X     |
+|   2   |     X     |     X      |    X     |
+|   1   |     X     |     X      |    X     |
+
+…
+
+<br />
+
+### 1.3. Comparison
+
+…
+
+<br />
+
+### 1.4. Model Improvment
+
+…
+
+## 2. Convolutional Neural Network on CIFAR10 Dataset
+
+## 3. Data Augmentation
+
+## 4. Transfer Learning / Fine-Tuning on CIFAR10 Dataset
