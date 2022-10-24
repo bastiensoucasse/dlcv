@@ -1,17 +1,21 @@
 # PROVOST Iantsa & SOUCASSE Bastien — DLCV Lab 4
 
+<!-- TODO: add machine -->
+
 ## 1. Convolutional Neural Network on MNIST dataset
 
 ### 1.2. First CNN
+
+*N.B.*: After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seems to stabilize around that number.
 
 #### Hyperparameters & Results
 
 | Batch Size |  Filters |  Kernel Size  | Stride | Padding |   Loss  | Accuracy |   Time   |
 | :--------: | :------: | :-----------: | :----: | :-----: | :-----: | :------: | :------: |
-|     32     |    64    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  | 1411.18s |
+|     32     |    32    |    (3, 3)     |   1    | 'valid' |  0.3152 |  92.43%  |  622.84s |
 
 <!-- temps abérant, à voir sur ton ordi -->
-Results for double plots:
+<!-- Results for double plots:
 SUMMARY:
     - Loss: 0.3228
     - Accuracy: 0.9154
@@ -21,7 +25,7 @@ Results for two plots:
 SUMMARY:
     - Loss: 0.3107
     - Accuracy: 0.9167
-    - Training Time: 1282.95s
+    - Training Time: 1282.95s -->
 
 <br>
 
