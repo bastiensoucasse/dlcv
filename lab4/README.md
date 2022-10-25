@@ -98,9 +98,9 @@ The CNN model takes two times more time than the lab3.3 best model and provides 
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model1 | 0.2875 |  91.89%  |    101.84s    |
+| model1 | 0.2957 |  91.67%  |    102.06s    |
 
-**Architecture**
+#### Architecture
 
 - Convolution: 32, 3, 1, 'valid'.
 - Flatten.
