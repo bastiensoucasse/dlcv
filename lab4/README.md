@@ -1,6 +1,13 @@
 # PROVOST Iantsa & SOUCASSE Bastien — DLCV Lab 4
 
-<!-- TODO: add machine -->
+- Development
+    - **Apple MacBook Air (2017)**
+        - Intel Core i5 Chip: 1.8GHz dual-core Intel Core i5, Turbo Boost up to 2.9GHz, with 3MB shared L3 cache.
+    - **Apple MacBook Air (2020)**
+        - Apple M1 Chip: 8-core CPU with 4 perform­ance cores and 4 efficiency cores, 7-core GPU, and 16-core Neural Engine.
+- Testing
+    - **CREMI (vlaminck)**
+        - 6-Core E-2236 32Go CPU, and RTX 2060 (6Go) GPU.
 
 # Keras
 
