@@ -12,7 +12,7 @@ from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
 import lab4_utils
 
-MODEL = 'model1'
+MODEL = 'model2'
 
 EPOCHS = 20
 NUM_CLASSES = 10
@@ -39,9 +39,9 @@ if __name__ == '__main__':
     # Define the model.
     model = Sequential()
     model.add(Conv2D(NB_FILTERS[0], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
-    # model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
-    # model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
-    # model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
+    model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
+    model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
+    model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
     model.add(Flatten())
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
