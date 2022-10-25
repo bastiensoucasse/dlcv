@@ -36,21 +36,21 @@
 
 <br />
 
-We may think this first model is overfitting. But is it ???? 
+We may think this first model is overfitting. But is it ???? YES IT IS
 <!-- TODO -->
 
 <br />
 
 #### Confusion Matrix
 
-<img src="plots/ex1/keras/model1_confusion_matrix.png" height="240" />
+<img src="plots/ex1/keras/model1_confusion_matrix.png" height="400" />
 
 <br />
 
 The diagonal is where there are the higher numbers, which is a good thing since it represents the true positives. When it comes to misclassified images, we can observe that the most misclassified digits are:
-- 5 misclassified as 3 (34)
-- 8 misclassified as 5 (37)
-- 9 misclassified as 4 (42)
+- 5 as 3 (34)
+- 8 as 5 (37)
+- 9 as 4 (42)
 
 <br />
 
@@ -79,7 +79,6 @@ As a consequence, we decided to gather all the misclassified images and selected
 
 <br />
 
-<!-- TODO: Comment those results -->
 Note that this ranking is for an arbitrary run(ning)?.
 
 In this ranking, we can notice that there are the most confusions between:
@@ -106,15 +105,87 @@ The CNN model takes a little bit more time (5s) than the lab3.3 best model and p
 
 ### 1.4. Model Improvment
 
-…
+### 1.4.1. A new architecture
 
-<br /><br />
+Let's use a basic architecture given in class. Maybe this one will not overfit.
+
+#### Model Summary
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model2 | 0.5195 |  97.81%  |    144.61s    |
+
+- Convolution: 32, 3, 1, 'valid'.
+- Convolution: 64, 3, 1, 'valid'.
+- MaxPooling: 2, 1, 'valid'
+- Convolution: 16, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
+
+This model's accuracy is much better, it even reaches the lab3.3 best model accuracy. However, the training time is way longer (about 3 times), but it remains reasonable.
+
+<br />
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex1/keras/model2_accuracy.png" height="240" />
+<img src="plots/ex1/keras/model2_loss.png" height="240" />
+
+<br />
+
+This time, it is clear that our model is **overfitting**. Indeed, even though we got a very good accuracy and the training loss is decreasing as expected, the validation loss is increasing.
+
+<br />
+
+#### Confusion Matrix
+
+<img src="plots/ex1/keras/model2_confusion_matrix.png" height="400" />
+
+<br />
+
+Just like the first model, the diagonal is where there are the higher numbers. Moreover there are very few misclassified images (which is logical since the accuracy is higher). When it comes to misclassified images, we can observe that the most misclassified digits are:
+- 6 as 0 (10)
+- 8 as 7 (10)
+- 5 as 3 (11) (also noticed in first model)
+- 7 as 2 (12)
+- 9 as 7 (19)
+
+There are less misclassified images but more categories.
+
+<br />
+
+#### 10 Worst Classified Images
+
+*N.B.*: To know what is meant by "10 worst classified images", see same section in **1.2**.
+
+<br />
+
+| Rank  | Image idx | Pred. cat. | Act cat. |                     Images                      |
+| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
+|  10   |   7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |
+|   9   |   2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |
+|   8   |   2298    |     0      |    8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |
+|   7   |    290    |     5      |    8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |
+|   6   |   5936    |     9      |    4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |
+|   5   |   4838    |     5      |    6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |
+|   4   |   9982    |     6      |    5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |
+|   3   |   2770    |     7      |    3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |
+|   2   |   7886    |     4      |    2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |
+|   1   |   3794    |     3      |    8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |
+
+<br />
+
+First of all, none of the images in this ranking appear in the first model ranking.
+Then, we can only observe 1 confusion in both ways between 5 and 6, which was not in the first model ranking. Also this confusion doesn't appear in the most misclassified images. But, they look "harder to recognize" (such as the 7th, 8th and 9th) than the ones in the first model.
+
+<br />
+
+### 1.4.2. Fighting against overfitting
+
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
 
-## 3. Data Augmentation
-
-## 4. Transfer Learning / Fine-Tuning on CIFAR10 Dataset
+<br /><br />
 
 # PyTorch
 
@@ -149,7 +220,7 @@ The CNN model takes a little bit more time (5s) than the lab3.3 best model and p
 
 #### Confusion Matrix
 
-<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="240" />
+<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
 
 …
 
@@ -236,10 +307,7 @@ The CNN model takes a little bit more time (5s) than the lab3.3 best model and p
 
 …
 
-<br />
+<br /><br />
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
 
-## 3. Data Augmentation
-
-## 4. Transfer Learning / Fine-Tuning on CIFAR10 Dataset
