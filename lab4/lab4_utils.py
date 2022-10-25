@@ -8,14 +8,28 @@ import numpy as np
 from keras.datasets import cifar10, mnist
 
 
-# Find 10 worst classified images, from predictions file name
-def ten_worst(dataset, num_classes, filename):
+
+def ten_worst(dataset, num_classes, y_pred, save, path=None):
+    '''
+    Find 10 worst classified images, from predictions
+        dataset: dataset to work on
+                here, should becifar10 or mnist
+
+        num_classes: the number of classes of dataset (int)
+
+        y_pred: predictions made the model on y_test (2D array)
+
+        save: True if 10 worst images need to be saved, False otherwise (boolean)
+
+        path: path to where you should save the images (string)
+              here, should be ex_num/keras_or_pytorch/model
+              doesn't need to be defined if save is False 
+    '''
     
-    # Load predictions and real classes.
+    # Load test data.
     _, (x_test, y_test) = mnist.load_data()
     height, width = x_test.shape[1], x_test.shape[2]
     y_test = keras.utils.to_categorical(y_test, num_classes)
-    y_pred = np.loadtxt(filename)
 
     # Get the real class and predicted class for each image.
     real_classes = np.argmax(y_test, axis=1)
@@ -30,15 +44,12 @@ def ten_worst(dataset, num_classes, filename):
     misclassified.sort(key=lambda a: a[3])
     ranking = misclassified[-10:]
 
-    # Show the ten worst images.
+    # Show the ten worst images and their real and predicted classes.
     x_test = x_test.reshape(x_test.shape[0], height, width, 1) / 255.0
-    print("10 WORST CLASSIFIED IMAGES\n")
+    print('10 WORST CLASSIFIED IMAGES\n')
     for x in range(10, 0, -1):
         i, pc, rc, _ = ranking[x-1]
-        print(f"{x}. IMAGE {i}\n    - Predicted category: {pc}\n    - Actual category: {rc}\n")
-        # plt.imshow(x_test[i,:].reshape(28,28), cmap = matplotlib.cm.binary)
-        # plt.axis("off")
-        # plt.title("Rank %d" % x)
+        print(f'{x}. IMAGE {i}\n    - Predicted category: {pc}\n    - Actual category: {rc}\n')
+        if save:
+            plt.imsave('ten_worst/%s/%d.png' % (path, x), x_test[i,:].reshape(28,28), cmap = matplotlib.cm.binary)
     
-    
-ten_worst(mnist, 10, 'preds/ex1/keras/model_1_pred.txt')

@@ -51,3 +51,6 @@ on same plot
 For confusion matrix:
 https://subscription.packtpub.com/book/data/9781838555078/6/ch06lvl1sec34/confusion-matrix
 
+To save array in file and load back:
+np.savetxt(filename, array, fmt='%f') 
+np.loadtxt(filename)

@@ -2,22 +2,26 @@ import os
 import time
 
 import keras
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from keras.datasets import mnist
 from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import RMSprop
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
+import lab4_utils
 
-EPOCHS = 40
+MODEL = 'model1'
+
+EPOCHS = 20
 NUM_CLASSES = 10
 
 K = 3
+P = 2
 STRIDE = 1
 PADDING = ['valid', 'same']
-NB_FILTERS = 64
+NB_FILTERS = [32, 64, 128]
 
 
 if __name__ == '__main__':
@@ -34,7 +38,10 @@ if __name__ == '__main__':
 
     # Define the model.
     model = Sequential()
-    model.add(Conv2D(NB_FILTERS, (K, K), STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
+    model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
+    # model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
+    # model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
+    # model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
     model.add(Flatten())
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -45,56 +52,42 @@ if __name__ == '__main__':
 
 
     # Display the summary.
-    print(f"SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s")
+    print(f'SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s')
 
-    # Plot Training Loss & Validation Accuracy Over Epoch.
-    plt.clf()
-    plt.plot(hist.history["loss"], label="Training Loss")
-    # plt.plot(hist.history["val_accuracy"], label="Validation Accuracy")
+
+    # Plot the loss.
+    plt.plot(hist.history['loss'], label='Training')
+    plt.plot(hist.history['val_loss'], label='Validation')
     plt.legend()
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.title("Training Loss Over Epoch")
-    plt.savefig("plots/ex1/keras/first_model_loss_over_epoch.png")
-    # plt.ylabel("Loss/Accuracy")
-    # plt.title("Training Loss & Validation Accuracy Over Epoch")
-    # plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch.png")
-
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Loss Over Epoch')
+    plt.savefig('plots/ex1/keras/%s_loss.png' % MODEL)
     plt.clf()
-    plt.plot(hist.history["val_accuracy"], label="Validation Accuracy")
+
+    # Plot the accuracy.
+    plt.plot(hist.history['accuracy'], label='Training')
+    plt.plot(hist.history['val_accuracy'], label='Validation')
     plt.legend()
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-    plt.title("Validation Accuracy Over Epoch")
-    plt.savefig("plots/ex1/keras/first_model_valacc_over_epoch.png")
-
-    # fig, loss_ax = plt.subplots()
-
-    # color = 'tab:red'
-    # loss_ax.set_xlabel('Epoch')
-    # loss_ax.set_ylabel('Loss', color=color)
-    # loss_ax.plot(hist.history["loss"], label="Training Loss", color=color)
-    # loss_ax.tick_params(axis='y', labelcolor=color)
-
-    # acc_ax = loss_ax.twinx()  # instantiate a second axes that shares the same x-axis
-
-    # color = 'tab:blue'
-    # acc_ax.set_ylabel('Accuracy', color=color)  # we already handled the x-label with ax1
-    # acc_ax.plot(hist.history["val_accuracy"], label="Validation Accuracy", color=color)
-    # acc_ax.tick_params(axis='y', labelcolor=color)
-
-    # fig.tight_layout()  # otherwise the right y-label is slightly clipped
-    # plt.title("Training Loss & Validation Accuracy Over Epoch")
-    # plt.savefig("plots/ex1/keras/first_model_loss_valacc_over_epoch_test.png")
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Over Epoch')
+    plt.savefig('plots/ex1/keras/%s_accuracy.png' % MODEL)
+    plt.clf()
+    
 
     # Compute Confusion Matrix.
     y_pred = model.predict(x_test)
+
     y_pred = np.argmax(y_pred, axis=1)
     y_test = np.argmax(y_test, axis=1)
 
     cm = confusion_matrix(y_test, y_pred)
 
-    labels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
     disp.plot(cmap=plt.cm.Blues)
-    plt.savefig("plots/ex1/keras/first_model_confusion_matrix.png")
+    plt.savefig('plots/ex1/keras/%s_confusion_matrix.png' % MODEL)   
+
+    # Get 10 worst classified images
+    lab4_utils.ten_worst(mnist, 10, y_pred, True, 'ex1/keras/%s' % MODEL)
