@@ -7,7 +7,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-MODEL = 'model2'
+MODEL = 'model1'
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 NUM_CLASSES = len(CLASSES)
@@ -15,90 +15,6 @@ NUM_CHANNELS = 1
 
 BATCH_SIZE = 32
 NUM_EPOCHS = 20
-
-'''
-# First Convolution Layers: Array of tuples (in_channels, out_channels, kernel_size, stride, padding).
-CONVS = [(CHANNELS, 32, 3, 1, 'valid')] # Model 1
-# CONVS = [(CHANNELS, 64, 3, 1, 'valid'), (64, 32, 3, 1, 'valid')] # Model 2
-
-# Max Pooling Layers: Array of tuple (kernel_size, stride, padding).
-MAXPOOLS = [] # Model 1
-# MAXPOOLS = [(2, 1, 0)] # Model 2
-
-# Second Convolution Layers: Array of tuples (in_channels, out_channels, kernel_size, stride, padding).
-CONVS2 = [] # Model 1
-# CONVS2 = [(32, 16, 3, 1, 'valid')] # Model 2
-
-# Linear Layers: Array of tuples (in_features, out_features, activation_function).
-LINEARS = [(21632, CLASSES, 'softmax')] # Model 1
-# LINEARS = [(7056, CLASSES, 'softmax')] # Model 2
-
-
-class CNN(nn.Module):
-    def __init__(self):
-        super(CNN, self).__init__()
-
-        # Define the first convolution layers.
-        self.convs = nn.ParameterList()
-        for in_channels, out_channels, kernel_size, stride, padding in CONVS:
-            self.convs.append(nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding))
-
-        # Define the maximum pooling layers.
-        self.maxpools = nn.ParameterList()
-        for kernel_size, stride, padding in MAXPOOLS:
-            self.maxpools.append(nn.MaxPool2d(kernel_size, stride, padding))
-
-        # Define the second convolution layers.
-        self.convs2 = nn.ParameterList()
-        for in_channels, out_channels, kernel_size, stride, padding in CONVS2:
-            self.convs2.append(nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding))
-
-        # Define the flatten layer.
-        self.flatten = nn.Flatten()
-
-        # Define the linear layers.
-        self.linears = nn.ParameterList()
-        for in_features, out_features, act_fn in LINEARS:
-            self.linears.append(nn.Linear(in_features, out_features))
-
-        # Define the activation functions.
-        self.sigmoid = nn.Sigmoid()
-        self.relu = nn.ReLU()
-        self.tanh = nn.Tanh()
-        self.softmax = nn.Softmax(1)
-
-    def forward(self, x):
-        # Apply the first convolution layers.
-        for conv in self.convs:
-            x = conv(x)
-
-        # Apply the maximum pooling layers.
-        for maxpool in self.maxpools:
-            x = maxpool(x)
-
-        # Apply the second convolution layers.
-        for conv in self.convs2:
-            x = conv(x)
-
-        # Apply the flatten layer.
-        x = self.flatten(x)
-
-        # Apply the linear layers.
-        i = 0
-        for linear in self.linears:
-            if LINEARS[i][2] == 'sigmoid':
-                act_fn = self.sigmoid
-            if LINEARS[i][2] == 'relu':
-                act_fn = self.relu
-            if LINEARS[i][2] == 'tanh':
-                act_fn = self.tanh
-            if LINEARS[i][2] == 'softmax':
-                act_fn = self.softmax
-            x = act_fn(linear(x))
-            i += 1
-
-        return x
-'''
 
 
 class model1(nn.Module):

@@ -96,9 +96,15 @@ The CNN model takes two times more time than the lab3.3 best model and provides 
 
 #### Model Summary
 
-| Batch Size | Filters | Kernel Size | Stride | Padding |  Loss  | Accuracy |  Time   |
-| :--------: | :-----: | :---------: | :----: | :-----: | :----: | :------: | :-----: |
-|     32     |   32    |      3      |   1    | 'valid' | 1.5289 |  93.21%  | 294.66s |
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model1 | 0.2875 |  91.89%  |    101.84s    |
+
+**Architecture**
+
+- Convolution: 32, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
 
 <br />
 
