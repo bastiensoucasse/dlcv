@@ -7,7 +7,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-MODEL = 'model1'
+MODEL = 'model2'
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 NUM_CLASSES = len(CLASSES)
@@ -123,8 +123,8 @@ if __name__ == '__main__':
             loss = criterion(pred, y)
             running_loss += loss.item() / len(test_data_loader)
             running_accuracy += (pred.argmax(1) == y).sum().item() / BATCH_SIZE / len(test_data_loader)
-            y_pred.extend(pred.argmax(1))
-            y_true.extend(y)
+            y_pred.extend(pred.argmax(1).cpu())
+            y_true.extend(y.cpu())
         evaluating_time = time.time() - evaluating_start_time
         print(f'{evaluating_time:.2f}s - loss: {running_loss:.4f} - accuracy: {running_accuracy:.4f}')
 

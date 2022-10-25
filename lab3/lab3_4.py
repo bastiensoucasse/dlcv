@@ -1,5 +1,7 @@
 # Best Model
 
+import time
+
 import keras
 from keras.datasets import mnist
 from keras.layers import Dense
@@ -18,8 +20,11 @@ if __name__ == "__main__":
     model.add(Dense(128, activation="sigmoid"))
     model.add(Dense(10, activation="softmax"))
     model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
+
+    start_time = time.time()
     model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))
+    training_time = time.time() - start_time
+
     loss, accuracy = model.evaluate(x_test, y_test)
 
-    print("Model Loss: %.4f." % loss)
-    print("Model Accuracy: %.4f%." % accuracy)
+    print(f'SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s')

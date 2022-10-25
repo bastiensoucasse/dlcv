@@ -1,6 +1,13 @@
 # PROVOST Iantsa & SOUCASSE Bastien — DLCV Lab 4
 
-<!-- TODO: add machine -->
+- Development
+    - **Apple MacBook Air (2017)**
+        - Intel Core i5 Chip: 1.8GHz dual-core Intel Core i5, Turbo Boost up to 2.9GHz, with 3MB shared L3 cache.
+    - **Apple MacBook Air (2020)**
+        - Apple M1 Chip: 8-core CPU with 4 perform­ance cores and 4 efficiency cores, 7-core GPU, and 16-core Neural Engine.
+- Testing
+    - **CREMI (vlaminck)**
+        - 6-Core E-2236 32Go CPU, and RTX 2060 (6Go) GPU.
 
 # Keras
 
@@ -90,7 +97,7 @@ Here are the configuration and results of the best model we obtained on lab3.3.
 |    Model    | Accuracy |  Time  |
 | :---------: | :------: | :----: |
 | best lab3.3 |  97.59%  | 42.64s |
-|  first CNN  |  91.96%  | 46.96s |
+|   model1    |  91.96%  | 46.96s |
 
 The CNN model takes a little bit more time (5s) than the lab3.3 best model and provides an about 5% lower accuracy. For now, the CNN model is not better but it must be improvable.
 
@@ -190,9 +197,9 @@ Then, we can only observe 1 confusion in both ways between 5 and 6, which was no
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model1 | 0.2875 |  91.89%  |    101.84s    |
+| model1 | 0.2957 |  91.67%  |    102.06s    |
 
-**Architecture**
+#### Architecture
 
 - Convolution: 32, 3, 1, 'valid'.
 - Flatten.
@@ -238,11 +245,63 @@ Then, we can only observe 1 confusion in both ways between 5 and 6, which was no
 
 ### 1.3. Comparison
 
-…
+|    Model    | Accuracy |  Time   |
+| :---------: | :------: | :-----: |
+| best lab3.3 |  97.59%  | 42.64s  |
+|   model1    |  91.67%  | 102.06s |
 
 <br />
 
 ### 1.4. Model Improvment
+
+#### Model Summary
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model2 | 0.0988 |  97.98%  |    104.65s    |
+
+#### Architecture
+
+- Convolution: 64, 3, 1, 'valid'.
+- Convolution: 32, 3, 1, 'valid'.
+- Maximum Pooling: 2, 1, 'valid'.
+- Convolution: 16, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
+
+<br />
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex1/pytorch/model2_loss.png" height="240" />
+<img src="plots/ex1/pytorch/model2_accuracy.png" height="240" />
+
+…
+
+<br />
+
+#### Confusion Matrix
+
+<img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="240" />
+
+…
+
+<br />
+
+#### 10 Worst Classified Images
+
+| Rank  | Image idx | Pred. cat. | Act cat. |
+| :---: | :-------: | :--------: | :------: |
+|  10   |     X     |     X      |    X     |
+|   9   |     X     |     X      |    X     |
+|   8   |     X     |     X      |    X     |
+|   7   |     X     |     X      |    X     |
+|   6   |     X     |     X      |    X     |
+|   5   |     X     |     X      |    X     |
+|   4   |     X     |     X      |    X     |
+|   3   |     X     |     X      |    X     |
+|   2   |     X     |     X      |    X     |
+|   1   |     X     |     X      |    X     |
 
 …
 
