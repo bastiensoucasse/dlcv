@@ -117,7 +117,7 @@ Let's use a basic architecture given in class. Maybe this one will not overfit.
 
 - Convolution: 32, 3, 1, 'valid'.
 - Convolution: 64, 3, 1, 'valid'.
-- MaxPooling: 2, 1, 'valid'
+- Maximum Pooling: 2, 1, 'valid'.
 - Convolution: 16, 3, 1, 'valid'.
 - Flatten.
 - Fully Connected: 10, 'softmax'.
@@ -261,8 +261,6 @@ Then, we can only observe 1 confusion in both ways between 5 and 6, which was no
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
 | model2 | 0.0988 |  97.98%  |    104.65s    |
-
-#### Architecture
 
 - Convolution: 64, 3, 1, 'valid'.
 - Convolution: 32, 3, 1, 'valid'.
