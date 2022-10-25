@@ -12,27 +12,38 @@
 
 #### Model Summary
 
-| Batch Size | Filters | Kernel Size | Stride | Padding |  Loss  | Accuracy |  Time   |
-| :--------: | :-----: | :---------: | :----: | :-----: | :----: | :------: | :-----: |
-|     32     |   32    |   (3, 3)    |   1    | 'valid' | 0.3152 |  92.43%  | 622.84s |
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model1 | 0.2940 |  91.96%  |    46.96s     |
 
+- Convolution: 32, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
 
 <br />
 
-#### Loss and Accuracy Plot
+#### Loss and Accuracy Plots
 
-<img src="plots/ex1/keras/first_model_loss_valacc_over_epoch.png" height="240" />
+<img src="plots/ex1/keras/model1_accuracy.png" height="240" />
+<img src="plots/ex1/keras/model1_loss.png" height="240" />
+
+<br />
+
+We may think this first model is overfitting. But is it ???? 
+<!-- TODO -->
 
 <br />
 
 #### Confusion Matrix
 
-<img src="plots/ex1/keras/first_model_confusion_matrix.png" height="240" />
+<img src="plots/ex1/keras/model1_confusion_matrix.png" height="240" />
 
 <br />
 
-<!-- TODO: Comment those results -->
-…
+The diagonal is where there are the higher numbers, which is a good thing since it represents the true positives. When it comes to misclassified images, we can observe that the most misclassified digits are:
+- 5 misclassified as 3 (34)
+- 8 misclassified as 5 (37)
+- 9 misclassified as 4 (42)
 
 <br />
 
@@ -44,21 +55,32 @@ First of all, let's define what we mean by "badly classified" images. Here, we c
 
 As a consequence, we decided to gather all the misclassified images and selected the ones that had the ten lowest predicted probability for their actual class.
 
+<br />
+
+| Rank  | Image idx | Pred. cat. | Act cat. |                     Images                      |
+| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
+|  10   |   1727    |     7      |    3     | <img src="ten_worst/ex1/keras/model1/10.png" /> |
+|   9   |   6511    |     5      |    3     | <img src="ten_worst/ex1/keras/model1/9.png" />  |
+|   8   |   4910    |     4      |    9     | <img src="ten_worst/ex1/keras/model1/8.png" />  |
+|   7   |    565    |     9      |    4     | <img src="ten_worst/ex1/keras/model1/7.png" />  |
+|   6   |   5874    |     3      |    5     | <img src="ten_worst/ex1/keras/model1/6.png" />  |
+|   5   |   7786    |     7      |    9     | <img src="ten_worst/ex1/keras/model1/5.png" />  |
+|   4   |   8297    |     5      |    8     | <img src="ten_worst/ex1/keras/model1/4.png" />  |
+|   3   |   7689    |     5      |    8     | <img src="ten_worst/ex1/keras/model1/3.png" />  |
+|   2   |   3862    |     3      |    2     | <img src="ten_worst/ex1/keras/model1/2.png" />  |
+|   1   |   2371    |     9      |    4     | <img src="ten_worst/ex1/keras/model1/1.png" />  |
 
 <br />
 
-| Rank  | Image idx | Pred. cat. | Act cat. |
-| :---: | :-------: | :--------: | :------: |
-|  10   |     X     |     X      |    X     |
-|   9   |     X     |     X      |    X     |
-|   8   |     X     |     X      |    X     |
-|   7   |     X     |     X      |    X     |
-|   6   |     X     |     X      |    X     |
-|   5   |     X     |     X      |    X     |
-|   4   |     X     |     X      |    X     |
-|   3   |     X     |     X      |    X     |
-|   2   |     X     |     X      |    X     |
-|   1   |     X     |     X      |    X     |
+<!-- TODO: Comment those results -->
+Note that this ranking is for an arbitrary run(ning)?.
+
+In this ranking, we can notice that there are the most confusions between:
+- 5 and 3 (2)
+- 5 and 8 (2)
+- 4 and 9 (3)
+
+Looking back at the confusion matrix, we can see that those 3 confusions all appear in the most misclassified digits list, at least in one way (the two ways being x misclassified as y, and y miscalssified as x).
 
 <br />
 
@@ -66,13 +88,12 @@ As a consequence, we decided to gather all the misclassified images and selected
 
 Here are the configuration and results of the best model we obtained on lab3.3.
 
-|    Model    | Accuracy |  Time   |
-| :---------: | :------: | :-----: |
-| best lab3.3 |  97.82%  | 561.08s |
-|  first CNN  |  92.43%  | 622.84s |
+|    Model    | Accuracy |  Time  |
+| :---------: | :------: | :----: |
+| best lab3.3 |  97.59%  | 42.64s |
+|  first CNN  |  91.96%  | 46.96s |
 
-<!-- temporary time, to update (also update sentence, as adapted) -->
-The CNN model takes two times more time than the lab3.3 best model and provides a 5% lower accuracy. For now, the CNN model doesn't look good. It must be improvable.
+The CNN model takes a little bit more time (5s) than the lab3.3 best model and provides an about 5% lower accuracy. For now, the CNN model is not better but it must be improvable.
 
 <br />
 
