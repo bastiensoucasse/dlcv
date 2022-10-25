@@ -75,7 +75,7 @@ Here are the configuration and results of the best model we obtained on lab3.3.
 
 |    Model    | Accuracy |  Time   |
 | :---------: | :------: | :-----: |
-| best lab3.3 |  97.82%  | 561.08s |
+| best lab3.3 |  97.59%  | 42.64s  |
 |  first CNN  |  92.43%  | 622.84s |
 
 <!-- temporary time, to update (also update sentence, as adapted) -->
@@ -153,7 +153,10 @@ The CNN model takes two times more time than the lab3.3 best model and provides 
 
 ### 1.3. Comparison
 
-…
+|    Model    | Accuracy |  Time   |
+| :---------: | :------: | :-----: |
+| best lab3.3 |  97.59%  | 42.64s  |
+|   model1    |  91.67%  | 102.06s |
 
 <br />
 
