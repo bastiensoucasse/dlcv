@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     # Define the model.
     model = Sequential()
-    model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
+    model.add(Conv2D(NB_FILTERS[0], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
     # model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
     # model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
     # model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
@@ -49,7 +49,6 @@ if __name__ == '__main__':
     hist = model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
     training_time = time.time() - start_time
     loss, accuracy = model.evaluate(x_test, y_test)
-
 
     # Display the summary.
     print(f'SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s')
@@ -78,11 +77,8 @@ if __name__ == '__main__':
 
     # Compute Confusion Matrix.
     y_pred = model.predict(x_test)
-
-    y_pred = np.argmax(y_pred, axis=1)
-    y_test = np.argmax(y_test, axis=1)
-
-    cm = confusion_matrix(y_test, y_pred)
+    
+    cm = confusion_matrix(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1))
 
     labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
