@@ -152,7 +152,58 @@ The CNN model takes two times more time than the lab3.3 best model and provides 
 
 ### 1.4. Model Improvment
 
+#### Model Summary
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model2 | 0.0988 |  97.98%  |    104.65s    |
+
+#### Architecture
+
+- Convolution: 64, 3, 1, 'valid'.
+- Convolution: 32, 3, 1, 'valid'.
+- Maximum Pooling: 2, 1, 'valid'.
+- Convolution: 16, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
+
+<br />
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex1/pytorch/model2_loss.png" height="240" />
+<img src="plots/ex1/pytorch/model2_accuracy.png" height="240" />
+
 …
+
+<br />
+
+#### Confusion Matrix
+
+<img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="240" />
+
+…
+
+<br />
+
+#### 10 Worst Classified Images
+
+| Rank  | Image idx | Pred. cat. | Act cat. |
+| :---: | :-------: | :--------: | :------: |
+|  10   |     X     |     X      |    X     |
+|   9   |     X     |     X      |    X     |
+|   8   |     X     |     X      |    X     |
+|   7   |     X     |     X      |    X     |
+|   6   |     X     |     X      |    X     |
+|   5   |     X     |     X      |    X     |
+|   4   |     X     |     X      |    X     |
+|   3   |     X     |     X      |    X     |
+|   2   |     X     |     X      |    X     |
+|   1   |     X     |     X      |    X     |
+
+…
+
+<br />
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
 

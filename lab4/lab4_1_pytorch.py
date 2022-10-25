@@ -7,7 +7,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-MODEL = 'model1'
+MODEL = 'model2'
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 NUM_CLASSES = len(CLASSES)
