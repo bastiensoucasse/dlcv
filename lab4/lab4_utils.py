@@ -3,7 +3,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def ten_worst(dataset, num_classes, y_pred, save, path=None):
     '''
     Find 10 worst classified images, from predictions
@@ -21,6 +20,10 @@ def ten_worst(dataset, num_classes, y_pred, save, path=None):
     # Load test data.
     _, (x_test, y_test) = dataset.load_data()
     height, width = x_test.shape[1], x_test.shape[2]
+    if len(x_test.shape) == 3:
+        depth = 1
+    else:
+        depth = x_test.shape[3]
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     # Get the real class and predicted class for each image.
@@ -36,14 +39,13 @@ def ten_worst(dataset, num_classes, y_pred, save, path=None):
     ranking = misclassified[-10:]
 
     # Show the ten worst images and their real and predicted classes.
-    x_test = x_test.reshape(x_test.shape[0], height, width, 1) / 255.0
+    x_test = x_test.reshape(x_test.shape[0], height, width, depth) / 255.0
     print('10 WORST CLASSIFIED IMAGES\n')
     for x in range(10, 0, -1):
         i, pc, rc, _ = ranking[x-1]
         print(f'{x}. IMAGE {i}\n    - Predicted category: {pc}\n    - Actual category: {rc}\n')
         if save:
-            plt.imsave('ten_worst/%s/%d.png' % (path, x), x_test[i, :].reshape(28, 28), cmap=matplotlib.cm.binary)
-
-
-def ten_worst():
-    return
+            if depth == 1:
+                plt.imsave('ten_worst/%s/%d.png' % (path, x), x_test[i, :].reshape(width, height), cmap=matplotlib.cm.binary)
+            else:
+                plt.imsave('ten_worst/%s/%d.png' % (path, x), x_test[i, :].reshape(width, height, depth), cmap=matplotlib.cm.binary)
