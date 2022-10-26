@@ -9,9 +9,9 @@ from torchvision import datasets, transforms
 
 MODEL = 'model4'
 
-CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
-NUM_CHANNELS = 1
+NUM_CHANNELS = 3
 
 BATCH_SIZE = 32
 NUM_EPOCHS = 20
@@ -24,7 +24,7 @@ class model1(nn.Module):
         super(model1, self).__init__()
         self.conv = nn.Conv2d(NUM_CHANNELS, 32, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(21632, NUM_CLASSES)
+        self.linear = nn.Linear(28800, NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -43,7 +43,7 @@ class model2(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(1600, NUM_CLASSES)
+        self.linear = nn.Linear(2304, NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -67,7 +67,7 @@ class model3(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(1600, NUM_CLASSES)
+        self.linear = nn.Linear(2304, NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -93,7 +93,7 @@ class model4(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear1 = nn.Linear(1600, 128)
+        self.linear1 = nn.Linear(2304, 128)
         self.relu2 = nn.ReLU()
         self.linear2 = nn.Linear(128, NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
@@ -119,8 +119,8 @@ if __name__ == '__main__':
     print(f"Device: {device}.")
 
     # Load the data.
-    train_dataset = datasets.MNIST('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]), download=True)
-    test_dataset = datasets.MNIST('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]), download=True)
+    train_dataset = datasets.CIFAR10('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
+    test_dataset = datasets.CIFAR10('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
     train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
@@ -199,7 +199,7 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Loss Over Epoch')
-    plt.savefig('plots/ex1/pytorch/%s_loss.png' % MODEL)
+    plt.savefig('plots/ex2/pytorch/%s_loss.png' % MODEL)
     plt.clf()
 
     # Plot the accuracy.
@@ -209,12 +209,12 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Accuracy Over Epoch')
-    plt.savefig('plots/ex1/pytorch/%s_accuracy.png' % MODEL)
+    plt.savefig('plots/ex2/pytorch/%s_accuracy.png' % MODEL)
     plt.clf()
 
     # Plot the confusion matrix.
     cm = confusion_matrix(y_true, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
     disp.plot(cmap=plt.cm.magma)
-    plt.savefig('plots/ex1/pytorch/%s_confusion_matrix.png' % MODEL)
+    plt.savefig('plots/ex2/pytorch/%s_confusion_matrix.png' % MODEL)
     plt.clf()

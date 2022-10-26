@@ -9,6 +9,8 @@
     - **CREMI (vlaminck)**
         - 6-Core E-2236 32Go CPU, and RTX 2060 (6Go) GPU.
 
+<br /><br />
+
 # Keras
 
 ## 1. Convolutional Neural Network on MNIST Dataset
@@ -103,7 +105,7 @@ The CNN model takes a little bit more time (5s) than the lab3.3 best model and p
 
 <br />
 
-### 1.4. Model Improvment
+### 1.4. Model Improvement
 
 ### 1.4.1. A new architecture
 
@@ -237,7 +239,7 @@ They all look quite equivalent. More importantly, they show better results than 
 
 ## 1. Convolutional Neural Network on MNIST Dataset
 
-### 1.2. First CNN
+### 1.1. First CNN
 
 #### Model Summary
 
@@ -245,62 +247,45 @@ They all look quite equivalent. More importantly, they show better results than 
 | :----: | :----: | :------: | :-----------: |
 | model1 | 0.2957 |  91.67%  |    102.06s    |
 
-#### Architecture
-
 - Convolution: 32, 3, 1, 'valid'.
 - Flatten.
 - Fully Connected: 10 ('softmax').
 
-*N.B.:* In PyTorch, the Softmax activation is already done by the CrossEntropyLoss criterion, as mentionned in the [official documentation](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): "Note that this is equivalent to the combination of LogSoftmax and NLLLoss."
-
-<br />
+*N.B.:* This is the same model1 as with Keras to have the same base, but it won't be improve the same way as Keras, since we chose to improve it the most relevant way possible. This will allow us to have other CNN architectures giving good accuracies.
 
 #### Loss and Accuracy Plots
 
 <img src="plots/ex1/pytorch/model1_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
 
-…
-
-<br />
+These plots may show some overfitting, but not much. There is less overfitting than with Keras.
 
 #### Confusion Matrix
 
 <img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
 
-…
+As in Keras, the confusion matrix shows that most the images are well classified (the diagonal). The most misclassified digits are:
+
+- 7 as 9 (38)
+- 5 as 3 (38)
+- 2 as 8 (48)
+
+#### Nota Bene
+
+In PyTorch, the Softmax activation is already done by the CrossEntropyLoss criterion, as mentionned in the [official documentation](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): "Note that this is equivalent to the combination of LogSoftmax and NLLLoss." (That's why we put softmax between parenthesis.)
+
+As we didn't know this at first, we did a first version of this model with a softmax activation on the linear layer. The results were drastically different.
+
+<img src="plots/ex1/pytorch/model1_loss.png" height="240" />
+<img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
+
+<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
+
+The confusion matrix shows that not only the elements are not well classified, but also some classes are nerver predicted.
 
 <br />
 
-#### 10 Worst Classified Images
-
-| Rank  | Image idx | Pred. cat. | Act cat. |
-| :---: | :-------: | :--------: | :------: |
-|  10   |     X     |     X      |    X     |
-|   9   |     X     |     X      |    X     |
-|   8   |     X     |     X      |    X     |
-|   7   |     X     |     X      |    X     |
-|   6   |     X     |     X      |    X     |
-|   5   |     X     |     X      |    X     |
-|   4   |     X     |     X      |    X     |
-|   3   |     X     |     X      |    X     |
-|   2   |     X     |     X      |    X     |
-|   1   |     X     |     X      |    X     |
-
-…
-
-<br />
-
-### 1.3. Comparison
-
-|    Model    | Accuracy |  Time   |
-| :---------: | :------: | :-----: |
-| best lab3.3 |  97.59%  | 42.64s  |
-|   model1    |  91.67%  | 102.06s |
-
-<br />
-
-### 1.4. Model Improvment
+### 1.2. Model Improvement
 
 #### Model Summary
 
@@ -315,43 +300,38 @@ They all look quite equivalent. More importantly, they show better results than 
 - Flatten.
 - Fully Connected: 10 ('softmax').
 
-<br />
-
 #### Loss and Accuracy Plots
 
 <img src="plots/ex1/pytorch/model2_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model2_accuracy.png" height="240" />
 
-…
-
-<br />
+This time, there is an obvious overfitting detected as the trainling loss keeps descending but the validation one is stabilizing and ever ascending.
 
 #### Confusion Matrix
 
-<img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="240" />
+<img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="400" />
 
-…
+However, the confusion matrix—and the accuracy—still shows that most of the images are classified correctly.
 
 <br />
 
-#### 10 Worst Classified Images
+### 1.3. Fighting Against Overfitting
 
-| Rank  | Image idx | Pred. cat. | Act cat. |
-| :---: | :-------: | :--------: | :------: |
-|  10   |     X     |     X      |    X     |
-|   9   |     X     |     X      |    X     |
-|   8   |     X     |     X      |    X     |
-|   7   |     X     |     X      |    X     |
-|   6   |     X     |     X      |    X     |
-|   5   |     X     |     X      |    X     |
-|   4   |     X     |     X      |    X     |
-|   3   |     X     |     X      |    X     |
-|   2   |     X     |     X      |    X     |
-|   1   |     X     |     X      |    X     |
+|   ID   | Architecture                                                                                                                                                                                                                                                                                         |  Loss  | Accuracy | Training time |
+| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - Fully Connected: 10 ('softmax').                                        | 0.0499 |  98.36%  |    106.86s    |
+| model4 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - `Fully Connected: 128, 'relu'.` <br> - Fully Connected: 10 ('softmax'). | 0.0449 |  98.98%  |    121.13s    |
 
-…
+|   ID   |                            Loss Plot                             |                          Accuracy Plot                           |                         Confusion Matrix                         |
+| :----: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: |
+| model3 | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> |
+| model4 | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> |
 
 <br /><br />
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
 
+<!-- [model1] loss: 2.0761, accuracy: 33.09%, training time: 109.88s -->
+<!-- [model2] loss: 1.2972, accuracy: 59.38%, training time: 107.24s -->
+<!-- [model3] loss: 1.0494, accuracy: 64.26%, training time: 110.29s -->
+<!-- [model4] loss: 1.3524, accuracy: 63.06%, training time: 119.09s -->
