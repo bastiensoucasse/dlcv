@@ -4,24 +4,26 @@ import time
 import keras
 import matplotlib.pyplot as plt
 import numpy as np
+from keras.activations import relu
 from keras.datasets import mnist
-from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D
+from keras.layers import (BatchNormalization, Conv2D, Dense, Dropout, Flatten,
+                          MaxPooling2D)
 from keras.models import Sequential
 from keras.optimizers import RMSprop
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
 import lab4_utils
 
-MODEL = 'model2'
+MODEL = 'model5'
 
 EPOCHS = 20
 NUM_CLASSES = 10
 
-K = 3
+K = 5
 P = 2
 STRIDE = 1
 PADDING = ['valid', 'same']
-NB_FILTERS = [32, 64, 128]
+NB_FILTERS = [32, 64, 128, 256]
 
 
 if __name__ == '__main__':
@@ -38,16 +40,20 @@ if __name__ == '__main__':
 
     # Define the model.
     model = Sequential()
-    model.add(Conv2D(NB_FILTERS[0], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
-    model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
-    model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
+    model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
     model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(P, 2, PADDING[0]))
+    model.add(Conv2D(NB_FILTERS[3], K, STRIDE, PADDING[0]))
+    model.add(MaxPooling2D(P, STRIDE, PADDING[0]))
     model.add(Flatten())
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
     start_time = time.time()
     hist = model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
     training_time = time.time() - start_time
+
+    # Evaluate the model.
     loss, accuracy = model.evaluate(x_test, y_test)
 
     # Display the summary.

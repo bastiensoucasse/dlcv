@@ -54,3 +54,9 @@ https://subscription.packtpub.com/book/data/9781838555078/6/ch06lvl1sec34/confus
 To save array in file and load back:
 np.savetxt(filename, array, fmt='%f') 
 np.loadtxt(filename)
+
+Prevent overfitting:
+https://www.analyticsvidhya.com/blog/2020/09/overfitting-in-cnn-show-to-treat-overfitting-in-convolutional-neural-networks/
+
+Architecture
+https://vitalflux.com/different-types-of-cnn-architectures-explained-examples/

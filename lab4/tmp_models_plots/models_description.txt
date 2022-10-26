@@ -1,0 +1,37 @@
+model3: Oui pour l'acc
+batchnorm
+
+model4: Oui pour la loss
+batchnorm
+padding same sur tous conv
+padding valid sur maxpooling
+
+model5: Oui pour la loss, bof l'acc TOI
+batchnorm
+k = 5
+
+model6: mouais
+batchnorm
+k = 5
+padding valid sur maxpooling
+
+model8: pas mal TOI PEUTETRE
+batchnorm
+k = 5
+stride 2 pour maxpooling
+
+model7:
+batchnorm
+k = 5
+64, 128, 256 pour conv
+
+model9:
+batchnorm
+k = 5
+64, 128, 256 pour conv
+
+model10: TOI
+batchnorm
+k = 5
+stride 2 pour maxpooling
+64, 128, 256 pour conv
