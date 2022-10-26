@@ -38,8 +38,7 @@
 
 <br />
 
-We may think this first model is overfitting. But is it ???? YES IT IS
-<!-- TODO -->
+The plots for training data seem normal, but the validation data give don't follow: the model is overfitting. 
 
 <br />
 
@@ -53,6 +52,7 @@ The diagonal is where there are the higher numbers, which is a good thing since 
 - 5 as 3 (34)
 - 8 as 5 (37)
 - 9 as 4 (42)
+- 9 as 7 (42)
 
 <br />
 
@@ -66,7 +66,7 @@ As a consequence, we decided to gather all the misclassified images and selected
 
 <br />
 
-| Rank  | Image idx | Pred. cat. | Act cat. |                     Images                      |
+| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
 | :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
 |  10   |   1727    |     7      |    3     | <img src="ten_worst/ex1/keras/model1/10.png" /> |
 |   9   |   6511    |     5      |    3     | <img src="ten_worst/ex1/keras/model1/9.png" />  |
@@ -81,7 +81,7 @@ As a consequence, we decided to gather all the misclassified images and selected
 
 <br />
 
-Note that this ranking is for an arbitrary run(ning)?.
+Note that this ranking is for an arbitrary run.
 
 In this ranking, we can notice that there are the most confusions between:
 - 5 and 3 (2)
@@ -119,8 +119,8 @@ Let's use a basic architecture given in class. Maybe this one will not overfit.
 
 - Convolution: 32, 3, 1, 'valid'.
 - Convolution: 64, 3, 1, 'valid'.
-- Maximum Pooling: 2, 1, 'valid'.
-- Convolution: 16, 3, 1, 'valid'.
+- MaxPooling: 2, 1, 'valid'
+- Convolution: 128, 3, 1, 'valid'.
 - Flatten.
 - Fully Connected: 10, 'softmax'.
 
@@ -135,7 +135,7 @@ This model's accuracy is much better, it even reaches the lab3.3 best model accu
 
 <br />
 
-This time, it is clear that our model is **overfitting**. Indeed, even though we got a very good accuracy and the training loss is decreasing as expected, the validation loss is increasing.
+This time, our model is definitely **overfitting**. Indeed, even though we got a very good accuracy and the training loss is decreasing as expected, the validation loss is increasing.
 
 <br />
 
@@ -162,7 +162,7 @@ There are less misclassified images but more categories.
 
 <br />
 
-| Rank  | Image idx | Pred. cat. | Act cat. |                     Images                      |
+| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
 | :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
 |  10   |   7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |
 |   9   |   2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |
@@ -184,6 +184,81 @@ Then, we can only observe 1 confusion in both ways between 5 and 6, which was no
 
 ### 1.4.2. Fighting against overfitting
 
+This time, let's build a model with data normalization, to prevent overfitting.
+
+#### Model Summary
+
+<!-- model3: Oui pour l'acc
+batchnorm
+
+model4: Oui pour la loss
+batchnorm
+padding same sur tous conv
+padding valid sur maxpooling
+
+model5: Oui pour la loss, bof l'acc TOI
+batchnorm
+k = 5
+
+model6: mouais
+batchnorm
+k = 5
+padding valid sur maxpooling
+
+model8: pas mal TOI PEUTETRE
+batchnorm
+k = 5
+stride 2 pour maxpooling
+
+model7:
+batchnorm
+k = 5
+64, 128, 256 pour conv
+
+model9:
+batchnorm
+k = 5
+64, 128, 256 pour conv
+
+model10: TOI
+batchnorm
+k = 5
+stride 2 pour maxpooling
+64, 128, 256 pour conv -->
+
+
+|   ID   | Architecture                                                                                                                                                                                                     | Loss  | Accuracy  | Training time |
+| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---: | :-------: | :-----------: |
+| model3 | - Conv2D: 32, **5**, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - **BatchNorm** <br> - MaxPooling: 2, 1, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'                  | Loss3 | Accuracy3 | TrainingTime3 |
+| model4 | - Conv2D: 32, **5**, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - **BatchNorm** <br> - MaxPooling: 2, **2**, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'              | Loss4 | Accuracy4 | TrainingTime4 |
+| model5 | - Conv2D: **64**, **5**, 1, 'valid' <br> - Conv2D: **128**, 5, 1, 'valid' <br> - **BatchNorm** <br> - MaxPooling: 2, **2**, 'valid' <br> - Conv2D: **256**, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax' | Loss5 | Accuracy5 | TrainingTime5 |
+
+
+
+<br />
+
+|   ID   |                           Loss Plot                            |                         Accuracy Plot                          |                        Confusion Matrix                        |
+| :----: | :------------------------------------------------------------: | :------------------------------------------------------------: | :------------------------------------------------------------: |
+| model3 | <img src="plots/ex1/keras/model3_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model3_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model3_accuracy.png" height="200" /> |
+| model4 | <img src="plots/ex1/keras/model4_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model4_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model4_accuracy.png" height="200" /> |
+| model5 | <img src="plots/ex1/keras/model5_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model5_accuracy.png" height="200" /> | <img src="plots/ex1/keras/model5_accuracy.png" height="200" /> |
+
+<br />
+
+|       |  model3   |            |          |                                                 |  model4   |            |          |                                                 |   model5   |            |          |                                                 |
+| :---: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: |  :-------: | :--------: | :------: | :---------------------------------------------: |
+| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      |  Image idx | Pred. cat. | Act cat. |                      Image                      |
+|  10   |   7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |   7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |    7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |
+|   9   |   2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |   2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |    2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |
+|   8   |   2298    |     0      |    8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |   2298    |     0      |    8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |    2298    |     0      |    8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |
+|   7   |    290    |     5      |    8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |    290    |     5      |    8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |     290    |     5      |    8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |
+|   6   |   5936    |     9      |    4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |   5936    |     9      |    4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |    5936    |     9      |    4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |
+|   5   |   4838    |     5      |    6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |   4838    |     5      |    6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |    4838    |     5      |    6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |
+|   4   |   9982    |     6      |    5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |   9982    |     6      |    5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |    9982    |     6      |    5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |
+|   3   |   2770    |     7      |    3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |   2770    |     7      |    3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |    2770    |     7      |    3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |
+|   2   |   7886    |     4      |    2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |   7886    |     4      |    2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |    7886    |     4      |    2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |
+|   1   |   3794    |     3      |    8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |   3794    |     3      |    8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |    3794    |     3      |    8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |
+<br />
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
 
