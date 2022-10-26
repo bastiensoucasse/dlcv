@@ -15,7 +15,7 @@
 
 ### 1.2. First CNN
 
-*N.B.*: After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seems to stabilize around that number.
+*N.B.:* After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seems to stabilize around that number.
 
 #### Model Summary
 
@@ -278,7 +278,9 @@ stride 2 pour maxpooling
 
 - Convolution: 32, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10, 'softmax'.
+- Fully Connected: 10 ('softmax').
+
+*N.B.:* In PyTorch, the Softmax activation is already done by the CrossEntropyLoss criterion, as mentionned in the [official documentation](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): "Note that this is equivalent to the combination of LogSoftmax and NLLLoss."
 
 <br />
 
@@ -335,14 +337,12 @@ stride 2 pour maxpooling
 | :----: | :----: | :------: | :-----------: |
 | model2 | 0.0988 |  97.98%  |    104.65s    |
 
-#### Architecture
-
 - Convolution: 64, 3, 1, 'valid'.
 - Convolution: 32, 3, 1, 'valid'.
 - Maximum Pooling: 2, 1, 'valid'.
 - Convolution: 16, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10, 'softmax'.
+- Fully Connected: 10 ('softmax').
 
 <br />
 
