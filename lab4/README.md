@@ -94,8 +94,6 @@ Looking back at the confusion matrix, we can see that those 3 confusions all app
 
 ### 1.3. Comparison
 
-Here are the configuration and results of the best model we obtained on lab3.3.
-
 |    Model    | Accuracy |  Time  |
 | :---------: | :------: | :----: |
 | best lab3.3 |  97.59%  | 42.64s |
@@ -231,7 +229,119 @@ They all look quite equivalent. More importantly, they show better results than 
 |   2   |   4256    |     2      |    3     | <img src="ten_worst/ex1/keras/model3/2.png" />  |   5745    |     1      |    7     | <img src="ten_worst/ex1/keras/model4/2.png" />  |   2189    |     8      |    9     | <img src="ten_worst/ex1/keras/model5/2.png" />  |
 |   1   |   2369    |     3      |    5     | <img src="ten_worst/ex1/keras/model3/1.png" />  |   9638    |     7      |    9     | <img src="ten_worst/ex1/keras/model4/1.png" />  |   3951    |     7      |    8     | <img src="ten_worst/ex1/keras/model5/1.png" />  |
 
+<br /><br />
+
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
+
+### 2.2. First CNN
+### Model Summary
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model1 | 1.9821 |  33.35%  |    53.39s     |
+
+- Convolution: 32, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10, 'softmax'.
+
+<br />
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/keras/model1_loss.png" height="240" />
+<img src="plots/ex2/keras/model1_accuracy.png" height="240" />
+
+<br />
+
+Not only the accuracy is low, but both loss and accuracy plots show overfitting. This model is not satisfactory at all. 
+
+<br />
+
+#### Confusion Matrix
+
+<img src="plots/ex2/keras/model1_confusion_matrix.png" height="400" />
+
+<br />
+
+The confusion matrix looks bad: there is no high value diagonal. It adds a proof that the model is bad.
+
+<br />
+
+#### 10 Worst Classified Images
+
+| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
+| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
+|  10   |   7451    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model1/10.png" /> |
+|   9   |   7196    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/9.png" />  |
+|   8   |   8309    |    frog    |   deer   | <img src="ten_worst/ex2/keras/model1/8.png" />  |
+|   7   |   5918    |   truck    |  automo  | <img src="ten_worst/ex2/keras/model1/7.png" />  |
+|   6   |   7811    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/6.png" />  |
+|   5   |   1889    |    ship    |  truck   | <img src="ten_worst/ex2/keras/model1/5.png" />  |
+|   4   |   7455    |   truck    |  automo  | <img src="ten_worst/ex2/keras/model1/4.png" />  |
+|   3   |   4971    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model1/3.png" />  |
+|   2   |   3024    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/2.png" />  |
+|   1   |   5008    |   horse    |   4dee   | <img src="ten_worst/ex2/keras/model1/1.png" />  |
+
+<br />
+
+### 1.3. Comparison
+
+|    Model    | Accuracy |  Time  |
+| :---------: | :------: | :----: |
+| best lab3.3 |  XX.XX%  | XX.XXs |
+|   model1    |  33.35%  | 53.39s |
+
+<!-- TODO -->
+The CNN model takes a little bit more time (5s) than the lab3.3 best model and provides an about 5% lower accuracy. For now, the CNN model is not better but it must be improvable.
+
+<br />
+
+### 1.4. Model Improvement
+
+#### Models Summaries
+
+Legend:
+- Conv2D: nb_filters, kernel_size, stride, padding
+- MaxPooling: pool_size, stride, padding
+- Dense: units, activation_function
+
+|   ID   | Architecture                                                                                                                                                                                                                                                                                           |  Loss  | Accuracy | Training time |
+| :----: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Conv2D: 64, 5, 1, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - BatchNorm <br> - MaxPooling: 2, 2, 'valid' <br> - Conv2D: 256, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'                                                                                                               | 0.2406 |  98.12%  |    143.87s    |
+| model4 | - Conv2D: 64, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br> - BatchNorm <br> - Conv2D: 32, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br>  - BatchNorm <br> - Flatten <br> - Dense: 128, 'relu' <br> - Dense: 'softmax'                                                                   | 0.2260 |  98.13%  |    113.17s    |
+| model5 | - Conv2D: 64, 5, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br> - BatchNorm <br> - Conv2D: 32, 5, 1, 'valid' <br> - Conv2D: 32, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br>  - BatchNorm <br> - Flatten <br> - Dense: 128, 'relu' <br> - Dense: 'softmax' | 0.3216 |  98.04%  |    211.00s    |
+
+The accuracy increases through the different models. What's more, the one giving the best accuracy (model4) is not even the slower one. 68% might not seem a great accuracy, but it doubled since model1 which is good news.
+
+
+<br />
+
+|   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
+| :----: | :--------------------------------------------------------: | :------------------------------------------------------------: | :--------------------------------------------------------------------: |
+| model2 | <img src="plots/ex2/keras/model2_loss.png" height="250" /> | <img src="plots/ex2/keras/model2_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model2_confusion_matrix.png" height="250" /> |
+| model3 | <img src="plots/ex2/keras/model3_loss.png" height="250" /> | <img src="plots/ex2/keras/model3_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model3_confusion_matrix.png" height="250" /> |
+| model4 | <img src="plots/ex2/keras/model4_loss.png" height="250" /> | <img src="plots/ex2/keras/model4_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model4_confusion_matrix.png" height="250" /> |
+
+Compared to model1, the confusion matrices are much better: they all present the famous diagonal.
+
+Even though we managed to improve the accuracy, it's becoming harder to fight overfitting. Indeed, all 3 models show a lot of overfitting. Notice that the last one looks like it's slightly less overfitting.
+
+
+<br />
+
+|       |  model2   |            |          |                                                 |  model3   |            |          |                                                 |  model4   |            |          |                                                 |
+| :---: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: |
+| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      |
+|  10   |   5231    |    dog     |   deer   | <img src="ten_worst/ex2/keras/model2/10.png" /> |   2319    |    deer    |  horse   | <img src="ten_worst/ex2/keras/model3/10.png" /> |   9067    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model4/10.png" /> |
+|   9   |   2584    |    cat     |   frog   | <img src="ten_worst/ex2/keras/model2/9.png" />  |    611    |   plane    |  truck   | <img src="ten_worst/ex2/keras/model3/9.png" />  |   9523    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/9.png" />  |
+|   8   |   8688    |     9      |   ship   | <img src="ten_worst/ex2/keras/model2/8.png" />  |   3237    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model3/8.png" />  |   8697    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/8.png" />  |
+|   7   |   6280    |    bird    |   ship   | <img src="ten_worst/ex2/keras/model2/7.png" />  |    48     |    deer    |  horse   | <img src="ten_worst/ex2/keras/model3/7.png" />  |   6031    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/7.png" />  |
+|   6   |   6094    |    deer    |   dog    | <img src="ten_worst/ex2/keras/model2/6.png" />  |   9235    |    deer    |  plane   | <img src="ten_worst/ex2/keras/model3/6.png" />  |   4784    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model4/6.png" />  |
+|   5   |   4868    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model2/5.png" />  |   3613    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model3/5.png" />  |   8947    |    bird    |   deer   | <img src="ten_worst/ex2/keras/model4/5.png" />  |
+|   4   |   1226    |    auto    |   frog   | <img src="ten_worst/ex2/keras/model2/4.png" />  |   3817    |    auto    |   ship   | <img src="ten_worst/ex2/keras/model3/4.png" />  |   2578    |    bird    |   ship   | <img src="ten_worst/ex2/keras/model4/4.png" />  |
+|   3   |   6621    |    bird    |  plane   | <img src="ten_worst/ex2/keras/model2/3.png" />  |   3959    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model3/3.png" />  |   6258    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model4/3.png" />  |
+|   2   |   4150    |    deer    |   frog   | <img src="ten_worst/ex2/keras/model2/2.png" />  |    872    |    cat     |   deer   | <img src="ten_worst/ex2/keras/model3/2.png" />  |   3856    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model4/2.png" />  |
+|   1   |   4842    |    cat     |   bird   | <img src="ten_worst/ex2/keras/model2/1.png" />  |   9188    |    bird    |   dog    | <img src="ten_worst/ex2/keras/model3/1.png" />  |   1014    |    dog     |   cat    | <img src="ten_worst/ex2/keras/model4/1.png" />  |
 
 <br /><br />
 
