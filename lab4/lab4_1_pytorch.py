@@ -7,7 +7,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-MODEL = 'model2'
+MODEL = 'model4'
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 NUM_CLASSES = len(CLASSES)
@@ -15,6 +15,8 @@ NUM_CHANNELS = 1
 
 BATCH_SIZE = 32
 NUM_EPOCHS = 20
+
+PLOT = True
 
 
 class model1(nn.Module):
@@ -51,6 +53,62 @@ class model2(nn.Module):
         x = self.conv3(x)
         x = self.flatten(x)
         x = self.linear(x)
+        # x = self.softmax(x)
+        return x
+
+
+class model3(nn.Module):
+    def __init__(self):
+        super(model3, self).__init__()
+        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
+        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
+        self.dropout = nn.Dropout()
+        self.relu = nn.ReLU()
+        self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
+        self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
+        self.flatten = nn.Flatten()
+        self.linear = nn.Linear(1600, NUM_CLASSES)
+        # self.softmax = nn.Softmax(dim=1)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.dropout(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
+        x = self.conv3(x)
+        x = self.flatten(x)
+        x = self.linear(x)
+        # x = self.softmax(x)
+        return x
+
+
+class model4(nn.Module):
+    def __init__(self):
+        super(model4, self).__init__()
+        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
+        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
+        self.dropout = nn.Dropout()
+        self.relu = nn.ReLU()
+        self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
+        self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
+        self.flatten = nn.Flatten()
+        self.linear1 = nn.Linear(1600, 128)
+        self.relu2 = nn.ReLU()
+        self.linear2 = nn.Linear(128, NUM_CLASSES)
+        # self.softmax = nn.Softmax(dim=1)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.dropout(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
+        x = self.conv3(x)
+        x = self.flatten(x)
+        x = self.linear1(x)
+        x = self.relu2(x)
+        x = self.linear2(x)
         # x = self.softmax(x)
         return x
 
@@ -130,6 +188,9 @@ if __name__ == '__main__':
 
     # Display the summary.
     print(f'SUMMARY:\n    - Loss: {running_loss:.4f}\n    - Accuracy: {running_accuracy:.4f}\n    - Training Time: {training_time:.2f}s')
+
+    if not PLOT:
+        exit()
 
     # Plot the loss.
     plt.plot(history['loss'], label='Training')
