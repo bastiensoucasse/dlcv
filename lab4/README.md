@@ -237,7 +237,7 @@ They all look quite equivalent. More importantly, they show better results than 
 
 # PyTorch
 
-## 1. Convolutional Neural Network on MNIST Dataset
+## 1. Conv2D Neural Network on MNIST Dataset
 
 ### 1.1. First CNN
 
@@ -245,9 +245,9 @@ They all look quite equivalent. More importantly, they show better results than 
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model1 | 0.2957 |  91.67%  |    102.06s    |
+| model1 | 0.2996 |  91.74%  |    92.76s     |
 
-- Convolution: 32, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
 - Flatten.
 - Fully Connected: 10 ('softmax').
 
@@ -258,17 +258,16 @@ They all look quite equivalent. More importantly, they show better results than 
 <img src="plots/ex1/pytorch/model1_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
 
-These plots may show some overfitting, but not much. There is less overfitting than with Keras.
+These plots may show some overfitting, but not much.
 
 #### Confusion Matrix
 
 <img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
 
 As in Keras, the confusion matrix shows that most the images are well classified (the diagonal). The most misclassified digits are:
-
-- 7 as 9 (38)
-- 5 as 3 (38)
-- 2 as 8 (48)
+- 7 as 9 (35)
+- 4 as 9 (38)
+- 5 as 3 (51)
 
 #### Nota Bene
 
@@ -276,62 +275,275 @@ In PyTorch, the Softmax activation is already done by the CrossEntropyLoss crite
 
 As we didn't know this at first, we did a first version of this model with a softmax activation on the linear layer. The results were drastically different.
 
-<img src="plots/ex1/pytorch/model1_loss.png" height="240" />
-<img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
+<img src="plots/ex1/pytorch/old_model1_loss.png" height="240" />
+<img src="plots/ex1/pytorch/old_model1_accuracy.png" height="240" />
 
-<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
+<img src="plots/ex1/pytorch/old_model1_confusion_matrix.png" height="400" />
 
 The confusion matrix shows that not only the elements are not well classified, but also some classes are nerver predicted.
+
+#### 10 Worst Classified Images
+
+The same way as before, we're going to determine the 10 worst classified images by the model.
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    6885    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/10.png" /> |
+|   9   |    6599    |     1      |     7     | <img src="ten_worst/ex1/pytorch/model1/9.png" />  |
+|   8   |    9487    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/8.png" />  |
+|   7   |    3189    |     4      |     7     | <img src="ten_worst/ex1/pytorch/model1/7.png" />  |
+|   6   |    5688    |     9      |     7     | <img src="ten_worst/ex1/pytorch/model1/6.png" />  |
+|   5   |    1940    |     0      |     5     | <img src="ten_worst/ex1/pytorch/model1/5.png" />  |
+|   4   |    1017    |     2      |     6     | <img src="ten_worst/ex1/pytorch/model1/4.png" />  |
+|   3   |    1310    |     7      |     3     | <img src="ten_worst/ex1/pytorch/model1/3.png" />  |
+|   2   |    3682    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/2.png" />  |
+|   1   |    9916    |     9      |     7     | <img src="ten_worst/ex1/pytorch/model1/1.png" />  |
 
 <br />
 
 ### 1.2. Model Improvement
 
+### 1.2.1. A New Architecture
+
+Once again, we are going to complexify our architecture.
+
 #### Model Summary
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model2 | 0.0988 |  97.98%  |    104.65s    |
+| model2 | 0.1276 |  97.20%  |    97.12s     |
 
-- Convolution: 64, 3, 1, 'valid'.
-- Convolution: 32, 3, 1, 'valid'.
-- Maximum Pooling: 2, 1, 'valid'.
-- Convolution: 16, 3, 1, 'valid'.
+- `Conv2D: 64, 3, 1, 'valid'.`
+- Conv2D: 32, 3, 1, 'valid'.
+- `MaxPooling: 2, 1, 'valid'.`
+- `Conv2D: 16, 3, 1, 'valid'.`
 - Flatten.
 - Fully Connected: 10 ('softmax').
+
+This model is definitely better than the first one. For only a few seconds longer, it gives a 6 to 7 percent better accuracy.
 
 #### Loss and Accuracy Plots
 
 <img src="plots/ex1/pytorch/model2_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model2_accuracy.png" height="240" />
 
-This time, there is an obvious overfitting detected as the trainling loss keeps descending but the validation one is stabilizing and ever ascending.
+However this time, there is an obvious overfitting detected as the training loss keeps descending but the validation one is ascending.
 
 #### Confusion Matrix
 
 <img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="400" />
 
-However, the confusion matrix—and the accuracy—still shows that most of the images are classified correctly.
+However, the confusion matrix—and also the accuracy obviously—still shows that most of the images are classified correctly.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    5593    |     6      |     0     | <img src="ten_worst/ex1/pytorch/model2/10.png" /> |
+|   9   |    5176    |     4      |     8     | <img src="ten_worst/ex1/pytorch/model2/9.png" />  |
+|   8   |     8      |     6      |     5     | <img src="ten_worst/ex1/pytorch/model2/8.png" />  |
+|   7   |    2370    |     6      |     0     | <img src="ten_worst/ex1/pytorch/model2/7.png" />  |
+|   6   |    6532    |     5      |     0     | <img src="ten_worst/ex1/pytorch/model2/6.png" />  |
+|   5   |    9614    |     5      |     3     | <img src="ten_worst/ex1/pytorch/model2/5.png" />  |
+|   4   |    8069    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model2/4.png" />  |
+|   3   |    6847    |     4      |     6     | <img src="ten_worst/ex1/pytorch/model2/3.png" />  |
+|   2   |    5228    |     4      |     6     | <img src="ten_worst/ex1/pytorch/model2/2.png" />  |
+|   1   |    965     |     0      |     6     | <img src="ten_worst/ex1/pytorch/model2/1.png" />  |
+
+With this model, we're starting to understand why the neural network is wrong sometimes, as one might be wrong the same way on some images.
 
 <br />
 
-### 1.3. Fighting Against Overfitting
+### 1.2.2. Fighting Against Overfitting
 
-|   ID   | Architecture                                                                                                                                                                                                                                                                                         |  Loss  | Accuracy | Training time |
-| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
-| model3 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - Fully Connected: 10 ('softmax').                                        | 0.0499 |  98.36%  |    106.86s    |
-| model4 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - `Fully Connected: 128, 'relu'.` <br> - Fully Connected: 10 ('softmax'). | 0.0449 |  98.98%  |    121.13s    |
+This time, let's build a model with data normalization, to prevent overfitting. And then, try and improve its accuracy.
 
-|   ID   |                            Loss Plot                             |                          Accuracy Plot                           |                         Confusion Matrix                         |
-| :----: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: |
-| model3 | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> |
-| model4 | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> |
+#### Models Summaries
+
+|   ID   | Architecture                                                                                                                                                                                                                                                                                 |  Loss  | Accuracy | Training time |
+| :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Conv2D: 64, 3, 1, 'valid'. <br /> - Conv2D: 32, 3, 1, 'valid'. <br /> - `Dropout.` <br /> - `Activation: 'relu'.` <br /> - MaxPooling: 2, 1, 'valid'. <br /> - Conv2D: 16, 3, 1, 'valid'. <br /> - Flatten. <br /> - Fully Connected: 10 ('softmax').                                      | 0.0456 |  98.55%  |    98.83s     |
+| model4 | - Conv2D: 64, 3, 1, 'valid'. <br /> - Conv2D: 32, 3, 1, 'valid'. <br /> - Dropout. <br /> - Activation: 'relu'. <br /> - MaxPooling: 2, 1, 'valid'. <br /> - Conv2D: 16, 3, 1, 'valid'. <br /> - Flatten. <br /> - `Fully Connected: 128, 'relu'.` <br /> - Fully Connected: 10 ('softmax'). | 0.0432 |  98.76%  |    103.71s    |
+
+The 2 new models provide rather identical results, slightly better than the model2 ones.
+
+|   ID   |                          Loss Plot                           |                          Accuracy Plot                           |                             Confusion Matrix                             |
+| :----: | :----------------------------------------------------------: | :--------------------------------------------------------------: | :----------------------------------------------------------------------: |
+| model3 | <img src="plots/ex1/pytorch/model3_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_confusion_matrix.png" height="250" /> |
+| model4 | <img src="plots/ex1/pytorch/model4_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_confusion_matrix.png" height="250" /> |
+
+Here, model3 seems to have less overfitting, but it depends also on the run as the difference is very subtle.
+
+|       |   model3   |            |           |                                                   |   model4   |            |           |                                                   |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+|  10   |    1147    |     7      |     4     | <img src="ten_worst/ex1/pytorch/model3/10.png" /> |    2953    |     5      |     3     | <img src="ten_worst/ex1/pytorch/model4/10.png" /> |
+|   9   |    8059    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model3/9.png" />  |    5937    |     3      |     5     | <img src="ten_worst/ex1/pytorch/model4/9.png" />  |
+|   8   |    9664    |     7      |     2     | <img src="ten_worst/ex1/pytorch/model3/8.png" />  |    6091    |     5      |     9     | <img src="ten_worst/ex1/pytorch/model4/8.png" />  |
+|   7   |    4063    |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/7.png" />  |    359     |     4      |     9     | <img src="ten_worst/ex1/pytorch/model4/7.png" />  |
+|   6   |    4838    |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/6.png" />  |    2130    |     9      |     4     | <img src="ten_worst/ex1/pytorch/model4/6.png" />  |
+|   5   |    3073    |     2      |     1     | <img src="ten_worst/ex1/pytorch/model3/5.png" />  |    3030    |     0      |     6     | <img src="ten_worst/ex1/pytorch/model4/5.png" />  |
+|   4   |    2035    |     3      |     5     | <img src="ten_worst/ex1/pytorch/model3/4.png" />  |    4860    |     9      |     4     | <img src="ten_worst/ex1/pytorch/model4/4.png" />  |
+|   3   |    217     |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/3.png" />  |    8277    |     8      |     3     | <img src="ten_worst/ex1/pytorch/model4/3.png" />  |
+|   2   |    9755    |     5      |     8     | <img src="ten_worst/ex1/pytorch/model3/2.png" />  |    8521    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model4/2.png" />  |
+|   1   |    9015    |     2      |     7     | <img src="ten_worst/ex1/pytorch/model3/1.png" />  |    6081    |     5      |     9     | <img src="ten_worst/ex1/pytorch/model4/1.png" />  |
 
 <br /><br />
 
-## 2. Convolutional Neural Network on CIFAR10 Dataset
+## 2. Conv2D Neural Network on CIFAR10 Dataset
 
-<!-- [model1] loss: 2.0761, accuracy: 33.09%, training time: 109.88s -->
-<!-- [model2] loss: 1.2972, accuracy: 59.38%, training time: 107.24s -->
-<!-- [model3] loss: 1.0494, accuracy: 64.26%, training time: 110.29s -->
-<!-- [model4] loss: 1.3524, accuracy: 63.06%, training time: 119.09s -->
+### 2.1. First CNN
+
+#### Model Summary
+
+For the first run, we chose once again to try the model1 on the new dataset
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model1 | 2.1902 |  30.53%  |    100.20s    |
+
+- Conv2D: 32, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 10 ('softmax').
+
+For the first time, we obtain bad results from a model. The color images were much more complicated to analyse.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model1_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model1_accuracy.png" height="240" />
+
+Also, the overfitting is already tremendous.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model1_confusion_matrix.png" height="400" />
+
+To confirm everything we've seen so far, the confusion matrix shows that the predictions are very far from the actual values. We can barely distinguish the diagonal.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    3650    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/10.png" /> |
+|   9   |    9590    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/9.png" />  |
+|   8   |    2968    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/8.png" />  |
+|   7   |    9766    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/7.png" />  |
+|   6   |    7454    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/6.png" />  |
+|   5   |    3278    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/5.png" />  |
+|   4   |    4981    |   Avion    |  Voiture  | <img src="ten_worst/ex2/pytorch/model1/4.png" />  |
+|   3   |    1651    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/3.png" />  |
+|   2   |    7431    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model1/2.png" />  |
+|   1   |    2200    |  Voiture   |   Avion   | <img src="ten_worst/ex2/pytorch/model1/1.png" />  |
+
+<br />
+
+### 2.2. Model Improvement
+
+### 2.2.1. A New Architecture
+
+#### Model Summary
+
+This time, the model4, one of the best models we've tested, is used.
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model4 | 1.2091 |  67.51%  |    107.47s    |
+
+- Conv2D: 64, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
+- Dropout.
+- Activation: 'relu'.
+- MaxPooling: 2, 1, 'valid'.
+- Conv2D: 16, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 128, 'relu'.
+- Fully Connected: 10 ('softmax').
+
+We might be lucky, but this model actualy improves drastically the results we've had with model1. The accuracy is already almost as good as the fourth model tested with Keras.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model4_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model4_accuracy.png" height="240" />
+
+On the other hand, the overfitting is still very present, though we might have limited it.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model4_confusion_matrix.png" height="400" />
+
+The confusion matrix also shows an important improvement as the diagonal is much more visible now.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    1692    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/10.png" /> |
+|   9   |    1732    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/9.png" />  |
+|   8   |    9854    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/8.png" />  |
+|   7   |    4866    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/7.png" />  |
+|   6   |    1829    |   Camion   |  Voiture  | <img src="ten_worst/ex2/pytorch/model4/6.png" />  |
+|   5   |    3150    |   Camion   |  Voiture  | <img src="ten_worst/ex2/pytorch/model4/5.png" />  |
+|   4   |    5041    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/4.png" />  |
+|   3   |    6615    |   Chien    |  Cheval   | <img src="ten_worst/ex2/pytorch/model4/3.png" />  |
+|   2   |    6968    |   Avion    |  Bateau   | <img src="ten_worst/ex2/pytorch/model4/2.png" />  |
+|   1   |    3812    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model4/1.png" />  |
+
+<br />
+
+### 2.2.2. Going Further
+
+#### Model Summary
+
+Let's imagine a new model, inspired by model4, but trying to improve the final accuracy.
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model5 | 0.9670 |  70.11%  |    134.46s    |
+
+- Conv2D: 64, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
+- Dropout.
+- Activation: 'relu'.
+- MaxPooling: 2, 1, 'valid'.
+- `Conv2D: 64, 3, 1, 'valid'.`
+- `Conv2D: 32, 3, 1, 'valid'.`
+- `Dropout.`
+- `Activation: 'relu'.`
+- `MaxPooling: 2, 1, 'valid'.`
+- Conv2D: 16, 3, 1, 'valid'.
+- Flatten.
+- Fully Connected: 128, 'relu'.
+- `Fully Connected: 256, 'relu'.`
+- Fully Connected: 10 ('softmax').
+
+This model gives the best results for this dataset. On the other hand, the training time is starting to grow bigger.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model5_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model5_accuracy.png" height="240" />
+
+There is persistent overfitting but at this point, there is not mcuh solution but to use data augmentation. We will try to focus on that next.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model5_confusion_matrix.png" height="400" />
+
+The confusion matrix is not perfect but it's the best we've had on this dataset, confirming that the model is better.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    5918    |   Camion   |  Voiture  | <img src="ten_worst/ex2/pytorch/model5/10.png" /> |
+|   9   |    2322    |   Oiseau   |   Avion   | <img src="ten_worst/ex2/pytorch/model5/9.png" />  |
+|   8   |    4766    |   Camion   |  Voiture  | <img src="ten_worst/ex2/pytorch/model5/8.png" />  |
+|   7   |    3151    |  Voiture   |  Bateau   | <img src="ten_worst/ex2/pytorch/model5/7.png" />  |
+|   6   |     81     |   Camion   |  Voiture  | <img src="ten_worst/ex2/pytorch/model5/6.png" />  |
+|   5   |    6342    |   Avion    |  Bateau   | <img src="ten_worst/ex2/pytorch/model5/5.png" />  |
+|   4   |    5416    |  Voiture   |  Camion   | <img src="ten_worst/ex2/pytorch/model5/4.png" />  |
+|   3   |    4056    |   Bateau   |   Avion   | <img src="ten_worst/ex2/pytorch/model5/3.png" />  |
+|   2   |    5392    |  Voiture   |   Avion   | <img src="ten_worst/ex2/pytorch/model5/2.png" />  |
+|   1   |    9981    |   Cheval   |   Cerf    | <img src="ten_worst/ex2/pytorch/model5/1.png" />  |

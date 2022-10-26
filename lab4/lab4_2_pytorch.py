@@ -1,13 +1,17 @@
+import sys
 import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-MODEL = 'model4'
+import lab4_utils
+
+MODEL = 'model5'
 
 CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
@@ -89,7 +93,7 @@ class model4(nn.Module):
         self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
         self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
         self.dropout = nn.Dropout()
-        self.relu = nn.ReLU()
+        self.relu1 = nn.ReLU()
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
@@ -102,7 +106,7 @@ class model4(nn.Module):
         x = self.conv1(x)
         x = self.conv2(x)
         x = self.dropout(x)
-        x = self.relu(x)
+        x = self.relu1(x)
         x = self.maxpool(x)
         x = self.conv3(x)
         x = self.flatten(x)
@@ -113,7 +117,55 @@ class model4(nn.Module):
         return x
 
 
+class model5(nn.Module):
+    def __init__(self):
+        super(model5, self).__init__()
+        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
+        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
+        self.dropout1 = nn.Dropout()
+        self.relu1 = nn.ReLU()
+        self.maxpool1 = nn.MaxPool2d(2, stride=2, padding=0)
+        self.conv3 = nn.Conv2d(32, 64, 3, stride=1, padding=0)
+        self.conv4 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
+        self.dropout2 = nn.Dropout()
+        self.relu2 = nn.ReLU()
+        self.maxpool2 = nn.MaxPool2d(2, stride=2, padding=0)
+        self.conv5 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
+        self.flatten = nn.Flatten()
+        self.linear1 = nn.Linear(144, 128)
+        self.relu3 = nn.ReLU()
+        self.linear2 = nn.Linear(128, 256)
+        self.relu4 = nn.ReLU()
+        self.linear3 = nn.Linear(256, NUM_CLASSES)
+        # self.softmax = nn.Softmax(dim=1)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.dropout1(x)
+        x = self.relu1(x)
+        x = self.maxpool1(x)
+        x = self.conv3(x)
+        x = self.conv4(x)
+        x = self.dropout2(x)
+        x = self.relu2(x)
+        x = self.maxpool2(x)
+        x = self.conv5(x)        
+        x = self.flatten(x)
+        x = self.linear1(x)
+        x = self.relu3(x)
+        x = self.linear2(x)
+        x = self.relu4(x)
+        x = self.linear3(x)
+        # x = self.softmax(x)
+        return x
+
+
 if __name__ == '__main__':
+    # Check custom model.
+    if len(sys.argv) == 2:
+        MODEL = sys.argv[1]
+
     # Set up device.
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Device: {device}.")
@@ -171,7 +223,7 @@ if __name__ == '__main__':
 
     # Evaluate the model.
     with torch.no_grad():
-        y_pred, y_true = [], []
+        y_test, y_pred = [], []
         evaluating_start_time = time.time()
         model.eval()
         running_loss, running_accuracy = 0, 0
@@ -181,9 +233,12 @@ if __name__ == '__main__':
             loss = criterion(pred, y)
             running_loss += loss.item() / len(test_data_loader)
             running_accuracy += (pred.argmax(1) == y).sum().item() / BATCH_SIZE / len(test_data_loader)
-            y_pred.extend(pred.argmax(1).cpu())
-            y_true.extend(y.cpu())
+
+            # Store the expected values and the predictions, for the confusion matrix and to call ten_worst.
+            y_test.extend(y.detach().cpu().numpy())
+            y_pred.extend(pred.detach().cpu().numpy())
         evaluating_time = time.time() - evaluating_start_time
+        y_test, y_pred = np.array(y_test), np.array(y_pred)
         print(f'{evaluating_time:.2f}s - loss: {running_loss:.4f} - accuracy: {running_accuracy:.4f}')
 
     # Display the summary.
@@ -213,8 +268,11 @@ if __name__ == '__main__':
     plt.clf()
 
     # Plot the confusion matrix.
-    cm = confusion_matrix(y_true, y_pred)
+    cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
     disp.plot(cmap=plt.cm.magma)
     plt.savefig('plots/ex2/pytorch/%s_confusion_matrix.png' % MODEL)
     plt.clf()
+
+    # Export the ten worst classified images.
+    lab4_utils.ten_worst_pytorch('cifar10', y_pred, True, 'ex2/pytorch/%s' % MODEL)
