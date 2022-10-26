@@ -359,3 +359,8 @@ However, the confusion matrix—and the accuracy—still shows that most of the 
 <br /><br />
 
 ## 2. Convolutional Neural Network on CIFAR10 Dataset
+
+<!-- [model1] loss: 2.0761, accuracy: 33.09%, training time: 109.88s -->
+<!-- [model2] loss: 1.2972, accuracy: 59.38%, training time: 107.24s -->
+<!-- [model3] loss: 1.0494, accuracy: 64.26%, training time: 110.29s -->
+<!-- [model4] loss: 1.3524, accuracy: 63.06%, training time: 119.09s -->
