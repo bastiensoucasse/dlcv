@@ -83,7 +83,7 @@ if __name__ == '__main__':
     
     cm = confusion_matrix(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1))
 
-    labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
     disp.plot(cmap=plt.cm.Blues)
     plt.savefig('plots/ex1/keras/%s_confusion_matrix.png' % MODEL)   
