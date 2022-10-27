@@ -288,11 +288,10 @@ The confusion matrix looks bad: there is no high value diagonal. It adds a proof
 
 |    Model    | Accuracy |  Time  |
 | :---------: | :------: | :----: |
-| best lab3.3 |  XX.XX%  | XX.XXs |
+| best lab3.3 |  44.50%  | 46.06s |
 |   model1    |  33.35%  | 53.39s |
 
-<!-- TODO -->
-The CNN model takes a little bit more time (5s) than the lab3.3 best model and provides an about 5% lower accuracy. For now, the CNN model is not better but it must be improvable.
+Our best lab3.3. model gives a more than 10% better accuracy than our first CNN model. Let's try to improve it.
 
 <br />
 
