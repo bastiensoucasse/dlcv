@@ -28,7 +28,7 @@ class model1(nn.Module):
         super(model1, self).__init__()
         self.conv = nn.Conv2d(NUM_CHANNELS, 32, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(28800, NUM_CLASSES)
+        self.linear = nn.LazyLinear(NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -47,7 +47,7 @@ class model2(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(2304, NUM_CLASSES)
+        self.linear = nn.LazyLinear(NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -71,7 +71,7 @@ class model3(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear = nn.Linear(2304, NUM_CLASSES)
+        self.linear = nn.LazyLinear(NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -97,9 +97,9 @@ class model4(nn.Module):
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear1 = nn.Linear(2304, 128)
+        self.linear1 = nn.LazyLinear(128)
         self.relu2 = nn.ReLU()
-        self.linear2 = nn.Linear(128, NUM_CLASSES)
+        self.linear2 = nn.LazyLinear(NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -132,11 +132,11 @@ class model5(nn.Module):
         self.maxpool2 = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv5 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
-        self.linear1 = nn.Linear(144, 128)
+        self.linear1 = nn.LazyLinear(128)
         self.relu3 = nn.ReLU()
-        self.linear2 = nn.Linear(128, 256)
+        self.linear2 = nn.LazyLinear(256)
         self.relu4 = nn.ReLU()
-        self.linear3 = nn.Linear(256, NUM_CLASSES)
+        self.linear3 = nn.LazyLinear(NUM_CLASSES)
         # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):

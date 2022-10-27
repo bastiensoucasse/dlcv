@@ -202,9 +202,9 @@ Those 3 new models provide rather identical accuracies, that are slightly better
 
 |   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
 | :----: | :--------------------------------------------------------: | :------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| model3 | <img src="plots/ex1/keras/model3_loss.png" height="250" /> | <img src="plots/ex1/keras/model3_accuracy.png" height="250" /> | <img src="plots/ex1/keras/model3_confusion_matrix.png" height="250" /> |
-| model4 | <img src="plots/ex1/keras/model4_loss.png" height="250" /> | <img src="plots/ex1/keras/model4_accuracy.png" height="250" /> | <img src="plots/ex1/keras/model4_confusion_matrix.png" height="250" /> |
-| model5 | <img src="plots/ex1/keras/model5_loss.png" height="250" /> | <img src="plots/ex1/keras/model5_accuracy.png" height="250" /> | <img src="plots/ex1/keras/model5_confusion_matrix.png" height="250" /> |
+| model3 | <img src="plots/ex1/keras/model3_loss.png" height="150" /> | <img src="plots/ex1/keras/model3_accuracy.png" height="150" /> | <img src="plots/ex1/keras/model3_confusion_matrix.png" height="150" /> |
+| model4 | <img src="plots/ex1/keras/model4_loss.png" height="150" /> | <img src="plots/ex1/keras/model4_accuracy.png" height="150" /> | <img src="plots/ex1/keras/model4_confusion_matrix.png" height="150" /> |
+| model5 | <img src="plots/ex1/keras/model5_loss.png" height="150" /> | <img src="plots/ex1/keras/model5_accuracy.png" height="150" /> | <img src="plots/ex1/keras/model5_confusion_matrix.png" height="150" /> |
 
 Whether it is about loss or accuracy, for all 3 models, we can observe some overfitting since the training values are improving and not the validation ones.
 Nevertheless, the scale is small so even if it may look huge, they actually all have:
@@ -317,9 +317,9 @@ The accuracy increases through the different models. What's more, the one giving
 
 |   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
 | :----: | :--------------------------------------------------------: | :------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| model2 | <img src="plots/ex2/keras/model2_loss.png" height="250" /> | <img src="plots/ex2/keras/model2_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model2_confusion_matrix.png" height="250" /> |
-| model3 | <img src="plots/ex2/keras/model3_loss.png" height="250" /> | <img src="plots/ex2/keras/model3_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model3_confusion_matrix.png" height="250" /> |
-| model4 | <img src="plots/ex2/keras/model4_loss.png" height="250" /> | <img src="plots/ex2/keras/model4_accuracy.png" height="250" /> | <img src="plots/ex2/keras/model4_confusion_matrix.png" height="250" /> |
+| model2 | <img src="plots/ex2/keras/model2_loss.png" height="150" /> | <img src="plots/ex2/keras/model2_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model2_confusion_matrix.png" height="150" /> |
+| model3 | <img src="plots/ex2/keras/model3_loss.png" height="150" /> | <img src="plots/ex2/keras/model3_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model3_confusion_matrix.png" height="150" /> |
+| model4 | <img src="plots/ex2/keras/model4_loss.png" height="150" /> | <img src="plots/ex2/keras/model4_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model4_confusion_matrix.png" height="150" /> |
 
 Compared to model1, the confusion matrices are much better: they all present the famous diagonal.
 
@@ -360,7 +360,7 @@ Even though we managed to improve the accuracy, it's becoming harder to fight ov
 - Flatten.
 - Dense: 10 ('softmax').
 
-*N.B.:* This is the same model1 as with Keras to have the same base, but it won't be improve the same way as Keras, since we chose to improve it the most relevant way possible. This will allow us to have other CNN architectures giving good accuracies.
+*N.B.:* This is the same model1 as with Keras to have the same base, but it won't be improved the same way as Keras, since we chose to improve it the most relevant way possible. This will allow us to have other CNN architectures giving good accuracies.
 
 #### Loss and Accuracy Plots
 
@@ -478,8 +478,8 @@ The 2 new models provide rather identical results, slightly better than the mode
 
 |   ID   |                          Loss Plot                           |                          Accuracy Plot                           |                             Confusion Matrix                             |
 | :----: | :----------------------------------------------------------: | :--------------------------------------------------------------: | :----------------------------------------------------------------------: |
-| model3 | <img src="plots/ex1/pytorch/model3_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_confusion_matrix.png" height="250" /> |
-| model4 | <img src="plots/ex1/pytorch/model4_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_confusion_matrix.png" height="250" /> |
+| model3 | <img src="plots/ex1/pytorch/model3_loss.png" height="150" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="150" /> | <img src="plots/ex1/pytorch/model3_confusion_matrix.png" height="150" /> |
+| model4 | <img src="plots/ex1/pytorch/model4_loss.png" height="150" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="150" /> | <img src="plots/ex1/pytorch/model4_confusion_matrix.png" height="150" /> |
 
 Here, model3 seems to have less overfitting, but it depends also on the run as the difference is very subtle.
 
@@ -634,7 +634,7 @@ This model gives the best results for this dataset. On the other hand, the train
 <img src="plots/ex2/pytorch/model5_loss.png" height="240" />
 <img src="plots/ex2/pytorch/model5_accuracy.png" height="240" />
 
-There is persistent overfitting but at this point, there is not mcuh solution but to use data augmentation. We will try to focus on that next.
+There is persistent overfitting but at this point, there is not much solution but to use data augmentation. We will try to focus on that next.
 
 #### Confusion Matrix
 

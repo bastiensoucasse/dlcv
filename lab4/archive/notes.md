@@ -60,3 +60,7 @@ https://www.analyticsvidhya.com/blog/2020/09/overfitting-in-cnn-show-to-treat-ov
 
 Architecture
 https://vitalflux.com/different-types-of-cnn-architectures-explained-examples/
+
+# SÉANCE 2
+
+To avoid the number of channels into Linear, use LazyLinear.
