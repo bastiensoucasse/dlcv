@@ -92,4 +92,4 @@ if __name__ == '__main__':
     plt.savefig('plots/ex1/keras/%s_confusion_matrix.png' % MODEL)   
 
     # Get 10 worst classified images
-    lab4_utils.ten_worst(mnist, 10, y_pred, True, 'ex1/keras/%s' % MODEL)
+    lab4_utils.ten_worst(mnist, y_pred, True, 'ex1/keras/%s' % MODEL)

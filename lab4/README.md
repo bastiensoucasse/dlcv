@@ -6,7 +6,7 @@
     - **Apple MacBook Air (2020)**
         - Apple M1 Chip: 8-core CPU with 4 perform­ance cores and 4 efficiency cores, 7-core GPU, and 16-core Neural Engine.
 - Testing
-    - **CREMI (vlaminck)**
+    - **CREMI (204)**
         - 6-Core E-2236 32Go CPU, and RTX 2060 (6Go) GPU.
 
 <br /><br />
@@ -25,9 +25,9 @@
 | :----: | :----: | :------: | :-----------: |
 | model1 | 0.2940 |  91.96%  |    46.96s     |
 
-- Convolution: 32, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10, 'softmax'.
+- Dense: 10, 'softmax'.
 
 <br />
 
@@ -66,18 +66,18 @@ As a consequence, we decided to gather all the misclassified images and selected
 
 <br />
 
-| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
-| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
-|  10   |   1727    |     7      |    3     | <img src="ten_worst/ex1/keras/model1/10.png" /> |
-|   9   |   6511    |     5      |    3     | <img src="ten_worst/ex1/keras/model1/9.png" />  |
-|   8   |   4910    |     4      |    9     | <img src="ten_worst/ex1/keras/model1/8.png" />  |
-|   7   |    565    |     9      |    4     | <img src="ten_worst/ex1/keras/model1/7.png" />  |
-|   6   |   5874    |     3      |    5     | <img src="ten_worst/ex1/keras/model1/6.png" />  |
-|   5   |   7786    |     7      |    9     | <img src="ten_worst/ex1/keras/model1/5.png" />  |
-|   4   |   8297    |     5      |    8     | <img src="ten_worst/ex1/keras/model1/4.png" />  |
-|   3   |   7689    |     5      |    8     | <img src="ten_worst/ex1/keras/model1/3.png" />  |
-|   2   |   3862    |     3      |    2     | <img src="ten_worst/ex1/keras/model1/2.png" />  |
-|   1   |   2371    |     9      |    4     | <img src="ten_worst/ex1/keras/model1/1.png" />  |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
+| :---: | :--------: | :--------: | :-------: | :---------------------------------------------: |
+|  10   |    1727    |     7      |     3     | <img src="ten_worst/ex1/keras/model1/10.png" /> |
+|   9   |    6511    |     5      |     3     | <img src="ten_worst/ex1/keras/model1/9.png" />  |
+|   8   |    4910    |     4      |     9     | <img src="ten_worst/ex1/keras/model1/8.png" />  |
+|   7   |    565     |     9      |     4     | <img src="ten_worst/ex1/keras/model1/7.png" />  |
+|   6   |    5874    |     3      |     5     | <img src="ten_worst/ex1/keras/model1/6.png" />  |
+|   5   |    7786    |     7      |     9     | <img src="ten_worst/ex1/keras/model1/5.png" />  |
+|   4   |    8297    |     5      |     8     | <img src="ten_worst/ex1/keras/model1/4.png" />  |
+|   3   |    7689    |     5      |     8     | <img src="ten_worst/ex1/keras/model1/3.png" />  |
+|   2   |    3862    |     3      |     2     | <img src="ten_worst/ex1/keras/model1/2.png" />  |
+|   1   |    2371    |     9      |     4     | <img src="ten_worst/ex1/keras/model1/1.png" />  |
 
 <br />
 
@@ -105,7 +105,7 @@ The CNN model takes a little bit more time (5s) than the lab3.3 best model and p
 
 ### 1.4. Model Improvement
 
-### 1.4.1. A new architecture
+### 1.4.1. A New Architecture
 
 Let's use an architecture more complex given in class.
 
@@ -115,12 +115,12 @@ Let's use an architecture more complex given in class.
 | :----: | :----: | :------: | :-----------: |
 | model2 | 0.5195 |  97.81%  |    144.61s    |
 
-- Convolution: 32, 3, 1, 'valid'.
-- Convolution: 64, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
+- Conv2D: 64, 3, 1, 'valid'.
 - MaxPooling: 2, 1, 'valid'
-- Convolution: 128, 3, 1, 'valid'.
+- Conv2D: 128, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10, 'softmax'.
+- Dense: 10, 'softmax'.
 
 This model's accuracy is much better, it even reaches the lab3.3 best model accuracy. However, the training time is way longer (about 3 times), but it remains reasonable.
 
@@ -160,18 +160,18 @@ There are less misclassified images but more categories.
 
 <br />
 
-| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
-| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
-|  10   |   7813    |     8      |    9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |
-|   9   |   2135    |     1      |    6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |
-|   8   |   2298    |     0      |    8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |
-|   7   |    290    |     5      |    8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |
-|   6   |   5936    |     9      |    4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |
-|   5   |   4838    |     5      |    6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |
-|   4   |   9982    |     6      |    5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |
-|   3   |   2770    |     7      |    3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |
-|   2   |   7886    |     4      |    2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |
-|   1   |   3794    |     3      |    8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
+| :---: | :--------: | :--------: | :-------: | :---------------------------------------------: |
+|  10   |    7813    |     8      |     9     | <img src="ten_worst/ex1/keras/model2/10.png" /> |
+|   9   |    2135    |     1      |     6     | <img src="ten_worst/ex1/keras/model2/9.png" />  |
+|   8   |    2298    |     0      |     8     | <img src="ten_worst/ex1/keras/model2/8.png" />  |
+|   7   |    290     |     5      |     8     | <img src="ten_worst/ex1/keras/model2/7.png" />  |
+|   6   |    5936    |     9      |     4     | <img src="ten_worst/ex1/keras/model2/6.png" />  |
+|   5   |    4838    |     5      |     6     | <img src="ten_worst/ex1/keras/model2/5.png" />  |
+|   4   |    9982    |     6      |     5     | <img src="ten_worst/ex1/keras/model2/4.png" />  |
+|   3   |    2770    |     7      |     3     | <img src="ten_worst/ex1/keras/model2/3.png" />  |
+|   2   |    7886    |     4      |     2     | <img src="ten_worst/ex1/keras/model2/2.png" />  |
+|   1   |    3794    |     3      |     8     | <img src="ten_worst/ex1/keras/model2/1.png" />  |
 
 <br />
 
@@ -180,21 +180,21 @@ Then, we can only observe 1 confusion in both ways between 5 and 6, which was no
 
 <br />
 
-### 1.4.2. Fighting against overfitting
+### 1.4.2. Fighting Against Overfitting
 
 This time, let's build a model with data normalization, to prevent overfitting. And then, try and improve its accuracy.
 
-#### Models Summaries
+#### Model Summaries
 
 Legend:
-- Conv2D: nb_filters, kernel_size, stride, padding
-- MaxPooling: pool_size, stride, padding
+- Conv2D: num_filters, kernel_size, stride, padding.
+- MaxPooling: pool_size, stride, padding.
 
-|   ID   | Architecture                                                                                                                                                                                         |  Loss  | Accuracy | Training time |
-| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
-| model3 | - Conv2D: 32, `5`, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - `BatchNorm` <br> - MaxPooling: 2, 1, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'          | 0.2406 |  98.12%  |    143.87s    |
-| model4 | - Conv2D: 32, `5`, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - `BatchNorm` <br> - MaxPooling: 2, `2`, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'        | 0.2260 |  98.13%  |    113.17s    |
-| model5 | - Conv2D: `64`, `5`, 1, 'valid' <br> - Conv2D: `128`, 5, 1, 'valid' <br> - `BatchNorm` <br> - MaxPooling: 2, `2`, 'valid' <br> - Conv2D: `256`, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax' | 0.3216 |  98.04%  |    211.00s    |
+|   ID   | Architecture                                                                                                                                                                                                         |  Loss  | Accuracy | Training time |
+| :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Conv2D: 32, `5`, 1, 'valid' <br /> - Conv2D: 64, 5, 1, 'valid' <br /> - `BatchNorm` <br /> - MaxPooling: 2, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax'          | 0.2406 |  98.12%  |    143.87s    |
+| model4 | - Conv2D: 32, `5`, 1, 'valid' <br /> - Conv2D: 64, 5, 1, 'valid' <br /> - `BatchNorm` <br /> - MaxPooling: 2, `2`, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax'        | 0.2260 |  98.13%  |    113.17s    |
+| model5 | - Conv2D: `64`, `5`, 1, 'valid' <br /> - Conv2D: `128`, 5, 1, 'valid' <br /> - `BatchNorm` <br /> - MaxPooling: 2, `2`, 'valid' <br /> - Conv2D: `256`, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax' | 0.3216 |  98.04%  |    211.00s    |
 
 Those 3 new models provide rather identical accuracies, that are slightly better than the model2 one. The training time allows to decide between them. Indeed, even if these information are not sufficient to choose a model, model4 seems to be the best model so far.
 
@@ -215,19 +215,19 @@ They all look quite equivalent. More importantly, they show better results than 
 
 <br />
 
-|       |  model3   |            |          |                                                 |  model4   |            |          |                                                 |  model5   |            |          |                                                 |
-| :---: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: |
-| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      |
-|  10   |   4196    |     9      |    5     | <img src="ten_worst/ex1/keras/model3/10.png" /> |   3559    |     5      |    8     | <img src="ten_worst/ex1/keras/model4/10.png" /> |   9614    |     5      |    3     | <img src="ten_worst/ex1/keras/model5/10.png" /> |
-|   9   |    924    |     7      |    2     | <img src="ten_worst/ex1/keras/model3/9.png" />  |   9904    |     8      |    2     | <img src="ten_worst/ex1/keras/model4/9.png" />  |   4534    |     7      |    9     | <img src="ten_worst/ex1/keras/model5/9.png" />  |
-|   8   |   6157    |     5      |    9     | <img src="ten_worst/ex1/keras/model3/8.png" />  |   9698    |     5      |    6     | <img src="ten_worst/ex1/keras/model4/8.png" />  |   6624    |     5      |    3     | <img src="ten_worst/ex1/keras/model5/8.png" />  |
-|   7   |   6166    |     3      |    9     | <img src="ten_worst/ex1/keras/model3/7.png" />  |   1101    |     3      |    8     | <img src="ten_worst/ex1/keras/model4/7.png" />  |   5922    |     3      |    5     | <img src="ten_worst/ex1/keras/model5/7.png" />  |
-|   6   |   9645    |     7      |    1     | <img src="ten_worst/ex1/keras/model3/6.png" />  |   9331    |     3      |    5     | <img src="ten_worst/ex1/keras/model4/6.png" />  |   1686    |     6      |    8     | <img src="ten_worst/ex1/keras/model5/6.png" />  |
-|   5   |   5176    |     4      |    8     | <img src="ten_worst/ex1/keras/model3/5.png" />  |   5265    |     4      |    6     | <img src="ten_worst/ex1/keras/model4/5.png" />  |   4783    |     9      |    4     | <img src="ten_worst/ex1/keras/model5/5.png" />  |
-|   4   |   1138    |     1      |    2     | <img src="ten_worst/ex1/keras/model3/4.png" />  |   6651    |     8      |    0     | <img src="ten_worst/ex1/keras/model4/4.png" />  |   2406    |     4      |    9     | <img src="ten_worst/ex1/keras/model5/4.png" />  |
-|   3   |    543    |     7      |    8     | <img src="ten_worst/ex1/keras/model3/3.png" />  |   6391    |     4      |    2     | <img src="ten_worst/ex1/keras/model4/3.png" />  |   3941    |     6      |    4     | <img src="ten_worst/ex1/keras/model5/3.png" />  |
-|   2   |   4256    |     2      |    3     | <img src="ten_worst/ex1/keras/model3/2.png" />  |   5745    |     1      |    7     | <img src="ten_worst/ex1/keras/model4/2.png" />  |   2189    |     8      |    9     | <img src="ten_worst/ex1/keras/model5/2.png" />  |
-|   1   |   2369    |     3      |    5     | <img src="ten_worst/ex1/keras/model3/1.png" />  |   9638    |     7      |    9     | <img src="ten_worst/ex1/keras/model4/1.png" />  |   3951    |     7      |    8     | <img src="ten_worst/ex1/keras/model5/1.png" />  |
+|       |   model3   |            |           |                                                 |   model4   |            |           |                                                 |   model5   |            |           |                                                 |
+| :---: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
+|  10   |    4196    |     9      |     5     | <img src="ten_worst/ex1/keras/model3/10.png" /> |    3559    |     5      |     8     | <img src="ten_worst/ex1/keras/model4/10.png" /> |    9614    |     5      |     3     | <img src="ten_worst/ex1/keras/model5/10.png" /> |
+|   9   |    924     |     7      |     2     | <img src="ten_worst/ex1/keras/model3/9.png" />  |    9904    |     8      |     2     | <img src="ten_worst/ex1/keras/model4/9.png" />  |    4534    |     7      |     9     | <img src="ten_worst/ex1/keras/model5/9.png" />  |
+|   8   |    6157    |     5      |     9     | <img src="ten_worst/ex1/keras/model3/8.png" />  |    9698    |     5      |     6     | <img src="ten_worst/ex1/keras/model4/8.png" />  |    6624    |     5      |     3     | <img src="ten_worst/ex1/keras/model5/8.png" />  |
+|   7   |    6166    |     3      |     9     | <img src="ten_worst/ex1/keras/model3/7.png" />  |    1101    |     3      |     8     | <img src="ten_worst/ex1/keras/model4/7.png" />  |    5922    |     3      |     5     | <img src="ten_worst/ex1/keras/model5/7.png" />  |
+|   6   |    9645    |     7      |     1     | <img src="ten_worst/ex1/keras/model3/6.png" />  |    9331    |     3      |     5     | <img src="ten_worst/ex1/keras/model4/6.png" />  |    1686    |     6      |     8     | <img src="ten_worst/ex1/keras/model5/6.png" />  |
+|   5   |    5176    |     4      |     8     | <img src="ten_worst/ex1/keras/model3/5.png" />  |    5265    |     4      |     6     | <img src="ten_worst/ex1/keras/model4/5.png" />  |    4783    |     9      |     4     | <img src="ten_worst/ex1/keras/model5/5.png" />  |
+|   4   |    1138    |     1      |     2     | <img src="ten_worst/ex1/keras/model3/4.png" />  |    6651    |     8      |     0     | <img src="ten_worst/ex1/keras/model4/4.png" />  |    2406    |     4      |     9     | <img src="ten_worst/ex1/keras/model5/4.png" />  |
+|   3   |    543     |     7      |     8     | <img src="ten_worst/ex1/keras/model3/3.png" />  |    6391    |     4      |     2     | <img src="ten_worst/ex1/keras/model4/3.png" />  |    3941    |     6      |     4     | <img src="ten_worst/ex1/keras/model5/3.png" />  |
+|   2   |    4256    |     2      |     3     | <img src="ten_worst/ex1/keras/model3/2.png" />  |    5745    |     1      |     7     | <img src="ten_worst/ex1/keras/model4/2.png" />  |    2189    |     8      |     9     | <img src="ten_worst/ex1/keras/model5/2.png" />  |
+|   1   |    2369    |     3      |     5     | <img src="ten_worst/ex1/keras/model3/1.png" />  |    9638    |     7      |     9     | <img src="ten_worst/ex1/keras/model4/1.png" />  |    3951    |     7      |     8     | <img src="ten_worst/ex1/keras/model5/1.png" />  |
 
 <br /><br />
 
@@ -240,9 +240,9 @@ They all look quite equivalent. More importantly, they show better results than 
 | :----: | :----: | :------: | :-----------: |
 | model1 | 1.9821 |  33.35%  |    53.39s     |
 
-- Convolution: 32, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10, 'softmax'.
+- Dense: 10, 'softmax'.
 
 <br />
 
@@ -269,18 +269,18 @@ The confusion matrix looks bad: there is no high value diagonal. It adds a proof
 
 #### 10 Worst Classified Images
 
-| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      |
-| :---: | :-------: | :--------: | :------: | :---------------------------------------------: |
-|  10   |   7451    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model1/10.png" /> |
-|   9   |   7196    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/9.png" />  |
-|   8   |   8309    |    frog    |   deer   | <img src="ten_worst/ex2/keras/model1/8.png" />  |
-|   7   |   5918    |   truck    |  automo  | <img src="ten_worst/ex2/keras/model1/7.png" />  |
-|   6   |   7811    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/6.png" />  |
-|   5   |   1889    |    ship    |  truck   | <img src="ten_worst/ex2/keras/model1/5.png" />  |
-|   4   |   7455    |   truck    |  automo  | <img src="ten_worst/ex2/keras/model1/4.png" />  |
-|   3   |   4971    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model1/3.png" />  |
-|   2   |   3024    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model1/2.png" />  |
-|   1   |   5008    |   horse    |   4dee   | <img src="ten_worst/ex2/keras/model1/1.png" />  |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
+| :---: | :--------: | :--------: | :-------: | :---------------------------------------------: |
+|  10   |    7451    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model1/10.png" /> |
+|   9   |    7196    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model1/9.png" />  |
+|   8   |    8309    |    Frog    |   Deer    | <img src="ten_worst/ex2/keras/model1/8.png" />  |
+|   7   |    5918    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model1/7.png" />  |
+|   6   |    7811    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model1/6.png" />  |
+|   5   |    1889    |    Ship    |   Truck   | <img src="ten_worst/ex2/keras/model1/5.png" />  |
+|   4   |    7455    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model1/4.png" />  |
+|   3   |    4971    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model1/3.png" />  |
+|   2   |    3024    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model1/2.png" />  |
+|   1   |    5008    |   Horse    |   Deer    | <img src="ten_worst/ex2/keras/model1/1.png" />  |
 
 <br />
 
@@ -297,18 +297,18 @@ Our best lab3.3. model gives a more than 10% better accuracy than our first CNN 
 
 ### 1.4. Model Improvement
 
-#### Models Summaries
+#### Model Summaries
 
 Legend:
-- Conv2D: nb_filters, kernel_size, stride, padding
-- MaxPooling: pool_size, stride, padding
-- Dense: units, activation_function
+- Conv2D: num_filters, kernel_size, stride, padding.
+- MaxPooling: pool_size, stride, padding.
+- Dense: units, activation_function.
 
-|   ID   | Architecture                                                                                                                                                                                                                                                                                           |  Loss  | Accuracy | Training time |
-| :----: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
-| model3 | - Conv2D: 64, 5, 1, 'valid' <br> - Conv2D: 128, 5, 1, 'valid' <br> - BatchNorm <br> - MaxPooling: 2, 2, 'valid' <br> - Conv2D: 256, 5, 1, 'valid' <br> - Flatten <br> - Dense: 'softmax'                                                                                                               | 0.2406 |  98.12%  |    143.87s    |
-| model4 | - Conv2D: 64, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br> - BatchNorm <br> - Conv2D: 32, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br>  - BatchNorm <br> - Flatten <br> - Dense: 128, 'relu' <br> - Dense: 'softmax'                                                                   | 0.2260 |  98.13%  |    113.17s    |
-| model5 | - Conv2D: 64, 5, 1, 'valid' <br> - Conv2D: 64, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br> - BatchNorm <br> - Conv2D: 32, 5, 1, 'valid' <br> - Conv2D: 32, 5, 1, 'valid' <br> - MaxPooling: 2, 2, 'valid' <br>  - BatchNorm <br> - Flatten <br> - Dense: 128, 'relu' <br> - Dense: 'softmax' | 0.3216 |  98.04%  |    211.00s    |
+|   ID   | Architecture                                                                                                                                                                                                                                                                                                                 |  Loss  | Accuracy | Training time |
+| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - BatchNorm <br /> - MaxPooling: 2, 2, 'valid' <br /> - Conv2D: 256, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax'                                                                                                                     | 0.2406 |  98.12%  |    143.87s    |
+| model4 | - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 32, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax'                                                                       | 0.2260 |  98.13%  |    113.17s    |
+| model5 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 32, 5, 1, 'valid' <br /> - Conv2D: 32, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax' | 0.3216 |  98.04%  |    211.00s    |
 
 The accuracy increases through the different models. What's more, the one giving the best accuracy (model4) is not even the slower one. 68% might not seem a great accuracy, but it doubled since model1 which is good news.
 
@@ -328,25 +328,25 @@ Even though we managed to improve the accuracy, it's becoming harder to fight ov
 
 <br />
 
-|       |  model2   |            |          |                                                 |  model3   |            |          |                                                 |  model4   |            |          |                                                 |
-| :---: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: | :-------: | :--------: | :------: | :---------------------------------------------: |
-| Rank  | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      | Image idx | Pred. cat. | Act cat. |                      Image                      |
-|  10   |   5231    |    dog     |   deer   | <img src="ten_worst/ex2/keras/model2/10.png" /> |   2319    |    deer    |  horse   | <img src="ten_worst/ex2/keras/model3/10.png" /> |   9067    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model4/10.png" /> |
-|   9   |   2584    |    cat     |   frog   | <img src="ten_worst/ex2/keras/model2/9.png" />  |    611    |   plane    |  truck   | <img src="ten_worst/ex2/keras/model3/9.png" />  |   9523    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/9.png" />  |
-|   8   |   8688    |     9      |   ship   | <img src="ten_worst/ex2/keras/model2/8.png" />  |   3237    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model3/8.png" />  |   8697    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/8.png" />  |
-|   7   |   6280    |    bird    |   ship   | <img src="ten_worst/ex2/keras/model2/7.png" />  |    48     |    deer    |  horse   | <img src="ten_worst/ex2/keras/model3/7.png" />  |   6031    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model4/7.png" />  |
-|   6   |   6094    |    deer    |   dog    | <img src="ten_worst/ex2/keras/model2/6.png" />  |   9235    |    deer    |  plane   | <img src="ten_worst/ex2/keras/model3/6.png" />  |   4784    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model4/6.png" />  |
-|   5   |   4868    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model2/5.png" />  |   3613    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model3/5.png" />  |   8947    |    bird    |   deer   | <img src="ten_worst/ex2/keras/model4/5.png" />  |
-|   4   |   1226    |    auto    |   frog   | <img src="ten_worst/ex2/keras/model2/4.png" />  |   3817    |    auto    |   ship   | <img src="ten_worst/ex2/keras/model3/4.png" />  |   2578    |    bird    |   ship   | <img src="ten_worst/ex2/keras/model4/4.png" />  |
-|   3   |   6621    |    bird    |  plane   | <img src="ten_worst/ex2/keras/model2/3.png" />  |   3959    |    cat     |   dog    | <img src="ten_worst/ex2/keras/model3/3.png" />  |   6258    |    ship    |  plane   | <img src="ten_worst/ex2/keras/model4/3.png" />  |
-|   2   |   4150    |    deer    |   frog   | <img src="ten_worst/ex2/keras/model2/2.png" />  |    872    |    cat     |   deer   | <img src="ten_worst/ex2/keras/model3/2.png" />  |   3856    |    auto    |  truck   | <img src="ten_worst/ex2/keras/model4/2.png" />  |
-|   1   |   4842    |    cat     |   bird   | <img src="ten_worst/ex2/keras/model2/1.png" />  |   9188    |    bird    |   dog    | <img src="ten_worst/ex2/keras/model3/1.png" />  |   1014    |    dog     |   cat    | <img src="ten_worst/ex2/keras/model4/1.png" />  |
+|       |   model2   |            |           |                                                 |   model3   |            |           |                                                 |   model4   |            |           |                                                 |
+| :---: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
+|  10   |    5231    |    Dog     |   Deer    | <img src="ten_worst/ex2/keras/model2/10.png" /> |    2319    |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model3/10.png" /> |    9067    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model4/10.png" /> |
+|   9   |    2584    |    Cat     |   Frog    | <img src="ten_worst/ex2/keras/model2/9.png" />  |    611     |   Plane    |   Truck   | <img src="ten_worst/ex2/keras/model3/9.png" />  |    9523    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model4/9.png" />  |
+|   8   |    8688    |   Truck    |   Ship    | <img src="ten_worst/ex2/keras/model2/8.png" />  |    3237    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model3/8.png" />  |    8697    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model4/8.png" />  |
+|   7   |    6280    |    Bird    |   Ship    | <img src="ten_worst/ex2/keras/model2/7.png" />  |     48     |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model3/7.png" />  |    6031    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model4/7.png" />  |
+|   6   |    6094    |    Deer    |    Dog    | <img src="ten_worst/ex2/keras/model2/6.png" />  |    9235    |    Deer    |   Plane   | <img src="ten_worst/ex2/keras/model3/6.png" />  |    4784    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model4/6.png" />  |
+|   5   |    4868    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model2/5.png" />  |    3613    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model3/5.png" />  |    8947    |    Bird    |   Deer    | <img src="ten_worst/ex2/keras/model4/5.png" />  |
+|   4   |    1226    |    Car     |   Frog    | <img src="ten_worst/ex2/keras/model2/4.png" />  |    3817    |    Car     |   Ship    | <img src="ten_worst/ex2/keras/model3/4.png" />  |    2578    |    Bird    |   Ship    | <img src="ten_worst/ex2/keras/model4/4.png" />  |
+|   3   |    6621    |    Bird    |   Plane   | <img src="ten_worst/ex2/keras/model2/3.png" />  |    3959    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model3/3.png" />  |    6258    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model4/3.png" />  |
+|   2   |    4150    |    Deer    |   Frog    | <img src="ten_worst/ex2/keras/model2/2.png" />  |    872     |    Cat     |   Deer    | <img src="ten_worst/ex2/keras/model3/2.png" />  |    3856    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model4/2.png" />  |
+|   1   |    4842    |    Cat     |   Bird    | <img src="ten_worst/ex2/keras/model2/1.png" />  |    9188    |    Bird    |    Dog    | <img src="ten_worst/ex2/keras/model3/1.png" />  |    1014    |    Dog     |    Cat    | <img src="ten_worst/ex2/keras/model4/1.png" />  |
 
 <br /><br />
 
 # PyTorch
 
-## 1. Convolutional Neural Network on MNIST Dataset
+## 1. Conv2D Neural Network on MNIST Dataset
 
 ### 1.1. First CNN
 
@@ -354,11 +354,11 @@ Even though we managed to improve the accuracy, it's becoming harder to fight ov
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model1 | 0.2957 |  91.67%  |    102.06s    |
+| model1 | 0.2996 |  91.74%  |    92.76s     |
 
-- Convolution: 32, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
 - Flatten.
-- Fully Connected: 10 ('softmax').
+- Dense: 10 ('softmax').
 
 *N.B.:* This is the same model1 as with Keras to have the same base, but it won't be improve the same way as Keras, since we chose to improve it the most relevant way possible. This will allow us to have other CNN architectures giving good accuracies.
 
@@ -367,17 +367,16 @@ Even though we managed to improve the accuracy, it's becoming harder to fight ov
 <img src="plots/ex1/pytorch/model1_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
 
-These plots may show some overfitting, but not much. There is less overfitting than with Keras.
+These plots may show some overfitting, but not much.
 
 #### Confusion Matrix
 
 <img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
 
 As in Keras, the confusion matrix shows that most the images are well classified (the diagonal). The most misclassified digits are:
-
-- 7 as 9 (38)
-- 5 as 3 (38)
-- 2 as 8 (48)
+- 7 as 9 (35)
+- 4 as 9 (38)
+- 5 as 3 (51)
 
 #### Nota Bene
 
@@ -385,62 +384,275 @@ In PyTorch, the Softmax activation is already done by the CrossEntropyLoss crite
 
 As we didn't know this at first, we did a first version of this model with a softmax activation on the linear layer. The results were drastically different.
 
-<img src="plots/ex1/pytorch/model1_loss.png" height="240" />
-<img src="plots/ex1/pytorch/model1_accuracy.png" height="240" />
+<img src="plots/ex1/pytorch/old_model1_loss.png" height="240" />
+<img src="plots/ex1/pytorch/old_model1_accuracy.png" height="240" />
 
-<img src="plots/ex1/pytorch/model1_confusion_matrix.png" height="400" />
+<img src="plots/ex1/pytorch/old_model1_confusion_matrix.png" height="400" />
 
 The confusion matrix shows that not only the elements are not well classified, but also some classes are nerver predicted.
+
+#### 10 Worst Classified Images
+
+The same way as before, we're going to determine the 10 worst classified images by the model.
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    6885    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/10.png" /> |
+|   9   |    6599    |     1      |     7     | <img src="ten_worst/ex1/pytorch/model1/9.png" />  |
+|   8   |    9487    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/8.png" />  |
+|   7   |    3189    |     4      |     7     | <img src="ten_worst/ex1/pytorch/model1/7.png" />  |
+|   6   |    5688    |     9      |     7     | <img src="ten_worst/ex1/pytorch/model1/6.png" />  |
+|   5   |    1940    |     0      |     5     | <img src="ten_worst/ex1/pytorch/model1/5.png" />  |
+|   4   |    1017    |     2      |     6     | <img src="ten_worst/ex1/pytorch/model1/4.png" />  |
+|   3   |    1310    |     7      |     3     | <img src="ten_worst/ex1/pytorch/model1/3.png" />  |
+|   2   |    3682    |     6      |     2     | <img src="ten_worst/ex1/pytorch/model1/2.png" />  |
+|   1   |    9916    |     9      |     7     | <img src="ten_worst/ex1/pytorch/model1/1.png" />  |
 
 <br />
 
 ### 1.2. Model Improvement
 
+### 1.2.1. A New Architecture
+
+Once again, we are going to complexify our architecture.
+
 #### Model Summary
 
 |   ID   |  Loss  | Accuracy | Training Time |
 | :----: | :----: | :------: | :-----------: |
-| model2 | 0.0988 |  97.98%  |    104.65s    |
+| model2 | 0.1276 |  97.20%  |    97.12s     |
 
-- Convolution: 64, 3, 1, 'valid'.
-- Convolution: 32, 3, 1, 'valid'.
-- Maximum Pooling: 2, 1, 'valid'.
-- Convolution: 16, 3, 1, 'valid'.
+- `Conv2D: 64, 3, 1, 'valid'.`
+- Conv2D: 32, 3, 1, 'valid'.
+- `MaxPooling: 2, 1, 'valid'.`
+- `Conv2D: 16, 3, 1, 'valid'.`
 - Flatten.
-- Fully Connected: 10 ('softmax').
+- Dense: 10 ('softmax').
+
+This model is definitely better than the first one. For only a few seconds longer, it gives a 6 to 7 percent better accuracy.
 
 #### Loss and Accuracy Plots
 
 <img src="plots/ex1/pytorch/model2_loss.png" height="240" />
 <img src="plots/ex1/pytorch/model2_accuracy.png" height="240" />
 
-This time, there is an obvious overfitting detected as the trainling loss keeps descending but the validation one is stabilizing and ever ascending.
+However this time, there is an obvious overfitting detected as the training loss keeps descending but the validation one is ascending.
 
 #### Confusion Matrix
 
 <img src="plots/ex1/pytorch/model2_confusion_matrix.png" height="400" />
 
-However, the confusion matrix—and the accuracy—still shows that most of the images are classified correctly.
+However, the confusion matrix—and also the accuracy obviously—still shows that most of the images are classified correctly.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    5593    |     6      |     0     | <img src="ten_worst/ex1/pytorch/model2/10.png" /> |
+|   9   |    5176    |     4      |     8     | <img src="ten_worst/ex1/pytorch/model2/9.png" />  |
+|   8   |     8      |     6      |     5     | <img src="ten_worst/ex1/pytorch/model2/8.png" />  |
+|   7   |    2370    |     6      |     0     | <img src="ten_worst/ex1/pytorch/model2/7.png" />  |
+|   6   |    6532    |     5      |     0     | <img src="ten_worst/ex1/pytorch/model2/6.png" />  |
+|   5   |    9614    |     5      |     3     | <img src="ten_worst/ex1/pytorch/model2/5.png" />  |
+|   4   |    8069    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model2/4.png" />  |
+|   3   |    6847    |     4      |     6     | <img src="ten_worst/ex1/pytorch/model2/3.png" />  |
+|   2   |    5228    |     4      |     6     | <img src="ten_worst/ex1/pytorch/model2/2.png" />  |
+|   1   |    965     |     0      |     6     | <img src="ten_worst/ex1/pytorch/model2/1.png" />  |
+
+With this model, we're starting to understand why the neural network is wrong sometimes, as one might be wrong the same way on some images.
 
 <br />
 
-### 1.3. Fighting Against Overfitting
+### 1.2.2. Fighting Against Overfitting
 
-|   ID   | Architecture                                                                                                                                                                                                                                                                                         |  Loss  | Accuracy | Training time |
-| :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
-| model3 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - Fully Connected: 10 ('softmax').                                        | 0.0499 |  98.36%  |    106.86s    |
-| model4 | - Convolution: 64, 3, 1, 'valid'. <br> - Convolution: 32, 3, 1, 'valid'. <br> - `Dropout.` <br> - `Activation: 'relu'.` <br> - Maximum Pooling: 2, 1, 'valid'. <br> - Convolution: 16, 3, 1, 'valid'. <br> - Flatten. <br> - `Fully Connected: 128, 'relu'.` <br> - Fully Connected: 10 ('softmax'). | 0.0449 |  98.98%  |    121.13s    |
+This time, let's build a model with data normalization, to prevent overfitting. And then, try and improve its accuracy.
 
-|   ID   |                            Loss Plot                             |                          Accuracy Plot                           |                         Confusion Matrix                         |
-| :----: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: |
-| model3 | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> |
-| model4 | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> |
+#### Models Summaries
+
+|   ID   | Architecture                                                                                                                                                                                                                                                             |  Loss  | Accuracy | Training time |
+| :----: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
+| model3 | - Conv2D: 64, 3, 1, 'valid'. <br /> - Conv2D: 32, 3, 1, 'valid'. <br /> - `Dropout.` <br /> - `Activation: 'relu'.` <br /> - MaxPooling: 2, 1, 'valid'. <br /> - Conv2D: 16, 3, 1, 'valid'. <br /> - Flatten. <br /> - Dense: 10 ('softmax').                            | 0.0456 |  98.55%  |    98.83s     |
+| model4 | - Conv2D: 64, 3, 1, 'valid'. <br /> - Conv2D: 32, 3, 1, 'valid'. <br /> - Dropout. <br /> - Activation: 'relu'. <br /> - MaxPooling: 2, 1, 'valid'. <br /> - Conv2D: 16, 3, 1, 'valid'. <br /> - Flatten. <br /> - `Dense: 128, 'relu'.` <br /> - Dense: 10 ('softmax'). | 0.0432 |  98.76%  |    103.71s    |
+
+The 2 new models provide rather identical results, slightly better than the model2 ones.
+
+|   ID   |                          Loss Plot                           |                          Accuracy Plot                           |                             Confusion Matrix                             |
+| :----: | :----------------------------------------------------------: | :--------------------------------------------------------------: | :----------------------------------------------------------------------: |
+| model3 | <img src="plots/ex1/pytorch/model3_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model3_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model3_confusion_matrix.png" height="250" /> |
+| model4 | <img src="plots/ex1/pytorch/model4_loss.png" height="250" /> | <img src="plots/ex1/pytorch/model4_accuracy.png" height="250" /> | <img src="plots/ex1/pytorch/model4_confusion_matrix.png" height="250" /> |
+
+Here, model3 seems to have less overfitting, but it depends also on the run as the difference is very subtle.
+
+|       |   model3   |            |           |                                                   |   model4   |            |           |                                                   |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+|  10   |    1147    |     7      |     4     | <img src="ten_worst/ex1/pytorch/model3/10.png" /> |    2953    |     5      |     3     | <img src="ten_worst/ex1/pytorch/model4/10.png" /> |
+|   9   |    8059    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model3/9.png" />  |    5937    |     3      |     5     | <img src="ten_worst/ex1/pytorch/model4/9.png" />  |
+|   8   |    9664    |     7      |     2     | <img src="ten_worst/ex1/pytorch/model3/8.png" />  |    6091    |     5      |     9     | <img src="ten_worst/ex1/pytorch/model4/8.png" />  |
+|   7   |    4063    |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/7.png" />  |    359     |     4      |     9     | <img src="ten_worst/ex1/pytorch/model4/7.png" />  |
+|   6   |    4838    |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/6.png" />  |    2130    |     9      |     4     | <img src="ten_worst/ex1/pytorch/model4/6.png" />  |
+|   5   |    3073    |     2      |     1     | <img src="ten_worst/ex1/pytorch/model3/5.png" />  |    3030    |     0      |     6     | <img src="ten_worst/ex1/pytorch/model4/5.png" />  |
+|   4   |    2035    |     3      |     5     | <img src="ten_worst/ex1/pytorch/model3/4.png" />  |    4860    |     9      |     4     | <img src="ten_worst/ex1/pytorch/model4/4.png" />  |
+|   3   |    217     |     5      |     6     | <img src="ten_worst/ex1/pytorch/model3/3.png" />  |    8277    |     8      |     3     | <img src="ten_worst/ex1/pytorch/model4/3.png" />  |
+|   2   |    9755    |     5      |     8     | <img src="ten_worst/ex1/pytorch/model3/2.png" />  |    8521    |     1      |     2     | <img src="ten_worst/ex1/pytorch/model4/2.png" />  |
+|   1   |    9015    |     2      |     7     | <img src="ten_worst/ex1/pytorch/model3/1.png" />  |    6081    |     5      |     9     | <img src="ten_worst/ex1/pytorch/model4/1.png" />  |
 
 <br /><br />
 
-## 2. Convolutional Neural Network on CIFAR10 Dataset
+## 2. Conv2D Neural Network on CIFAR10 Dataset
 
-<!-- [model1] loss: 2.0761, accuracy: 33.09%, training time: 109.88s -->
-<!-- [model2] loss: 1.2972, accuracy: 59.38%, training time: 107.24s -->
-<!-- [model3] loss: 1.0494, accuracy: 64.26%, training time: 110.29s -->
-<!-- [model4] loss: 1.3524, accuracy: 63.06%, training time: 119.09s -->
+### 2.1. First CNN
+
+#### Model Summary
+
+For the first run, we chose once again to try the model1 on the new dataset
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model1 | 2.1902 |  30.53%  |    100.20s    |
+
+- Conv2D: 32, 3, 1, 'valid'.
+- Flatten.
+- Dense: 10 ('softmax').
+
+For the first time, we obtain bad results from a model. The color images were much more complicated to analyse.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model1_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model1_accuracy.png" height="240" />
+
+Also, the overfitting is already tremendous.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model1_confusion_matrix.png" height="400" />
+
+To confirm everything we've seen so far, the confusion matrix shows that the predictions are very far from the actual values. We can barely distinguish the diagonal.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    3650    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/10.png" /> |
+|   9   |    9590    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/9.png" />  |
+|   8   |    2968    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/8.png" />  |
+|   7   |    9766    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/7.png" />  |
+|   6   |    7454    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/6.png" />  |
+|   5   |    3278    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/5.png" />  |
+|   4   |    4981    |   Plane    |    Car    | <img src="ten_worst/ex2/pytorch/model1/4.png" />  |
+|   3   |    1651    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model1/3.png" />  |
+|   2   |    7431    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model1/2.png" />  |
+|   1   |    2200    |    Car     |   Plane   | <img src="ten_worst/ex2/pytorch/model1/1.png" />  |
+
+<br />
+
+### 2.2. Model Improvement
+
+### 2.2.1. A New Architecture
+
+#### Model Summary
+
+This time, the model4, one of the best models we've tested, is used.
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model4 | 1.2091 |  67.51%  |    107.47s    |
+
+- Conv2D: 64, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
+- Dropout.
+- Activation: 'relu'.
+- MaxPooling: 2, 1, 'valid'.
+- Conv2D: 16, 3, 1, 'valid'.
+- Flatten.
+- Dense: 128, 'relu'.
+- Dense: 10 ('softmax').
+
+We might be lucky, but this model actualy improves drastically the results we've had with model1. The accuracy is already almost as good as the fourth model tested with Keras.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model4_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model4_accuracy.png" height="240" />
+
+On the other hand, the overfitting is still very present, though we might have limited it.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model4_confusion_matrix.png" height="400" />
+
+The confusion matrix also shows an important improvement as the diagonal is much more visible now.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    1692    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/10.png" /> |
+|   9   |    1732    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/9.png" />  |
+|   8   |    9854    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/8.png" />  |
+|   7   |    4866    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/7.png" />  |
+|   6   |    1829    |   Truck    |    Car    | <img src="ten_worst/ex2/pytorch/model4/6.png" />  |
+|   5   |    3150    |   Truck    |    Car    | <img src="ten_worst/ex2/pytorch/model4/5.png" />  |
+|   4   |    5041    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/4.png" />  |
+|   3   |    6615    |    Dog     |   Horse   | <img src="ten_worst/ex2/pytorch/model4/3.png" />  |
+|   2   |    6968    |   Plane    |   Ship    | <img src="ten_worst/ex2/pytorch/model4/2.png" />  |
+|   1   |    3812    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model4/1.png" />  |
+
+<br />
+
+### 2.2.2. Going Further
+
+#### Model Summary
+
+Let's imagine a new model, inspired by model4, but trying to improve the final accuracy.
+
+|   ID   |  Loss  | Accuracy | Training Time |
+| :----: | :----: | :------: | :-----------: |
+| model5 | 0.9670 |  70.11%  |    134.46s    |
+
+- Conv2D: 64, 3, 1, 'valid'.
+- Conv2D: 32, 3, 1, 'valid'.
+- Dropout.
+- Activation: 'relu'.
+- MaxPooling: 2, 1, 'valid'.
+- `Conv2D: 64, 3, 1, 'valid'.`
+- `Conv2D: 32, 3, 1, 'valid'.`
+- `Dropout.`
+- `Activation: 'relu'.`
+- `MaxPooling: 2, 1, 'valid'.`
+- Conv2D: 16, 3, 1, 'valid'.
+- Flatten.
+- Dense: 128, 'relu'.
+- `Dense: 256, 'relu'.`
+- Dense: 10 ('softmax').
+
+This model gives the best results for this dataset. On the other hand, the training time is starting to grow bigger.
+
+#### Loss and Accuracy Plots
+
+<img src="plots/ex2/pytorch/model5_loss.png" height="240" />
+<img src="plots/ex2/pytorch/model5_accuracy.png" height="240" />
+
+There is persistent overfitting but at this point, there is not mcuh solution but to use data augmentation. We will try to focus on that next.
+
+#### Confusion Matrix
+
+<img src="plots/ex2/pytorch/model5_confusion_matrix.png" height="400" />
+
+The confusion matrix is not perfect but it's the best we've had on this dataset, confirming that the model is better.
+
+#### 10 Worst Classified Images
+
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                       Image                       |
+| :---: | :--------: | :--------: | :-------: | :-----------------------------------------------: |
+|  10   |    5918    |   Truck    |    Car    | <img src="ten_worst/ex2/pytorch/model5/10.png" /> |
+|   9   |    2322    |    Bird    |   Plane   | <img src="ten_worst/ex2/pytorch/model5/9.png" />  |
+|   8   |    4766    |   Truck    |    Car    | <img src="ten_worst/ex2/pytorch/model5/8.png" />  |
+|   7   |    3151    |    Car     |   Ship    | <img src="ten_worst/ex2/pytorch/model5/7.png" />  |
+|   6   |     81     |   Truck    |    Car    | <img src="ten_worst/ex2/pytorch/model5/6.png" />  |
+|   5   |    6342    |   Plane    |   Ship    | <img src="ten_worst/ex2/pytorch/model5/5.png" />  |
+|   4   |    5416    |    Car     |   Truck   | <img src="ten_worst/ex2/pytorch/model5/4.png" />  |
+|   3   |    4056    |    Ship    |   Plane   | <img src="ten_worst/ex2/pytorch/model5/3.png" />  |
+|   2   |    5392    |    Car     |   Plane   | <img src="ten_worst/ex2/pytorch/model5/2.png" />  |
+|   1   |    9981    |   Horse    |   Deer    | <img src="ten_worst/ex2/pytorch/model5/1.png" />  |

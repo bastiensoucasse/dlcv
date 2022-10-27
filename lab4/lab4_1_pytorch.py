@@ -1,11 +1,15 @@
+import sys
 import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+
+import lab4_utils
 
 MODEL = 'model4'
 
@@ -89,7 +93,7 @@ class model4(nn.Module):
         self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
         self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
         self.dropout = nn.Dropout()
-        self.relu = nn.ReLU()
+        self.relu1 = nn.ReLU()
         self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
         self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
         self.flatten = nn.Flatten()
@@ -102,7 +106,7 @@ class model4(nn.Module):
         x = self.conv1(x)
         x = self.conv2(x)
         x = self.dropout(x)
-        x = self.relu(x)
+        x = self.relu1(x)
         x = self.maxpool(x)
         x = self.conv3(x)
         x = self.flatten(x)
@@ -114,13 +118,17 @@ class model4(nn.Module):
 
 
 if __name__ == '__main__':
+    # Check custom model.
+    if len(sys.argv) == 2:
+        MODEL = sys.argv[1]
+
     # Set up device.
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Device: {device}.")
 
     # Load the data.
-    train_dataset = datasets.MNIST('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]), download=True)
-    test_dataset = datasets.MNIST('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]), download=True)
+    train_dataset = datasets.MNIST('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0.5, 0.5)]), download=True)
+    test_dataset = datasets.MNIST('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize(0.5, 0.5)]), download=True)
     train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
@@ -171,7 +179,7 @@ if __name__ == '__main__':
 
     # Evaluate the model.
     with torch.no_grad():
-        y_pred, y_true = [], []
+        y_test, y_pred = [], []
         evaluating_start_time = time.time()
         model.eval()
         running_loss, running_accuracy = 0, 0
@@ -181,9 +189,12 @@ if __name__ == '__main__':
             loss = criterion(pred, y)
             running_loss += loss.item() / len(test_data_loader)
             running_accuracy += (pred.argmax(1) == y).sum().item() / BATCH_SIZE / len(test_data_loader)
-            y_pred.extend(pred.argmax(1).cpu())
-            y_true.extend(y.cpu())
+
+            # Store the expected values and the predictions, for the confusion matrix and to call ten_worst.
+            y_test.extend(y.detach().cpu().numpy())
+            y_pred.extend(pred.detach().cpu().numpy())
         evaluating_time = time.time() - evaluating_start_time
+        y_test, y_pred = np.array(y_test), np.array(y_pred)
         print(f'{evaluating_time:.2f}s - loss: {running_loss:.4f} - accuracy: {running_accuracy:.4f}')
 
     # Display the summary.
@@ -213,8 +224,11 @@ if __name__ == '__main__':
     plt.clf()
 
     # Plot the confusion matrix.
-    cm = confusion_matrix(y_true, y_pred)
+    cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
     disp.plot(cmap=plt.cm.magma)
     plt.savefig('plots/ex1/pytorch/%s_confusion_matrix.png' % MODEL)
     plt.clf()
+
+    # Export the ten worst classified images.
+    lab4_utils.ten_worst_pytorch('mnist', y_pred, True, 'ex1/pytorch/%s' % MODEL)
