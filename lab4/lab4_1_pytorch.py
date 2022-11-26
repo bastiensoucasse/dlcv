@@ -120,11 +120,14 @@ class model4(nn.Module):
 
 if __name__ == '__main__':
     # Check custom model.
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         MODEL = sys.argv[1]
 
     # Set up device.
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    if torch.__version__ < '1.12':
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    else:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
     print(f"Device: {device}.")
 
     # Load the data.

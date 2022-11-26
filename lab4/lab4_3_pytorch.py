@@ -151,7 +151,7 @@ class model5(nn.Module):
         x = self.dropout2(x)
         x = self.relu2(x)
         x = self.maxpool2(x)
-        x = self.conv5(x)        
+        x = self.conv5(x)
         x = self.flatten(x)
         x = self.linear1(x)
         x = self.relu3(x)
@@ -162,13 +162,52 @@ class model5(nn.Module):
         return x
 
 
+class model6(nn.Module):
+    def __init__(self):
+        super(model6, self).__init__()
+
+        self.layer1 = nn.Sequential(
+            nn.Conv2d(NUM_CHANNELS, 64, 5, stride=1, padding=0),
+            nn.Conv2d(64, 64, 5, stride=1, padding=0),
+            nn.MaxPool2d(2, stride=2, padding=0),
+            nn.LazyBatchNorm2d()
+        )
+
+        self.flatten = nn.Flatten()
+
+        self.layer2 = nn.Sequential(
+            nn.Conv2d(64, 128, 5, stride=1, padding=0),
+            nn.Conv2d(128, 128, 5, stride=1, padding=0),
+            nn.MaxPool2d(2, stride=2, padding=0),
+            nn.LazyBatchNorm2d()
+        )
+
+        self.fc1 = nn.Sequential(
+            nn.LazyLinear(128),
+            nn.ReLU()
+        )
+
+        self.fc2 = nn.LazyLinear(NUM_CLASSES)
+
+    def forward(self, x):
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.flatten(x)
+        x = self.fc1(x)
+        x = self.fc2(x)
+        return x
+
+
 if __name__ == '__main__':
     # Check custom model.
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         MODEL = sys.argv[1]
 
     # Set up device.
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    if torch.__version__ < '1.12':
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    else:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
     print(f"Device: {device}.")
 
     # Load the data.
