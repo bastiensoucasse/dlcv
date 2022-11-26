@@ -12,14 +12,14 @@ from torchvision import datasets, transforms
 import lab4_utils
 
 EX = 'ex3/pytorch'
-MODEL = 'model5'
+MODEL = 'praisynet'
 
 CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
 NUM_CHANNELS = 3
 
 BATCH_SIZE = 32
-NUM_EPOCHS = 20
+NUM_EPOCHS = 100
 
 PLOT = True
 
@@ -162,9 +162,9 @@ class model5(nn.Module):
         return x
 
 
-class model6(nn.Module):
+class praisynet(nn.Module):
     def __init__(self):
-        super(model6, self).__init__()
+        super(praisynet, self).__init__()
 
         self.layer1 = nn.Sequential(
             nn.Conv2d(NUM_CHANNELS, 64, 5, stride=1, padding=0),
@@ -207,12 +207,23 @@ if __name__ == '__main__':
     if torch.__version__ < '1.12':
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     else:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
+        device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')  # type: ignore
     print(f"Device: {device}.")
 
-    # Load the data.
-    train_dataset = datasets.CIFAR10('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
-    test_dataset = datasets.CIFAR10('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
+    # Load and augment the data.
+    train_transform = transforms.Compose([
+        transforms.RandomAffine(0, shear=10, scale=(.8, 1.2)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(10),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    test_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    train_dataset = datasets.CIFAR10('data', train=True, transform=train_transform, download=True)
+    test_dataset = datasets.CIFAR10('data', train=False, transform=test_transform, download=True)
     train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
@@ -310,7 +321,7 @@ if __name__ == '__main__':
     # Plot the confusion matrix.
     cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
-    disp.plot(cmap=plt.cm.magma)
+    disp.plot(cmap=plt.cm.magma)  # type: ignore
     plt.savefig('plots/%s/%s_confusion_matrix.png' % (EX, MODEL))
     plt.clf()
 
