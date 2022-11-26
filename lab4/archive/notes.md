@@ -64,3 +64,28 @@ https://vitalflux.com/different-types-of-cnn-architectures-explained-examples/
 # SÉANCE 2
 
 To avoid the number of channels into Linear, use LazyLinear.
+
+## Data augmentation
+https://www.kaggle.com/code/mielek/data-augmentation-with-keras-using-cifar-10/notebook
+https://machinelearningmastery.com/how-to-develop-a-cnn-from-scratch-for-cifar-10-photo-classification/
+https://medium.com/swlh/
+https://colab.research.google.com/drive/1hn284Jk4KDlHbgU1b9sQLJPp5fpyA9G5#scrollTo=dnQWa-QHiWCZ
+
+
+how-data-augmentation-improves-your-cnn-performance-an-experiment-in-pytorch-and-torchvision-e5fb36d038fb
+
+## Models that work
+
+ILSVRC: ImageNet Large Scale V. Recognition Challenge
+1.3M images in ImageNet
+1K classes
+
+https://github.com/rasbt/deeplearning-models/blob/master/pytorch_ipynb/cnn/cnn-alexnet-cifar10.ipynb
+https://www.kaggle.com/code/vortexkol/alexnet-cnn-architecture-on-tensorflow-beginner
+
+Première étape: utiliser un CNN préentrainé et le réutiliser sur nos données sans rien changer.
+
+Rendu 01/12: les 4 parties en entier
+Pour la partie 3: on peut s'inspirer de réseaux existant
+Pour la partie 4: pas obligé de mettre la data augmentation, on peut essayer avec ou sans
+Parties 1 et 2: corriger le diagnostique d'overfitting

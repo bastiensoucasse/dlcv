@@ -38,6 +38,26 @@ if __name__ == '__main__':
 
     # Define the model.
     model = Sequential()
+    # Model 2
+    # model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
+    # model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
+    # model.add(BatchNormalization())
+    # model.add(MaxPooling2D(P, 2, PADDING[0]))
+    # model.add(Conv2D(NB_FILTERS[3], K, STRIDE, PADDING[0]))
+    # model.add(Flatten())
+
+    # Model 3
+    # model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
+    # model.add(MaxPooling2D(P, 2, PADDING[0]))
+    # model.add(BatchNormalization())
+    # model.add(Conv2D(NB_FILTERS[2], K, STRIDE, PADDING[0]))
+    # model.add(MaxPooling2D(P, 2, PADDING[0]))
+    # model.add(BatchNormalization())
+    # model.add(Flatten())
+    # model.add(Dense(128, activation='relu'))
+
+
+    # Model 4
     model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0], input_shape=x_train.shape[1:]))
     model.add(Conv2D(NB_FILTERS[1], K, STRIDE, PADDING[0]))
     model.add(MaxPooling2D(P, 2, PADDING[0]))
@@ -48,6 +68,7 @@ if __name__ == '__main__':
     model.add(BatchNormalization())
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
+
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
     start_time = time.time()
