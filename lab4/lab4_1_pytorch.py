@@ -11,6 +11,7 @@ from torchvision import datasets, transforms
 
 import lab4_utils
 
+EX = 'ex1/pytorch'
 MODEL = 'model4'
 
 CLASSES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -210,7 +211,7 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Loss Over Epoch')
-    plt.savefig('plots/ex1/pytorch/%s_loss.png' % MODEL)
+    plt.savefig('plots/%s/%s_loss.png' % (EX, MODEL))
     plt.clf()
 
     # Plot the accuracy.
@@ -220,15 +221,15 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Accuracy Over Epoch')
-    plt.savefig('plots/ex1/pytorch/%s_accuracy.png' % MODEL)
+    plt.savefig('plots/%s/%s_accuracy.png' % (EX, MODEL))
     plt.clf()
 
     # Plot the confusion matrix.
     cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
     disp.plot(cmap=plt.cm.magma)
-    plt.savefig('plots/ex1/pytorch/%s_confusion_matrix.png' % MODEL)
+    plt.savefig('plots/%s/%s_confusion_matrix.png' % (EX, MODEL))
     plt.clf()
 
     # Export the ten worst classified images.
-    lab4_utils.ten_worst_pytorch('mnist', y_pred, True, 'ex1/pytorch/%s' % MODEL)
+    lab4_utils.ten_worst_pytorch('cifar10', y_pred, True, '%s/%s' % (EX, MODEL))

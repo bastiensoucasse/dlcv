@@ -325,7 +325,6 @@ Compared to model1, the confusion matrices are much better: they all present the
 
 Even though we managed to improve the accuracy, it's becoming harder to fight overfitting. Indeed, all 3 models show a lot of overfitting. Notice that the last one looks like it's slightly less overfitting.
 
-
 <br />
 
 |       |   model2   |            |           |                                                 |   model3   |            |           |                                                 |   model4   |            |           |                                                 |
