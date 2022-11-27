@@ -12,168 +12,80 @@ from torchvision import datasets, transforms
 import lab4_utils
 
 EX = 'ex3/pytorch'
-MODEL = 'model5'
+MODEL = 'praisynet'
 
 CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
 NUM_CHANNELS = 3
 
 BATCH_SIZE = 32
-NUM_EPOCHS = 20
+NUM_EPOCHS = 100
 
 PLOT = True
 
 
-class model1(nn.Module):
+class praisynet(nn.Module):
     def __init__(self):
-        super(model1, self).__init__()
-        self.conv = nn.Conv2d(NUM_CHANNELS, 32, 3, stride=1, padding=0)
+        super(praisynet, self).__init__()
+
+        self.layer1 = nn.Sequential(
+            nn.Conv2d(NUM_CHANNELS, 64, 5, stride=1, padding=0),
+            nn.Conv2d(64, 64, 5, stride=1, padding=0),
+            nn.MaxPool2d(2, stride=2, padding=0),
+            nn.LazyBatchNorm2d()
+        )
+
         self.flatten = nn.Flatten()
-        self.linear = nn.LazyLinear(NUM_CLASSES)
-        # self.softmax = nn.Softmax(dim=1)
+
+        self.layer2 = nn.Sequential(
+            nn.Conv2d(64, 128, 5, stride=1, padding=0),
+            nn.Conv2d(128, 128, 5, stride=1, padding=0),
+            nn.MaxPool2d(2, stride=2, padding=0),
+            nn.LazyBatchNorm2d()
+        )
+
+        self.fc1 = nn.Sequential(
+            nn.LazyLinear(128),
+            nn.ReLU()
+        )
+
+        self.fc2 = nn.LazyLinear(NUM_CLASSES)
 
     def forward(self, x):
-        x = self.conv(x)
+        x = self.layer1(x)
+        x = self.layer2(x)
         x = self.flatten(x)
-        x = self.linear(x)
-        # x = self.softmax(x)
-        return x
-
-
-class model2(nn.Module):
-    def __init__(self):
-        super(model2, self).__init__()
-        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
-        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
-        self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
-        self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
-        self.flatten = nn.Flatten()
-        self.linear = nn.LazyLinear(NUM_CLASSES)
-        # self.softmax = nn.Softmax(dim=1)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = self.maxpool(x)
-        x = self.conv3(x)
-        x = self.flatten(x)
-        x = self.linear(x)
-        # x = self.softmax(x)
-        return x
-
-
-class model3(nn.Module):
-    def __init__(self):
-        super(model3, self).__init__()
-        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
-        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
-        self.dropout = nn.Dropout()
-        self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
-        self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
-        self.flatten = nn.Flatten()
-        self.linear = nn.LazyLinear(NUM_CLASSES)
-        # self.softmax = nn.Softmax(dim=1)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = self.dropout(x)
-        x = self.relu(x)
-        x = self.maxpool(x)
-        x = self.conv3(x)
-        x = self.flatten(x)
-        x = self.linear(x)
-        # x = self.softmax(x)
-        return x
-
-
-class model4(nn.Module):
-    def __init__(self):
-        super(model4, self).__init__()
-        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
-        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
-        self.dropout = nn.Dropout()
-        self.relu1 = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(2, stride=2, padding=0)
-        self.conv3 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
-        self.flatten = nn.Flatten()
-        self.linear1 = nn.LazyLinear(128)
-        self.relu2 = nn.ReLU()
-        self.linear2 = nn.LazyLinear(NUM_CLASSES)
-        # self.softmax = nn.Softmax(dim=1)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = self.dropout(x)
-        x = self.relu1(x)
-        x = self.maxpool(x)
-        x = self.conv3(x)
-        x = self.flatten(x)
-        x = self.linear1(x)
-        x = self.relu2(x)
-        x = self.linear2(x)
-        # x = self.softmax(x)
-        return x
-
-
-class model5(nn.Module):
-    def __init__(self):
-        super(model5, self).__init__()
-        self.conv1 = nn.Conv2d(NUM_CHANNELS, 64, 3, stride=1, padding=0)
-        self.conv2 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
-        self.dropout1 = nn.Dropout()
-        self.relu1 = nn.ReLU()
-        self.maxpool1 = nn.MaxPool2d(2, stride=2, padding=0)
-        self.conv3 = nn.Conv2d(32, 64, 3, stride=1, padding=0)
-        self.conv4 = nn.Conv2d(64, 32, 3, stride=1, padding=0)
-        self.dropout2 = nn.Dropout()
-        self.relu2 = nn.ReLU()
-        self.maxpool2 = nn.MaxPool2d(2, stride=2, padding=0)
-        self.conv5 = nn.Conv2d(32, 16, 3, stride=1, padding=0)
-        self.flatten = nn.Flatten()
-        self.linear1 = nn.LazyLinear(128)
-        self.relu3 = nn.ReLU()
-        self.linear2 = nn.LazyLinear(256)
-        self.relu4 = nn.ReLU()
-        self.linear3 = nn.LazyLinear(NUM_CLASSES)
-        # self.softmax = nn.Softmax(dim=1)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = self.dropout1(x)
-        x = self.relu1(x)
-        x = self.maxpool1(x)
-        x = self.conv3(x)
-        x = self.conv4(x)
-        x = self.dropout2(x)
-        x = self.relu2(x)
-        x = self.maxpool2(x)
-        x = self.conv5(x)        
-        x = self.flatten(x)
-        x = self.linear1(x)
-        x = self.relu3(x)
-        x = self.linear2(x)
-        x = self.relu4(x)
-        x = self.linear3(x)
-        # x = self.softmax(x)
+        x = self.fc1(x)
+        x = self.fc2(x)
         return x
 
 
 if __name__ == '__main__':
     # Check custom model.
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         MODEL = sys.argv[1]
 
     # Set up device.
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    if torch.__version__ < '1.12':
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    else:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')  # type: ignore
     print(f"Device: {device}.")
 
-    # Load the data.
-    train_dataset = datasets.CIFAR10('data', train=True, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
-    test_dataset = datasets.CIFAR10('data', train=False, transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]), download=True)
+    # Load and augment the data.
+    train_transform = transforms.Compose([
+        transforms.RandomAffine(0, shear=10, scale=(.8, 1.2)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(10),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    test_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+    train_dataset = datasets.CIFAR10('data', train=True, transform=train_transform, download=True)
+    test_dataset = datasets.CIFAR10('data', train=False, transform=test_transform, download=True)
     train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
@@ -271,7 +183,7 @@ if __name__ == '__main__':
     # Plot the confusion matrix.
     cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
-    disp.plot(cmap=plt.cm.magma)
+    disp.plot(cmap=plt.cm.magma)  # type: ignore
     plt.savefig('plots/%s/%s_confusion_matrix.png' % (EX, MODEL))
     plt.clf()
 
