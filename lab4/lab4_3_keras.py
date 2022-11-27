@@ -8,15 +8,17 @@ from keras.datasets import cifar10
 from keras.layers import (BatchNormalization, Conv2D, Dense, Dropout, Flatten,
                           MaxPooling2D)
 from keras.models import Sequential
+from keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
 import lab4_utils
 
-MODEL = 'model4'
+MODEL = 'model10'
 
-EPOCHS = 20
+EPOCHS = 100
 NUM_CLASSES = 10
 
+BATCH_SIZE = 32
 K = 5
 P = 2
 STRIDE = 1
@@ -35,6 +37,26 @@ if __name__ == '__main__':
     x_test = x_test.reshape(x_test.shape[0], height, width, 3) / 255.0
     y_train = keras.utils.to_categorical(y_train, NUM_CLASSES)
     y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
+    
+    # Data augmentation.
+    datagen = ImageDataGenerator(
+        horizontal_flip=True,
+        height_shift_range=0.1,
+        width_shift_range=0.1,
+        # rotation_range=10,
+        # zoom_range=0.2,
+    )
+    datagen.fit(x_train)
+
+    # Visualize new data.
+    # plt.figure(figsize=(10, 2))
+    # for X_batch,_ in datagen.flow(x_train, y_train, batch_size=6, seed=28):
+    #     for i in range(0,6):
+    #         plt.subplot(1, 6, 1+i, xticks=[], yticks=[])
+    #         plt.imshow(X_batch[i])
+    #     plt.suptitle('Augmented images')
+    #     plt.savefig('plots/ex3/keras/dataset_augmented.png')
+    #     break
 
     # Define the model.
     model = Sequential()
@@ -50,8 +72,13 @@ if __name__ == '__main__':
     model.add(Dense(128, activation='relu'))
     model.add(Dense(NUM_CLASSES, activation='softmax'))
     model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
+
+    # Train the model.
     start_time = time.time()
-    hist = model.fit(x_train, y_train, batch_size=32, epochs=EPOCHS, validation_data=(x_test, y_test))  # type: ignore
+    hist = model.fit(datagen.flow(x_train, y_train, batch_size=BATCH_SIZE),
+                     steps_per_epoch=len(x_train) / BATCH_SIZE, 
+                     epochs=EPOCHS,
+                     validation_data=(x_test, y_test))
     training_time = time.time() - start_time
 
     # Evaluate the model.
@@ -59,7 +86,6 @@ if __name__ == '__main__':
 
     # Display the summary.
     print(f'SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s')
-
 
     # Plot the loss.
     plt.plot(hist.history['loss'], label='Training')
@@ -93,4 +119,4 @@ if __name__ == '__main__':
     plt.savefig('plots/ex3/keras/%s_confusion_matrix.png' % MODEL)   
 
     # Get 10 worst classified images
-    lab4_utils.ten_worst(cifar10, y_pred, True, 'ex3/keras/%s' % MODEL)
+    lab4_utils.ten_worst(cifar10, y_pred, True, 'ex3/keras/%s' % MODEL, True)

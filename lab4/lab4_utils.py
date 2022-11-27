@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets import cifar10, mnist
 
-def ten_worst(dataset, y_pred, save: bool = False, path: str = None):
+def ten_worst(dataset, y_pred, save: bool = False, path: str = None, probs: bool = False):
     '''
     Find 10 worst classified images, from predictions
         dataset: dataset to work on here, should be cifar10 or mnist
 
-        y_pred: predictions made the model on x_test (2D array)
+        y_pred: predictions made by the model on x_test (2D array)
 
         save: True if 10 worst images need to be saved, False otherwise (boolean)
 
@@ -41,12 +41,14 @@ def ten_worst(dataset, y_pred, save: bool = False, path: str = None):
     misclassified.sort(key=lambda a: a[3])
     ranking = misclassified[-10:]
 
-    # Show the ten worst images and their real and predicted classes.
+    # Show the ten worst images, their real and predicted classes, along with the probability for their real class.
     x_test = x_test.reshape(x_test.shape[0], height, width, depth) / 255.0
     print('10 WORST CLASSIFIED IMAGES\n')
     for x in range(10, 0, -1):
-        i, pc, rc, _ = ranking[x-1]
+        i, pc, rc, prob = ranking[x-1]
         print(f'{x}. IMAGE {i}\n    - Predicted category: {pc}\n    - Actual category: {rc}\n')
+        if probs:
+            print(f'    - Probability: {prob}\n')
         if save:
             Path('ten_worst/%s' % path).mkdir(parents=True, exist_ok=True)
 

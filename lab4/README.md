@@ -17,7 +17,7 @@
 
 ### 1.2. First CNN
 
-*N.B.:* After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seems to stabilize around that number.
+*N.B.:* After running the program with 40 epochs and realizing it takes a lot of time, we decided to lower the number of epochs to 20. Indeed, the results seem to stabilize around that number.
 
 #### Model Summary
 
@@ -306,40 +306,40 @@ Legend:
 
 |   ID   | Architecture                                                                                                                                                                                                                                                                                                                   |  Loss  | Accuracy | Training time |
 | :----: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----: | :------: | :-----------: |
-| model2 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - BatchNorm <br /> - MaxPooling: 2, 2, 'valid' <br /> - Conv2D: 256, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax'                                                                                                                       | 1.5979 |  55.96%  |    200.59s    |
-| model3 | - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax'                                                                        | 3.3476 |  63.78%  |    95.43s     |
-| model4 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax' | 1.3447 |  68.57%  |    158.78s    |
+| model5 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - BatchNorm <br /> - MaxPooling: 2, 2, 'valid' <br /> - Conv2D: 256, 5, 1, 'valid' <br /> - Flatten <br /> - Dense: 10, 'softmax'                                                                                                                       | 1.5979 |  55.96%  |    200.59s    |
+| model6 | - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax'                                                                        | 3.3476 |  63.78%  |    95.43s     |
+| model7 | - Conv2D: 64, 5, 1, 'valid' <br /> - Conv2D: 64, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br /> - BatchNorm <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - Conv2D: 128, 5, 1, 'valid' <br /> - MaxPooling: 2, 2, 'valid' <br />  - BatchNorm <br /> - Flatten <br /> - Dense: 128, 'relu' <br /> - Dense: 10, 'softmax' | 1.3447 |  68.57%  |    158.78s    |
 
-The accuracy increases through the different models. What's more, the one giving the best accuracy (model4) is not even the slower one. 68% might not seem a great accuracy, but it doubled since model1 which is good news.
+The accuracy increases through the different models. What's more, the one giving the best accuracy (model7) is not even the slower one. 68% might not seem a great accuracy, but it doubled since model1 which is good news.
 
 
 <br />
 
 |   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
 | :----: | :--------------------------------------------------------: | :------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| model2 | <img src="plots/ex2/keras/model2_loss.png" height="150" /> | <img src="plots/ex2/keras/model2_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model2_confusion_matrix.png" height="150" /> |
-| model3 | <img src="plots/ex2/keras/model3_loss.png" height="150" /> | <img src="plots/ex2/keras/model3_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model3_confusion_matrix.png" height="150" /> |
-| model4 | <img src="plots/ex2/keras/model4_loss.png" height="150" /> | <img src="plots/ex2/keras/model4_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model4_confusion_matrix.png" height="150" /> |
+| model5 | <img src="plots/ex2/keras/model5_loss.png" height="150" /> | <img src="plots/ex2/keras/model5_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model5_confusion_matrix.png" height="150" /> |
+| model6 | <img src="plots/ex2/keras/model6_loss.png" height="150" /> | <img src="plots/ex2/keras/model6_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model6_confusion_matrix.png" height="150" /> |
+| model7 | <img src="plots/ex2/keras/model7_loss.png" height="150" /> | <img src="plots/ex2/keras/model7_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model7_confusion_matrix.png" height="150" /> |
 
 Compared to model1, the confusion matrices are much better: they all present the famous diagonal.
 
-Even though we managed to improve the accuracy, it's becoming harder to fight overfitting. Indeed, all 3 models show a lot of overfitting. Notice that the last one looks like it's slightly less overfitting.
+Even though we managed to improve the accuracy, it's becoming harder to fight overfitting. Indeed, all 3 models show a lot of overfitting. (Notice that the last one looks like it's slightly less overfitting???)
 
 <br />
 
-|       |   model2   |            |           |                                                 |   model3   |            |           |                                                 |   model4   |            |           |                                                 |
+|       |   model5   |            |           |                                                 |   model6   |            |           |                                                 |   model7   |            |           |                                                 |
 | :---: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: |
 | Rank  | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      | Image Idx. | Pred. Cat. | Act. Cat. |                      Image                      |
-|  10   |    9935    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model2/10.png" /> |    5122    |    Cat     |   Frog    | <img src="ten_worst/ex2/keras/model3/10.png" /> |    5251    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model4/10.png" /> |
-|   9   |    2284    |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model2/9.png" />  |    9206    |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model3/9.png" />  |    1090    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model4/9.png" />  |
-|   8   |    5040    |    Frog    |    Cat    | <img src="ten_worst/ex2/keras/model2/8.png" />  |    7236    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model3/8.png" />  |    8201    |    Frog    |    Cat    | <img src="ten_worst/ex2/keras/model4/8.png" />  |
-|   7   |    9407    |    Car     |   Frog    | <img src="ten_worst/ex2/keras/model2/7.png" />  |    7329    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model3/7.png" />  |    6760    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model4/7.png" />  |
-|   6   |    5546    |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model2/6.png" />  |    3253    |    Ship    |   Truck   | <img src="ten_worst/ex2/keras/model3/6.png" />  |    6002    |   Plane    |   Bird    | <img src="ten_worst/ex2/keras/model4/6.png" />  |
-|   5   |    1433    |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model2/5.png" />  |    2060    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model3/5.png" />  |    783     |    Ship    |   Frog    | <img src="ten_worst/ex2/keras/model4/5.png" />  |
-|   4   |    8915    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model2/4.png" />  |    5729    |    Car     |   Ship    | <img src="ten_worst/ex2/keras/model3/4.png" />  |    1631    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model4/4.png" />  |
-|   3   |    757     |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model2/3.png" />  |    447     |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model3/3.png" />  |    4721    |   Plane    |    Car    | <img src="ten_worst/ex2/keras/model4/3.png" />  |
-|   2   |    1272    |    Frog    |   Deer    | <img src="ten_worst/ex2/keras/model2/2.png" />  |    1650    |    Bird    |    Dog    | <img src="ten_worst/ex2/keras/model3/2.png" />  |    1653    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model4/2.png" />  |
-|   1   |    3549    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model2/1.png" />  |    3402    |    Frog    |   Deer    | <img src="ten_worst/ex2/keras/model3/1.png" />  |    9148    |    Dog     |    Cat    | <img src="ten_worst/ex2/keras/model4/1.png" />  |
+|  10   |    9935    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model5/10.png" /> |    5122    |    Cat     |   Frog    | <img src="ten_worst/ex2/keras/model6/10.png" /> |    5251    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model7/10.png" /> |
+|   9   |    2284    |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model5/9.png" />  |    9206    |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model6/9.png" />  |    1090    |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model7/9.png" />  |
+|   8   |    5040    |    Frog    |    Cat    | <img src="ten_worst/ex2/keras/model5/8.png" />  |    7236    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model6/8.png" />  |    8201    |    Frog    |    Cat    | <img src="ten_worst/ex2/keras/model7/8.png" />  |
+|   7   |    9407    |    Car     |   Frog    | <img src="ten_worst/ex2/keras/model5/7.png" />  |    7329    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model6/7.png" />  |    6760    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model7/7.png" />  |
+|   6   |    5546    |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model5/6.png" />  |    3253    |    Ship    |   Truck   | <img src="ten_worst/ex2/keras/model6/6.png" />  |    6002    |   Plane    |   Bird    | <img src="ten_worst/ex2/keras/model7/6.png" />  |
+|   5   |    1433    |    Deer    |   Horse   | <img src="ten_worst/ex2/keras/model5/5.png" />  |    2060    |    Cat     |    Dog    | <img src="ten_worst/ex2/keras/model6/5.png" />  |    783     |    Ship    |   Frog    | <img src="ten_worst/ex2/keras/model7/5.png" />  |
+|   4   |    8915    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model5/4.png" />  |    5729    |    Car     |   Ship    | <img src="ten_worst/ex2/keras/model6/4.png" />  |    1631    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model7/4.png" />  |
+|   3   |    757     |   Plane    |   Ship    | <img src="ten_worst/ex2/keras/model5/3.png" />  |    447     |    Ship    |   Plane   | <img src="ten_worst/ex2/keras/model6/3.png" />  |    4721    |   Plane    |    Car    | <img src="ten_worst/ex2/keras/model7/3.png" />  |
+|   2   |    1272    |    Frog    |   Deer    | <img src="ten_worst/ex2/keras/model5/2.png" />  |    1650    |    Bird    |    Dog    | <img src="ten_worst/ex2/keras/model6/2.png" />  |    1653    |    Car     |   Truck   | <img src="ten_worst/ex2/keras/model7/2.png" />  |
+|   1   |    3549    |   Truck    |    Car    | <img src="ten_worst/ex2/keras/model5/1.png" />  |    3402    |    Frog    |   Deer    | <img src="ten_worst/ex2/keras/model6/1.png" />  |    9148    |    Dog     |    Cat    | <img src="ten_worst/ex2/keras/model7/1.png" />  |
 
 <br /><br />
 

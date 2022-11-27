@@ -12,7 +12,7 @@ from torchvision import datasets, transforms
 import lab4_utils
 
 EX = 'ex2/pytorch'
-MODEL = 'model5'
+MODEL = 'model7'
 
 CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
