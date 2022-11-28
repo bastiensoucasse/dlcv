@@ -198,6 +198,8 @@ Legend:
 
 Those 3 new models provide rather identical accuracies, that are slightly better than the model2 one. The training time allows to decide between them. Indeed, even if these information are not sufficient to choose a model, model4 seems to be the best model so far.
 
+#### Loss, Accuracy Plots and Confusion Matrices
+
 <br />
 
 |   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
@@ -214,6 +216,8 @@ Nevertheless, the scale is small so even if it may look huge, they actually all 
 They all look quite equivalent. More importantly, they show better results than model2. 
 
 <br />
+
+#### 10 Worst Classified Images
 
 |       |   model3   |            |           |                                                 |   model4   |            |           |                                                 |   model5   |            |           |                                                 |
 | :---: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: |
@@ -315,6 +319,8 @@ The accuracy increases through the different models. What's more, the one giving
 
 <br />
 
+#### Loss, Accuracy Plots and Confusion Matrices
+
 |   ID   |                         Loss Plot                          |                         Accuracy Plot                          |                            Confusion Matrix                            |
 | :----: | :--------------------------------------------------------: | :------------------------------------------------------------: | :--------------------------------------------------------------------: |
 | model5 | <img src="plots/ex2/keras/model5_loss.png" height="150" /> | <img src="plots/ex2/keras/model5_accuracy.png" height="150" /> | <img src="plots/ex2/keras/model5_confusion_matrix.png" height="150" /> |
@@ -326,6 +332,8 @@ Compared to model1, the confusion matrices are much better: they all present the
 Even though we managed to improve the accuracy, it's becoming harder to fight overfitting. Indeed, all 3 models show a lot of overfitting. (Notice that the last one looks like it's slightly less overfitting???)
 
 <br />
+
+#### 10 Worst Classified Images
 
 |       |   model5   |            |           |                                                 |   model6   |            |           |                                                 |   model7   |            |           |                                                 |
 | :---: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: | :--------: | :--------: | :-------: | :---------------------------------------------: |
