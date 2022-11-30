@@ -13,7 +13,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 
 import lab4_utils
 
-MODEL = "Keras MyResNetDA WithNorm"
+MODEL = "MyResNetDA"
 
 EPOCHS = 20
 NUM_CLASSES = 10
@@ -43,8 +43,7 @@ if __name__ == '__main__':
 
     # Define the model.
     input = Input(shape=x_train.shape[1:], name='input')
-    normalized = BatchNormalization(name='normalization')(input)
-    resnet_output = resnet(normalized)
+    resnet_output = resnet(input)
     avg_pool = GlobalAveragePooling2D(name='avg_pool')(resnet_output)
     predictions = Dense(NUM_CLASSES, activation='softmax', name='predictions')(avg_pool)
     model = Model(input, predictions)
@@ -53,6 +52,7 @@ if __name__ == '__main__':
 
     # Train the model.
     start_time = time.time()
+    # hist = model.fit(x_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS, validation_data=(x_test, y_test))
     hist = model.fit(datagen.flow(x_train, y_train, batch_size=BATCH_SIZE), steps_per_epoch=len(x_train) / BATCH_SIZE, epochs=EPOCHS, validation_data=(x_test, y_test))
     training_time = time.time() - start_time
 
@@ -62,51 +62,6 @@ if __name__ == '__main__':
     # Display the summary.
     print(f'SUMMARY:\n    - Loss: {loss:.4f}\n    - Accuracy: {accuracy:.4f}\n    - Training Time: {training_time:.2f}s')
 
-    # Add the fully-connected layers.
-    # x = Flatten(name='flatten')(output_resnet)
-    # x = Dense(256, activation='relu')(x)
-    # x = Dropout(0.5)(x)
-    # x = Dense(NUM_CLASSES, activation='softmax', name='predictions')(x)
-
-    # datagen = ImageDataGenerator(
-    #     horizontal_flip=True,
-    #     height_shift_range=0.1,
-    #     width_shift_range=0.1,
-    # )
-    # datagen.fit(x_train)
-
-    # Define the model.
-
-    # # Load ResNet.
-    # resnet = ResNet50(include_top=False, # do not load last layer (classifier)
-    #                  weights='imagenet',
-    #                  input_shape=x_train.shape[1:])
-
-    # output = resnet.layers[-1].output
-    # output = Flatten()(output)
-    # resnet = Model(resnet.input, outputs=output)
-
-    # # Freeze the weights.
-    # for layer in resnet.layers:
-    #     layer.trainable = False
-
-    # headModel = resnet.output
-    # headModel = Flatten(name="flatten")(headModel)
-    # headModel = Dense(256, activation="relu")(headModel)
-    # headModel = Dropout(0.5)(headModel)
-    # headModel = Dense(NUM_CLASSES, activation="softmax")(headModel)
-    # model = Model(inputs=resnet.input, outputs=headModel)
-
-    # Create our model using Pre-trained ResNet50.
-    # model = Sequential()
-    # model.add(resnet)
-    # model.add(Dense(512, activation='relu', input_dim=x_train.shape[1:]))
-    # model.add(Dropout(0.3))
-    # model.add(Dense(512, activation='relu'))
-    # model.add(Dropout(0.3))
-    # model.add(Dense(NUM_CLASSES, activation='softmax'))
-    # model.compile(optimizer='RMSProp', loss='categorical_crossentropy', metrics=['accuracy'])
-
     # Plot the loss.
     plt.plot(hist.history['loss'], label='Training')
     plt.plot(hist.history['val_loss'], label='Validation')
@@ -114,7 +69,7 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Loss Over Epoch')
-    plt.savefig('plots/ex4/keras/%s_loss.png' % MODEL)
+    plt.savefig('plots/ex4/keras/%s/loss.png' % MODEL)
     plt.clf()
 
     # Plot the accuracy.
@@ -124,16 +79,16 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Accuracy Over Epoch')
-    plt.savefig('plots/ex4/keras/%s_accuracy.png' % MODEL)
+    plt.savefig('plots/ex4/keras/%s/accuracy.png' % MODEL)
     plt.clf()
-    
+
     # Compute Confusion Matrix.
     y_pred = model.predict(x_test)
     cm = confusion_matrix(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1))
     labels = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
     disp.plot(cmap=plt.cm.Blues)
-    plt.savefig('plots/ex4/keras/%s_confusion_matrix.png' % MODEL)   
+    plt.savefig('plots/ex4/keras/%s/confusion_matrix.png' % MODEL)   
 
     # Get 10 worst classified images
-    lab4_utils.ten_worst(cifar10, y_pred, True, 'ex4/keras/%s' % MODEL)
+    lab4_utils.ten_worst(cifar10, y_pred, True, 'ex4/keras/%s' % MODEL, True)
