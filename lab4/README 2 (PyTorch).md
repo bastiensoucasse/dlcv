@@ -2,7 +2,7 @@
 
 ### Model Without Data Augmentation
 
-We are now going to use a stable model based on `model5` that we previously saw, and matching the one we used on the Keras version.
+We are now going to use a stable model based on `model5` that we previously saw, and matching the one we used on the Keras version. We will declare it as `PraisyNet` for no reason.
 
 #### Model Summary
 

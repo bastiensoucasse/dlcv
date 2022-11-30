@@ -1,8 +1,3 @@
-# PROVOST Iantsa & SOUCASSE Bastien — DLCV Lab 4
-This a temporary file.
-
-# Keras
-
 ## 3. Data Augmentation on CIFAR10 dataset
 
 Our last model (model7) is the best one we could get with a CNN so far, but it shows overfitting. One way to reduce overfitting is to increase the size of the training dataset. Let's try to improve our model by doing data augmentation on our dataset.
