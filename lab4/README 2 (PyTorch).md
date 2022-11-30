@@ -134,7 +134,7 @@ Fortunately (or not), we can add data augmentation in order to solve our problem
 |   1   |    3067    |    Dog     |    Cat    | <img src="ten_worst/ex4/pytorch/MyResNet/1.png" />  |    6237    |    Dog     |    Cat    | <img src="ten_worst/ex4/pytorch/MyResNetDA/1.png" />  |
 
 By analysing each ranking, we can observe that
-- MyResNet gives the worst results when mistaking Car as Truck (5 times), Cat as Dog (2 times) and Dog as Cat (3 times)
-- MyResNetDA gives the worst results when mistaking Cat as Dog (6 times) and Dog as Cat (2 times)
+- MyResNet tends to mistake Car as Truck (5 times), Cat as Dog (2 times) and Dog as Cat (3 times)
+- MyResNetDA tends to mistake Cat as Dog (6 times) and Dog as Cat (2 times)
 
 As mentionned earlier, since those classes are of "same type", the error is understandable.
