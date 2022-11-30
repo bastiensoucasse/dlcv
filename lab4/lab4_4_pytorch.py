@@ -1,5 +1,6 @@
 import sys
 import time
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,57 +8,21 @@ import torch
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
+from torchvision import datasets, models, transforms
 
 import lab4_utils
 
-EX = 'ex3/pytorch'
-MODEL = 'praisynet'
+EX = 'ex4/pytorch'
+MODEL = 'MyResNetDA'
 
 CLASSES = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 NUM_CLASSES = len(CLASSES)
 NUM_CHANNELS = 3
 
 BATCH_SIZE = 32
-NUM_EPOCHS = 100
+NUM_EPOCHS = 20
 
 PLOT = True
-
-
-class praisynet(nn.Module):
-    def __init__(self):
-        super(praisynet, self).__init__()
-
-        self.layer1 = nn.Sequential(
-            nn.Conv2d(NUM_CHANNELS, 64, 5, stride=1, padding=0),
-            nn.Conv2d(64, 64, 5, stride=1, padding=0),
-            nn.MaxPool2d(2, stride=2, padding=0),
-            nn.LazyBatchNorm2d()
-        )
-
-        self.layer2 = nn.Sequential(
-            nn.Conv2d(64, 128, 5, stride=1, padding=0),
-            nn.Conv2d(128, 128, 5, stride=1, padding=0),
-            nn.MaxPool2d(2, stride=2, padding=0),
-            nn.LazyBatchNorm2d()
-        )
-
-        self.flatten = nn.Flatten()
-
-        self.fc1 = nn.Sequential(
-            nn.LazyLinear(128),
-            nn.ReLU()
-        )
-
-        self.fc2 = nn.LazyLinear(NUM_CLASSES)
-
-    def forward(self, x):
-        x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.flatten(x)
-        x = self.fc1(x)
-        x = self.fc2(x)
-        return x
 
 
 if __name__ == '__main__':
@@ -74,7 +39,7 @@ if __name__ == '__main__':
 
     # Load and augment the data.
     train_transform = transforms.Compose([
-        transforms.RandomAffine(0, scale=(.2, 1.2), shear=10),
+        transforms.RandomAffine(0, scale=(.8, 1.2), shear=10),
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(10),
         transforms.ToTensor(),
@@ -84,14 +49,22 @@ if __name__ == '__main__':
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
-    train_dataset = datasets.CIFAR10('data', train=True, transform=train_transform, download=True)
-    test_dataset = datasets.CIFAR10('data', train=False, transform=test_transform, download=True)
+    train_dataset = datasets.CIFAR10('data', train=True, transform=train_transform, download=False)
+    test_dataset = datasets.CIFAR10('data', train=False, transform=test_transform, download=False)
     train_data_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
     test_data_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
     # Define the model.
-    model = eval(MODEL + '()').to(device)
+    model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
+
+    # Change the classifier section.
+    model.fc = nn.LazyLinear(NUM_CLASSES)
+
+    # Send model to device.
+    model = model.to(device)
     print(f"Model: {MODEL}.")
+
+    # Define optimizer and criterion.
     optimizer = torch.optim.RMSprop(model.parameters(), lr=1e-3)
     criterion = nn.CrossEntropyLoss()
 
@@ -160,6 +133,9 @@ if __name__ == '__main__':
     if not PLOT:
         exit()
 
+    # Create folder if necessary
+    Path('plots/%s/%s/' % (EX, MODEL)).mkdir(parents=True, exist_ok=True)
+
     # Plot the loss.
     plt.plot(history['loss'], label='Training')
     plt.plot(history['val_loss'], label='Validation')
@@ -167,7 +143,7 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Loss Over Epoch')
-    plt.savefig('plots/%s/%s_loss.png' % (EX, MODEL))
+    plt.savefig('plots/%s/%s/loss.png' % (EX, MODEL))
     plt.clf()
 
     # Plot the accuracy.
@@ -177,14 +153,14 @@ if __name__ == '__main__':
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Accuracy Over Epoch')
-    plt.savefig('plots/%s/%s_accuracy.png' % (EX, MODEL))
+    plt.savefig('plots/%s/%s/accuracy.png' % (EX, MODEL))
     plt.clf()
 
     # Plot the confusion matrix.
     cm = confusion_matrix(y_test, y_pred.argmax(1))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=CLASSES)
     disp.plot(cmap=plt.cm.magma)
-    plt.savefig('plots/%s/%s_confusion_matrix.png' % (EX, MODEL))
+    plt.savefig('plots/%s/%s/confusion_matrix.png' % (EX, MODEL))
     plt.clf()
 
     # Export the ten worst classified images.

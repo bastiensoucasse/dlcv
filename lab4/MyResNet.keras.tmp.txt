@@ -1,0 +1,49 @@
+# MyResNet
+
+SUMMARY
+
+Loss: 3.0612
+Accuracy: 0.7363
+Training Time: 1153.49s
+
+10 WORST CLASSIFIED IMAGES
+
+10. IMAGE 2022
+    - Predicted category: 3
+    - Actual category: [5]
+
+9. IMAGE 3885
+    - Predicted category: 3
+    - Actual category: [6]
+
+8. IMAGE 5127
+    - Predicted category: 9
+    - Actual category: [1]
+
+7. IMAGE 7684
+    - Predicted category: 2
+    - Actual category: [0]
+
+6. IMAGE 5936
+    - Predicted category: 3
+    - Actual category: [6]
+
+5. IMAGE 3049
+    - Predicted category: 5
+    - Actual category: [3]
+
+4. IMAGE 6215
+    - Predicted category: 0
+    - Actual category: [2]
+
+3. IMAGE 7841
+    - Predicted category: 3
+    - Actual category: [6]
+
+2. IMAGE 1338
+    - Predicted category: 3
+    - Actual category: [6]
+
+1. IMAGE 6873
+    - Predicted category: 5
+    - Actual category: [3]
