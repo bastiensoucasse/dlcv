@@ -24,6 +24,21 @@ NUM_EPOCHS = 20
 
 PLOT = True
 
+def toIMG(tensor):
+    transform = transforms.Compose([
+        transforms.ToPILImage()
+    ])
+    return transform(tensor.detach().cpu())
+
+def plot(tensors):
+    plt.figure(figsize=(10, 2))
+    for i in range(0, 6):
+        plt.subplot(1, 6, 1+i, xticks=[], yticks=[])
+        plt.imshow(toIMG(tensors[i]))
+    plt.suptitle('Augmented images')
+    plt.savefig('batch.png')
+    plt.clf()
+
 
 if __name__ == '__main__':
     # Check custom model.
