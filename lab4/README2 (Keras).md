@@ -73,8 +73,10 @@ Even though the test accuracy oscillates around the train accuracy, the test acc
 |   1   |    4125    |   Plane    |   Ship    |   0.4783   | <img src="ten_worst/ex3/keras/model8/1.png" />  |    3130    |    Dog     |    Cat    |   0.4869   | <img src="ten_worst/ex3/keras/model9/1.png" />  |    4421    |    Dog     |   Bird    |   0.4692   | <img src="ten_worst/ex3/keras/model10/1.png" />  |
 
 By analysing each ranking, we can observe that
-- model8 tends to mistake Car as Truck (4 times)
+- model8 gives the worst results when mistaking Car as Truck (4 times)
 - model9/10 also (Car as Truck 3 times, Truck as Car 1 time), and Cat as Dog, Dog as Cat (3 times each)
+
+These classes are respectively of the same type of subject, and kind of look alike. Therefore, they are not aberrant mistakes.
 
 <br /><br />
 
@@ -88,7 +90,7 @@ To conclude this part, let's compare our new best model (model10) with the ones 
 | model10 | <img src="plots/ex3/keras/model10_accuracy.png" height="150" /> |  76.33%  | 1557.88s (311.58s for 20 epochs) |
 
 In spite of an almost twice longer training time, model10 overperforms model7. 
-Indeed, mode10 provides an accuracy that is almost 8% higher and the problem of overfitting seems solved
+Indeed, model10 provides an accuracy that is almost 8% higher and the problem of overfitting seems solved
 (even if the plots are not on the same number of epochs, we do not need more epochs to see that the test accuracy will not get higher in model7).
 
 
@@ -99,8 +101,53 @@ Indeed, mode10 provides an accuracy that is almost 8% higher and the problem of 
 N.B.: We used this tutorial
 https://towardsdatascience.com/deep-learning-using-transfer-learning-python-code-for-resnet50-8acdfb3a2d38 -->
 
+<!-- ### 4.1. Pre-trained ResNet50 -->
+
+For this part, we are going to use ResNet50 pre-trained on ImageNet. 
+We want to specify our input shape and remove the classifier to add our own so the model can classify 10 classes.
+
+#### Model Summaries
+
+Now that we know data augmentation helps improve results, we want to try fine-tuning with and without data augmentation.
+
+|     ID     |    Data Augmentation     |  Loss  | Accuracy | Training time |
+| :--------: | :----------------------: | :----: | :------: | :-----------: |
+|  MyResNet  |            No            | X.XXXX |  XX.XX%  |    XXX.XXs    |
+| MyResNetDA | Yes, same than model9/10 | X.XXXX |  XX.XX%  |    XXX.XXs    |
+
+<br />
 
 <!-- TODO -->
 
+<br />
 
+#### Loss, Accuracy Plots and Confusion Matrices
 
+|     ID     |                           Loss Plot                            |                           Accuracy Plot                            |                              Confusion Matrix                              |
+| :--------: | :------------------------------------------------------------: | :----------------------------------------------------------------: | :------------------------------------------------------------------------: |
+|  MyResNet  |  <img src="plots/ex4/keras/MyResNet_loss.png" height="150" />  |  <img src="plots/ex4/keras/MyResNet_accuracy.png" height="150" />  |  <img src="plots/ex4/keras/MyResNet_confusion_matrix.png" height="150" />  |
+| MyResNetDA | <img src="plots/ex4/keras/MyResNetDA_loss.png" height="150" /> | <img src="plots/ex4/keras/MyResNetDA_accuracy.png" height="150" /> | <img src="plots/ex4/keras/MyResNetDA_confusion_matrix.png" height="150" /> |
+
+<br />
+
+<!-- TODO -->
+
+<br />
+
+#### 10 Worst Classified Images
+
+|       |  model11   |            |           |            |                                                   |  model12   |            |           |            |                                                     |
+| :---: | :--------: | :--------: | :-------: | :--------: | :-----------------------------------------------: | :--------: | :--------: | :-------: | :--------: | :-------------------------------------------------: |
+| Rank  | Image Idx. | Pred. Cat. | Act. Cat. | Prob. Act. |                       Image                       | Image Idx. | Pred. Cat. | Act. Cat. | Prob. Act. |                        Image                        |
+|  10   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/10.png" /> |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/10.png" /> |
+|   9   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/9.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/9.png" />  |
+|   8   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/8.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/8.png" />  |
+|   7   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/7.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/7.png" />  |
+|   6   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/6.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/6.png" />  |
+|   5   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/5.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/5.png" />  |
+|   4   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/4.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/4.png" />  |
+|   3   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/3.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/3.png" />  |
+|   2   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/2.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/2.png" />  |
+|   1   |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNet/1.png" />  |            |            |           |            | <img src="ten_worst/ex4/keras/MyResNetDA/1.png" />  |
+
+<!-- TODO: By analysing each ranking, we can observe that (optional) -->
