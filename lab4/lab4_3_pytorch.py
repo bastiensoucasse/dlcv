@@ -44,19 +44,17 @@ class praisynet(nn.Module):
 
         self.flatten = nn.Flatten()
 
-        self.fc1 = nn.Sequential(
+        self.classifier = nn.Sequential(
             nn.LazyLinear(128),
-            nn.ReLU()
+            nn.ReLU(),
+            nn.LazyLinear(NUM_CLASSES)
         )
-
-        self.fc2 = nn.LazyLinear(NUM_CLASSES)
 
     def forward(self, x):
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.flatten(x)
-        x = self.fc1(x)
-        x = self.fc2(x)
+        x = self.classifier(x)
         return x
 
 

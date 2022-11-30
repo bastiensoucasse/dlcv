@@ -10,7 +10,23 @@ We are now going to use a stable model based on `model5` that we previously saw,
 | :-------: | :---------------: | :----: | :------: | :-----------: |
 | PraisyNet |        No         | 1.1851 |  69.80%  |    160.63s    |
 
-[architecture]
+The model architechture is the following:
+
+- Layer1
+    - Conv2d(NUM_CHANNELS, 64, 5, stride=1, padding=0)
+    - Conv2d(64, 64, 5, stride=1, padding=0)
+    - MaxPool2d(2, stride=2, padding=0)
+    - LazyBatchNorm2d()
+- Layer2
+    - Conv2d(64, 128, 5, stride=1, padding=0)
+    - Conv2d(128, 128, 5, stride=1, padding=0)
+    - MaxPool2d(2, stride=2, padding=0)
+    - LazyBatchNorm2d()
+- Flatten
+- Classifier
+    - LazyLinear(128)
+    - ReLU()
+    - LazyLinear(NUM_CLASSES)
 
 #### Loss and Accuracy Plots
 
@@ -50,7 +66,11 @@ We are now going to use a stable model based on `model5` that we previously saw,
 | :-------: | :---------------: | :----: | :------: | :-----------------------------: |
 | PraisyNet |        Yes        | 0.7004 |  77.18%  | 899.34s (179.87s for 20 epochs) |
 
-[architecture]
+The same model as before is used, and the Data Augmentation set up as the following:
+
+- RandomAffine(0, scale=(.2, 1.2), shear=10)
+- RandomHorizontalFlip()
+- RandomRotation(10)
 
 #### Loss and Accuracy Plots
 
@@ -113,7 +133,7 @@ For both MyResnet and MyResNetDA, the accuracy has increased of more than 10% co
 
 Despite better accuracies in both models, their respective plots are questionable.
 Indeed, for MyResNet, the accuracy and loss plots show overfitting around the third epoch.
-Fortunately (or not), we can add data augmentation in order to solve our problem. The thing is, we now observe on the accuracy plot a train accuracy that is above the test accuracy. This is a sign of underfitting, due to data augmentation [TODO: add some details].
+Fortunately (or not), we can add data augmentation in order to solve our problem. The thing is, we now observe on the accuracy plot a train accuracy that is above the test accuracy. This is a sign of underfitting, due to data augmentation. We might be adding and changing input data so much that the model become very efficient on the “simple” data in the test dataset (because it's not transformed), but still has trouble giving a good result on a lot of different data.  
 
 <br />
 
